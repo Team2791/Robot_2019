@@ -3,18 +3,21 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.auto.DriveForwardForTime;
 
 public class Robot extends TimedRobot {
+
     public static OI m_oi;
-    Command m_autonomousCommand;
-    SendableChooser<Command> m_chooser = new SendableChooser<>();
+    public static Drivetrain drivetrain;
+    
+    private Command m_autoCommand;
 
     @Override
     public void robotInit() {
+        drivetrain = new Drivetrain();
         m_oi = new OI();
-        SmartDashboard.putData("Auto mode", m_chooser);
+        m_autoCommand = new DriveForwardForTime(1, 0.5);
     }
 
     @Override
@@ -23,20 +26,19 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
+        m_autoCommand.cancel();
+        drivetrain.setMotors(0, 0);
     }
 
     @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
+        drivetrain.setMotors(0, 0);
     }
 
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = m_chooser.getSelected();
-
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
-        }
+        m_autoCommand.start();
     }
 
     @Override
@@ -46,17 +48,15 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.cancel();
-        }
+        m_autoCommand.cancel();
     }
 
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
-
+    
     @Override
-        public void testPeriodic() {
+    public void testPeriodic() {
     }
 }
