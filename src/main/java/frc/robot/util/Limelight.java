@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight {
     NetworkTable table;
-    private NetworkTableEntry camMode, ledMode, tx, ty, ta, tv, ts, tl;
+    private NetworkTableEntry camMode, ledMode, horizontalOffset, verticalOffset, targetArea, validTargets, targetSkew, pipelineLatency;
     private static double kProportion = 1.56;
     //private double horizontalOffset,
      //verticalOffset, validTarget, targetArea, targetSkew, latency;
@@ -28,12 +28,12 @@ public class Limelight {
         table = NetworkTableInstance.getDefault().getTable("limelight");
 
         // Get stats
-        tx = table.getEntry("tx");
-        ty = table.getEntry("ty");
-        ta = table.getEntry("ta");
-        tv = table.getEntry("tv");
-        ts = table.getEntry("ts");
-        tl = table.getEntry("tl");
+        horizontalOffset = table.getEntry("tx");
+        verticalOffset = table.getEntry("ty");
+        targetArea = table.getEntry("ta");
+        validTargets = table.getEntry("tv");
+        targetSkew = table.getEntry("ts");
+        pipelineLatency = table.getEntry("tl");
 
         ledMode = table.getEntry("ledMode");
         camMode = table.getEntry("camMode");
@@ -45,22 +45,22 @@ public class Limelight {
 
     // Methods to get information
     public double getHorizontalOffset(){
-        return tx.getDouble(0.0);
+        return horizontalOffset.getDouble(0.0);
     }
     public double getVerticalOffset(){
-        return ty.getDouble(0.0);
+        return verticalOffset.getDouble(0.0);
     }
     public double getTargetArea(){
-        return ta.getDouble(0.0);
+        return targetArea.getDouble(0.0);
     }
     public double getTargetSkew(){
-        return ts.getDouble(0.0);
+        return targetSkew.getDouble(0.0);
     }
     public double getLatency(){
-        return tl.getDouble(0.0);
+        return pipelineLatency.getDouble(0.0);
     }
     public boolean targetValid(){
-    	if(tv.getDouble(0.0) == 1.0) {
+    	if(verticalOffset.getDouble(0.0) == 1.0) {
     		return true;
     	} else {
     		return false;
