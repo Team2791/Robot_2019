@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Limelight {
     NetworkTable table;
     private NetworkTableEntry camMode, ledMode, tx, ty, ta, tv, ts, tl;
+    private static double kProportion = 1.56;
     //private double horizontalOffset,
      //verticalOffset, validTarget, targetArea, targetSkew, latency;
 
@@ -66,6 +67,10 @@ public class Limelight {
     	}
 
     }
+    public double getDistance(){
+        double distance = getTargetArea()*kProportion;
+        return distance;
+    }
 
 
     // Methods to set Camera settings
@@ -111,7 +116,7 @@ public class Limelight {
         SmartDashboard.putString("Limelight Skew", Double.toString(ts.getDouble(0.0)));
         SmartDashboard.putString("Limelight Latency", Double.toString(tl.getDouble(0.0)));
         SmartDashboard.putString("Limelight Valid", Boolean.toString(tv.getDouble(0.0) == 1.0));
-
+        SmartDashboard.putString("Limelight Distance from Object", Double.toString(this.getDistance()));
 
 
     }
