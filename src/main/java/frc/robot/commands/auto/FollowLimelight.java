@@ -44,6 +44,7 @@ public class FollowLimelight extends Command {
         System.out.println("right: "+right);
         Robot.drivetrain.setMotors(left, right);
         
+        myLimelight.debug();
     }
 
     public void end(){

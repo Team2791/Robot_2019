@@ -3,8 +3,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.commands.auto.FollowLimelight;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.StopDrive;
+
 
 public class Robot extends TimedRobot {
 
@@ -17,7 +19,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         drivetrain = new Drivetrain();
         m_oi = new OI();
-        m_autoCommand = new FollowLimelight();
+        m_autoCommand = new StopDrive();
     }
 
     @Override

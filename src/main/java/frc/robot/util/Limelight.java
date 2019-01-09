@@ -18,7 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Limelight {
     NetworkTable table;
     private NetworkTableEntry camMode, ledMode, tx, ty, ta, tv, ts, tl;
-    //private double horizontalOffset, verticalOffset, validTarget, targetArea, targetSkew, latency;
+    //private double horizontalOffset,
+     //verticalOffset, validTarget, targetArea, targetSkew, latency;
 
 
     public Limelight(){
@@ -65,6 +66,7 @@ public class Limelight {
     	}
 
     }
+
 
     // Methods to set Camera settings
 
