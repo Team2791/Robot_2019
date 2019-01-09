@@ -1,26 +1,29 @@
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import main.java.frc.robot.util.Limelight;
+import frc.robot.util.Limelight;
 
 
 public class FollowLimelight extends Command {
     private static double kMoveSpeed = 0.5;
-    private static double kTurnSpeed = 0.5;
+    private static double kTurnSpeed = 0.01;
     private Limelight myLimelight;
 
-
-    public FollowLimelight(Joystick stick){
+    public FollowLimelight() {
         super("FollowLimelight");
         requires(Robot.drivetrain);
         myLimelight = new Limelight();
+        System.out.println("In FollowLimelight");
+        myLimelight.setCameraMode("driver");
     }
 
     public void execute() {
 
         
         double thrust = 1;
+
+        
         thrust *= kMoveSpeed;
         if(Math.abs(thrust) < 0.1){
             thrust = 0;
@@ -28,6 +31,7 @@ public class FollowLimelight extends Command {
 
         double turn = myLimelight.getHorizontalOffset();
 
+        System.out.println(turn);
         myLimelight.debug();
 
         turn *= kTurnSpeed;
@@ -35,9 +39,11 @@ public class FollowLimelight extends Command {
             turn = 0;
         }
         double left = Math.max(Math.min(thrust - turn, 1), -1);
+        System.out.println("left: "+left);
         double right = Math.max(Math.min(thrust + turn, 1), -1);
-        
+        System.out.println("right: "+right);
         Robot.drivetrain.setMotors(left, right);
+        
     }
 
     public void end(){

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.commands.auto.DriveForwardForTime;
+import frc.robot.commands.auto.FollowLimelight;
 
 public class Robot extends TimedRobot {
 
@@ -17,7 +17,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         drivetrain = new Drivetrain();
         m_oi = new OI();
-        m_autoCommand = new DriveForwardForTime(1, 0.5);
+        m_autoCommand = new FollowLimelight();
     }
 
     @Override

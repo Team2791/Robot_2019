@@ -8,11 +8,7 @@ More info: http://docs.limelightvision.io/en/latest/
 */
 
 
-package org.usfirst.frc.team2791.robot.util;
-
-
-
-import org.usfirst.frc.team2791.robot.Constants;
+package frc.robot.util;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
