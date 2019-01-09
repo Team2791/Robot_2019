@@ -16,4 +16,7 @@ package frc.robot;
 public class RobotMap {
     public static int LEFT_MOTOR = 8;
     public static int RIGHT_MOTOR = 9;
+
+    public static final int kGrabberOpen = 0;
+    public static final int kGrabberClose = 1;
 }
