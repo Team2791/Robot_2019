@@ -13,6 +13,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        drivetrain = new Drivetrain();
         oi = new OI();
     }
 

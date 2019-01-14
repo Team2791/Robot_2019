@@ -7,30 +7,32 @@ import frc.robot.Robot;
 public class DriveWithJoystick extends Command {
     private Joystick stick;
     private boolean isSquaredTurn;
+    private double deadzone;
 
-    public DriveWithJoystick(Joystick stick) {
+    public DriveWithJoystick(Joystick stick, double deadzone) {
         super("DriveWithJoystick");
         requires(Robot.drivetrain);
         this.stick = stick;
+        this.deadzone = deadzone;
     }
 
     public void execute() {
         double thrust = stick.getRawAxis(3) - stick.getRawAxis(2);
-        if(Math.abs(thrust) < 0.1) {
+        if(Math.abs(thrust) < deadzone) {
             thrust = 0;
         }
         double turn = stick.getRawAxis(0);
+
+        if(turn < deadzone && turn > -deadzone) {
+            turn = 0;
+        }
 
         if(isSquaredTurn) {
             turn *= Math.abs(turn);
         }
 
-        if(turn < 0.05 && turn > -0.05) {
-            turn = 0;
-        }
-
-        double left = Math.max(Math.min(thrust - turn, 1), -1);
-        double right = Math.max(Math.min(thrust + turn, 1), -1);
+        double left = Math.max(Math.min(thrust + turn, 1), -1);
+        double right = Math.max(Math.min(thrust - turn, 1), -1);
         
         Robot.drivetrain.setMotors(left, right);
     }
