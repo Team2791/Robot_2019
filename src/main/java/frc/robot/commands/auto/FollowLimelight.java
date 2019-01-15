@@ -2,7 +2,7 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.util.Limelight;
+import frc.robot.util.Limelight.*;
 
 
 public class FollowLimelight extends Command {
@@ -13,9 +13,9 @@ public class FollowLimelight extends Command {
     public FollowLimelight() {
         super("FollowLimelight");
         requires(Robot.drivetrain);
-        myLimelight = new Limelight();
+        myLimelight = Robot.limelight;
         System.out.println("In FollowLimelight");
-        myLimelight.setCameraMode("driver");
+        myLimelight.setCameraMode(CameraMode.Driver);
     }
 
     public void execute() {

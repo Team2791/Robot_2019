@@ -8,12 +8,13 @@ More info: http://docs.limelightvision.io/en/latest/
 */
 
 
-package frc.robot.util;
+package frc.robot.util.Limelight;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import frc.robot.util.Limelight.CameraMode;
 
 public class Limelight {
     NetworkTable table;
@@ -77,46 +78,40 @@ public class Limelight {
 
     // Controls Leds
     // String mode must be either "on" or "off" or "blink"
-    public void setLed(String mode){
-        if(mode.equals("on")){
+    public void setLed(LedMode mode){
+        if(mode == LedMode.On){
             ledMode.setNumber(0);
 
         }
-        else if(mode.equals("off")){
+        else if(mode == LedMode.Off){
             ledMode.setNumber(1);
         }
-        else if(mode.equals("blink")){
+        else if(mode == LedMode.Blink){
             ledMode.setNumber(2);
         }
-        else{
-            System.out.println("Limelight:   setLed(String mode) -----> mode not recognised\nSetting Leds to blink.");
-            ledMode.setNumber(2);
-        }
+        
     }
     // Sets the camera to a operation mode
     // String mode must be either "vision" or "driver"
-    public void setCameraMode(String mode){
-        if(mode.equals("vision")){
+    public void setCameraMode(CameraMode mode){
+        if(mode == CameraMode.Vision){
             camMode.setNumber(0);
         }
-        else if(mode.equals("driver")){
+        else if(mode == CameraMode.Driver){
             camMode.setNumber(1);
         }
-        else{
-            System.out.println("Limelight:   setCameraMode(String mode) -----> mode not recognised\nSetting camera to vision.");
-            camMode.setNumber(0);
-        }
+        
 
     }
 
     public void debug(){
-        SmartDashboard.putString("Limelight Horizontal", Double.toString(tx.getDouble(0.0)));
-        SmartDashboard.putString("Limelight Vertical", Double.toString(ty.getDouble(0.0)));
-        SmartDashboard.putString("Limelight Area", Double.toString(ta.getDouble(0.0)));
-        SmartDashboard.putString("Limelight Skew", Double.toString(ts.getDouble(0.0)));
-        SmartDashboard.putString("Limelight Latency", Double.toString(tl.getDouble(0.0)));
-        SmartDashboard.putString("Limelight Valid", Boolean.toString(tv.getDouble(0.0) == 1.0));
-        SmartDashboard.putString("Limelight Distance from Object", Double.toString(this.getDistance()));
+        SmartDashboard.putString("Limelight Horizontal", Double.toString(getHorizontalOffset()));
+        SmartDashboard.putString("Limelight Vertical", Double.toString(getVerticalOffset()));
+        SmartDashboard.putString("Limelight Area", Double.toString(getTargetArea()));
+        SmartDashboard.putString("Limelight Skew", Double.toString(getTargetSkew()));
+        SmartDashboard.putString("Limelight Latency", Double.toString(getLatency()));
+        SmartDashboard.putString("Limelight Valid", Boolean.toString(targetValid()));
+        SmartDashboard.putString("Limelight Distance from Object", Double.toString(getDistance()));
 
 
     }

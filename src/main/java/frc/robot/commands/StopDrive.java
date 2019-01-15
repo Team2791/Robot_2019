@@ -2,11 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.util.Limelight;
+import frc.robot.util.Limelight.Limelight;
 
 public class StopDrive extends Command{
 
-    private Limelight myLimelight = new Limelight();
+    private Limelight myLimelight = Robot.limelight;
     public StopDrive(){
         super("StopDrive");
         requires(Robot.drivetrain);
