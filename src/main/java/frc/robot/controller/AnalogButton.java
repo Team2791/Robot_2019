@@ -43,16 +43,16 @@ public class AnalogButton extends Button {
 
     @Override public boolean get() {
         double total = 0;
+        if(alternate >= 0 && Math.abs(stick.getRawAxis(alternate)) > dead) {
+            return true;
+        }
+
         if(positive >= 0) {
             total += stick.getRawAxis(positive);
         }
 
         if(negative >= 0) {
             total -= stick.getRawAxis(negative);
-        }
-
-        if(alternate >= 0) {
-            total += stick.getRawAxis(alternate);
         }
 
         return Math.abs(total) > dead;
