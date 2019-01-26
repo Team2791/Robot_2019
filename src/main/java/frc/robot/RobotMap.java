@@ -2,6 +2,8 @@ package frc.robot;
 
 public class RobotMap {
     //The numbers in this map are temporary values until we get an actual robot to use.
+    //Global
+    public static final int kPCM = 1;
     //Drivetrain
     public static final int kLeftTalon = 20;
     public static final int kRightTalon = 21;
