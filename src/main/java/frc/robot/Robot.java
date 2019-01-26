@@ -5,10 +5,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+
 
 public class Robot extends TimedRobot {
     public static OI oi;
     public static Drivetrain drivetrain;
+    public static Elevator elevator;
     SendableChooser<Command> chooser = new SendableChooser<>();
 
     @Override

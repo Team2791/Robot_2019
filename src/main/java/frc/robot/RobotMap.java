@@ -16,4 +16,17 @@ public class RobotMap {
 
     public static final int kElevatorTalon = 24;
     public static final int kIntakeVictor = 35;
+
+    //Lift 
+    public static final int TOP_LIMIT_SWITCH = 8;
+    public static final int BOTTOM_LIMIT_SWITCH = 9;
+    public static final int IR_SENSOR_LEFT = 3;
+    public static final int IR_SENSOR_RIGHT = 2;
+    public static final int LIFT_POT_PORT = 1;
+    public static final int LIFT_TALON = 24;
+    public static final int LIFT_VICTOR = 0;    // no follow victor change later
+    public static final int BREAK_SOLENOID = 0; // don't know ID for break solenoid will change to id after robot is made
+
+    //Piston ID
+    public static final int PCM_CAN_ID = 10;
 }
