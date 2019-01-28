@@ -1,7 +1,19 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package frc.robot;
 
+/**
+ * The RobotMap is a mapping from the ports sensors and actuators are wired into
+ * to a variable name. This provides flexibility changing wiring, makes checking
+ * the wiring easier and significantly reduces the number of magic numbers
+ * floating around.
+ */
 public class RobotMap {
-    //The numbers in this map are temporary values until we get an actual robot to use.
     //Global
     public static final int kPCM = 1;
     //Drivetrain
@@ -10,10 +22,15 @@ public class RobotMap {
     public static final int[] kLeftVictors = {30, 32};
     public static final int[] kRightVictors = {31, 33};
 
+    //Lifters
     public static final int kFrontLiftTalon = 22;
     public static final int kBackLiftTalon = 23;
     public static final int kRollerVictor = 34;
 
+    //Elevator
     public static final int kElevatorTalon = 24;
     public static final int kIntakeVictor = 35;
+
+    public static final int kGrabberOpen = 0;
+    public static final int kGrabberClose = 1;
 }

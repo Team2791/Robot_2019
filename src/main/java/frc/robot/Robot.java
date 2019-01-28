@@ -1,15 +1,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.HatchManipulator;
+import frc.robot.util.Limelight.Limelight;
 
 public class Robot extends TimedRobot {
+
     public static OI oi;
     public static Drivetrain drivetrain;
-    SendableChooser<Command> chooser = new SendableChooser<>();
+    public static HatchManipulator hatchManipulator;
+    public static Limelight limelight;
 
     @Override
     public void robotInit() {
@@ -23,11 +25,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
+        drivetrain.setMotors(0, 0);
     }
 
     @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
+        drivetrain.setMotors(0, 0);
     }
 
     @Override
@@ -48,8 +52,8 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
-
+    
     @Override
-        public void testPeriodic() {
+    public void testPeriodic() {
     }
 }
