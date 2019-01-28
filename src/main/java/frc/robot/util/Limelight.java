@@ -1,5 +1,6 @@
 package frc.robot.util;
 
+import java.lang.Math;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -10,7 +11,11 @@ public class Limelight {
     NetworkTable table;
     private NetworkTableEntry camMode, ledMode, horizontalOffset, verticalOffset, targetArea, validTargets, targetSkew, pipelineLatency;
     private NetworkTableEntry lengthShort, lengthLong, lengthHori, lengthVert, indexPipe;
-    private static double kProportion = 1.56;
+  //  private static double kProportion = 1.56;
+  private static double kcameraHeight = .085;
+  private static double kobjectHeight = 0.5;
+  private static double kmountingAngle = 0;
+  private static double kangletoTarget = 0;
 
 
     public Limelight() {
@@ -87,7 +92,7 @@ public class Limelight {
     }
 
     public double getDistance() {
-        double distance = getTargetArea() * kProportion;
+        double distance = (kcameraHeight-kobjectHeight)/java.lang.Math.tan(kmountingAngle-kangletoTarget);
         return distance;
     }
 
@@ -132,6 +137,7 @@ public class Limelight {
         SmartDashboard.putString("Limelight Horizontal sidelength", Double.toString(getLengthHori()));
         SmartDashboard.putString("Limelight Vertical sidelength", Double.toString(getLengthVert()));
         SmartDashboard.putString("Limelight Pipeline Index", Double.toString(getIndexPipe()));
+        SmartDashboard.putString("Limelight Distance", Double.toString(getDistance()));
 
     }
 }
