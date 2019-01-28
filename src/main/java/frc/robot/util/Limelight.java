@@ -1,15 +1,6 @@
-/*
-Name: Limelight.java
-Author: Sam O
-Date: 1/18/2018
-Info:
-This is the limelight class to control robots limelight.
-More info: http://docs.limelightvision.io/en/latest/
-*/
+package frc.robot.util;
 
-
-package frc.robot.util.Limelight;
-
+import java.lang.Math;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -20,7 +11,11 @@ public class Limelight {
     NetworkTable table;
     private NetworkTableEntry camMode, ledMode, horizontalOffset, verticalOffset, targetArea, validTargets, targetSkew, pipelineLatency;
     private NetworkTableEntry lengthShort, lengthLong, lengthHori, lengthVert, indexPipe;
-    private static double kProportion = 1.56;
+  //  private static double kProportion = 1.56;
+  private static double kcameraHeight = .085;
+  private static double kobjectHeight = 0.5;
+  private static double kmountingAngle = 0;
+  private static double kangletoTarget = 0;
 
 
     public Limelight() {
@@ -97,7 +92,7 @@ public class Limelight {
     }
 
     public double getDistance() {
-        double distance = getTargetArea() * kProportion;
+        double distance = (kcameraHeight-kobjectHeight)/java.lang.Math.tan(kmountingAngle-kangletoTarget);
         return distance;
     }
 
@@ -134,7 +129,7 @@ public class Limelight {
         SmartDashboard.putString("Limelight Vertical", Double.toString(getVerticalOffset()));
         SmartDashboard.putString("Limelight Area", Double.toString(getTargetArea()));
         SmartDashboard.putString("Limelight Skew", Double.toString(getTargetSkew()));
-        SmartDashboard.putString("Limelight Latency", Double.toString(getPipelineLatency()));
+       // SmartDashboard.putString("Limelight Latency", Double.toString(getLatency()));
         SmartDashboard.putString("Limelight Valid", Boolean.toString(targetValid()));
         SmartDashboard.putString("Limelight Distance from Object", Double.toString(getDistance()));
         SmartDashboard.putString("Limelight Sidelength of shortest side", Double.toString(getLengthShort()));
@@ -142,6 +137,7 @@ public class Limelight {
         SmartDashboard.putString("Limelight Horizontal sidelength", Double.toString(getLengthHori()));
         SmartDashboard.putString("Limelight Vertical sidelength", Double.toString(getLengthVert()));
         SmartDashboard.putString("Limelight Pipeline Index", Double.toString(getIndexPipe()));
+        SmartDashboard.putString("Limelight Distance", Double.toString(getDistance()));
 
     }
 }

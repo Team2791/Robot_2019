@@ -33,4 +33,10 @@ public class RobotMap {
 
     public static final int kGrabberOpen = 0;
     public static final int kGrabberClose = 1;
+
+    public static final int kElevatorTopLimit = 8;
+    public static final int kElevatorBottomLimit = 9;
+    public static final int kElevatorPot = 1;
+    public static final int kBreakSolenoid = 2;
+
 }

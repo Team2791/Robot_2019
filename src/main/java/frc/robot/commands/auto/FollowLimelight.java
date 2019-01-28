@@ -2,7 +2,8 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.util.Limelight.*;
+import frc.robot.util.CameraMode;
+import frc.robot.util.Limelight;
 
 
 public class FollowLimelight extends Command {
