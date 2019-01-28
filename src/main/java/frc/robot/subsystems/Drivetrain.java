@@ -62,7 +62,6 @@ public class Drivetrain extends Subsystem {
     }
 
     public void setMotors(double left, double right) {
-        System.out.println(left + ", " + right);
         leftLeader.set(ControlMode.PercentOutput, left * speedMultiplier);
         rightLeader.set(ControlMode.PercentOutput, right * speedMultiplier);
     }
