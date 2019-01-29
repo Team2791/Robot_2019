@@ -22,6 +22,8 @@ class Lifters extends Subsystem {
         backLifter = new TalonSRX(RobotMap.kBackLiftTalon);
         lifterDrive = new VictorSPX(RobotMap.kRollerVictor);
 
+        // TODO: set PID values and sensors
+
     }
 
     @Override
@@ -29,28 +31,38 @@ class Lifters extends Subsystem {
     }
 
     public void extendFront(double output) {
+        // TODO: implement velocity based motion
     }
 
     public void extendBack(double output) {
+        // TODO: implement velocity based motion
     }
 
     public boolean isFrontRetracted() {
-        return true;
+        return frontLifter.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     public boolean isBackRetracted() {
-        return true;
+        return backLifter.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     public boolean isFrontExtended() {
-        return false;
+        return frontLifter.getSensorCollection().isFwdLimitSwitchClosed();
     }
     
     public boolean isBackExtended() {
-        return false;
+        return backLifter.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
     public void driveMotor(double output) {
         lifterDrive.set(ControlMode.PercentOutput, output);
+    }
+
+    public boolean isFrontOverLedge() {
+        return false;
+    }
+
+    public boolean isBackOverLedge() {
+        return false;
     }
 }
