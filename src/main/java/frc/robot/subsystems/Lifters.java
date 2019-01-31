@@ -49,7 +49,7 @@ class Lifters extends Subsystem {
     public boolean isFrontExtended() {
         return frontLifter.getSensorCollection().isFwdLimitSwitchClosed();
     }
-    
+     
     public boolean isBackExtended() {
         return backLifter.getSensorCollection().isFwdLimitSwitchClosed();
     }
