@@ -28,10 +28,8 @@ public class RobotMap {
     public static final int kRollerVictor = 34;
 
     //TEMPORARY NUMBERS
-    public static final int kFrontIRPing = 0;
-    public static final int kFrontIREcho = 1;
-    public static final int kBackIRPing = 2;
-    public static final int kBackIREcho = 3;
+    public static final int kFrontIrReadout = 3;
+    public static final int kBackIrReadout = 4;
 
     //Elevator
     public static final int kElevatorTalon = 24;
