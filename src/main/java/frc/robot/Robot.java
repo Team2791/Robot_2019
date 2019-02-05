@@ -15,10 +15,12 @@ public class Robot extends TimedRobot {
     public static Limelight limelight;
     public static Elevator elevator;
 
+
     @Override
     public void robotInit() {
         drivetrain = new Drivetrain();
         oi = new OI();
+
     }
 
     @Override
@@ -38,7 +40,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        
+
     }
 
     @Override
