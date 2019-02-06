@@ -14,6 +14,7 @@ public class Constants {
 
     public static final double kLowPlatformHeight = 18;
     public static final double kHighPlatformHeight = 6;
+    public static final double kLifterDrivePower = 1;
 
     // Lift Constants All these constants need to be modified later on
 	public static final int kElevatorPotOffset = 0; 

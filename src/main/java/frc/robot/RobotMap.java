@@ -23,13 +23,13 @@ public class RobotMap {
     public static final int[] kRightVictors = {31, 33};
 
     //Lifters
-    public static final int kFrontLiftTalon = 22;
-    public static final int kBackLiftTalon = 23;
+    public static final int kFrontLiftTalon = 23;
+    public static final int kBackLiftTalon = 22;
     public static final int kRollerVictor = 34;
 
     //TEMPORARY NUMBERS
-    public static final int kFrontIrReadout = 3;
-    public static final int kBackIrReadout = 4;
+    public static final int kFrontIrReadout = 1;
+    public static final int kBackIrReadout = 0;
 
     //Elevator
     public static final int kElevatorTalon = 24;
@@ -37,10 +37,5 @@ public class RobotMap {
 
     public static final int kGrabberOpen = 0;
     public static final int kGrabberClose = 1;
-
-    public static final int kElevatorTopLimit = 8;
-    public static final int kElevatorBottomLimit = 9;
-    public static final int kElevatorPot = 1;
     public static final int kBreakSolenoid = 2;
-
 }
