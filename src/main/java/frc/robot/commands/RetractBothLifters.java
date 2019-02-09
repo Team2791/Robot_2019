@@ -8,12 +8,7 @@ public class RetractBothLifters extends Command {
     }
 
     public void execute() {
-        if(!Robot.lifters.isFrontRetracted()) {
-            Robot.lifters.extendFront(-0.75);
-        }
-        if(!Robot.lifters.isBackRetracted()) {
-            Robot.lifters.extendBack(-0.75);
-        }
+        Robot.lifters.ExtendBoth(-.75);
     }
 
     public void end() {

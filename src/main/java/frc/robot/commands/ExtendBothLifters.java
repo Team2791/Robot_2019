@@ -8,12 +8,7 @@ public class ExtendBothLifters extends Command {
     }
 
     public void execute() {
-        if(!Robot.lifters.isFrontExtended()) {
-            Robot.lifters.extendFront(0.75);
-        }
-        if(!Robot.lifters.isBackExtended()) {
-            Robot.lifters.extendBack(0.75);
-        }
+        Robot.lifters.ExtendBoth(0.75);
     }
 
     public void end() {

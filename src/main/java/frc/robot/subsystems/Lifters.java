@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.util.IrSensor;
 
@@ -42,18 +43,26 @@ public class Lifters extends Subsystem {
     }
 
     public void extendFront(double output) {
-        // double maxVel = Constants.kFrontLifterRange / Constants.kLiftTime;
-        // if(output > 1) {
-        //     output = 1;
-        // } else if(output < -1) {
-        //     output = -1;
-        // }
-
-        // frontLifter.set(ControlMode.Velocity, output * maxVel);
-        frontLifter.set(ControlMode.PercentOutput, output);
+        if(output < 0 && isFrontRetracted()) {
+            frontLifter.set(ControlMode.PercentOutput, 0);
+        } else if(output > 0 && isFrontExtended()) {
+            frontLifter.set(ControlMode.PercentOutput, 0);
+        } else{
+            frontLifter.set(ControlMode.PercentOutput, output);
+        }
     }
 
     public void extendBack(double output) {
+        if(output < 0 && isBackRetracted()) {
+            backLifter.set(ControlMode.PercentOutput, 0);
+        } else if(output > 0 && isBackExtended()) {
+            backLifter.set(ControlMode.PercentOutput, 0);
+        } else{
+            backLifter.set(ControlMode.PercentOutput, output);
+        }
+    }
+
+    public void ExtendBoth(double output) {
         // double maxVel = Constants.kBackLifterRange / Constants.kLiftTime;
         // if(output > 1) {
         //     output = 1;
@@ -62,7 +71,26 @@ public class Lifters extends Subsystem {
         // }
 
         // backLifter.set(ControlMode.Velocity, output * maxVel);
-        backLifter.set(ControlMode.PercentOutput, output);
+        int backHeight = getBackHeight() - Constants.kBackLifterPotMin;
+        int frontHeight = getFrontHeight() - Constants.kFrontLifterPotMin;
+
+        if(frontHeight > backHeight) {
+            if(output >= 0) {
+                frontLifter.set(ControlMode.PercentOutput, output / 2);
+                backLifter.set(ControlMode.PercentOutput, output);
+            } else {
+                frontLifter.set(ControlMode.PercentOutput, output);
+                backLifter.set(ControlMode.PercentOutput, 3 * output / 4);
+            }
+        } else if(backHeight > frontHeight) {
+            if(output <= 0) {
+                frontLifter.set(ControlMode.PercentOutput, 3 * output / 4);
+                backLifter.set(ControlMode.PercentOutput, output);
+            } else {
+                frontLifter.set(ControlMode.PercentOutput, output);
+                backLifter.set(ControlMode.PercentOutput,  output / 2);
+            }
+        }
     }
 
     public boolean isFrontRetracted() {
@@ -104,10 +132,10 @@ public class Lifters extends Subsystem {
     // }
 
     public void debug() {
-        SmartDashboard.putString("Front Lifters ", Boolean.toString(isFrontRetracted()));
-        SmartDashboard.putString("Front Lifters ", Boolean.toString(isFrontExtended()));
-        SmartDashboard.putString("Front Lifters ", Boolean.toString(isBackRetracted()));
-        SmartDashboard.putString("Front Lifters ", Boolean.toString(isBackExtended()));
+        SmartDashboard.putString("Front Lifter Retracted", Boolean.toString(isFrontRetracted()));
+        SmartDashboard.putString("Front Lifter Extended", Boolean.toString(isFrontExtended()));
+        SmartDashboard.putString("Back Lifter Retracted", Boolean.toString(isBackRetracted()));
+        SmartDashboard.putString("Back Lifter Extended", Boolean.toString(isBackExtended()));
         SmartDashboard.putString("Pot Front value ", Double.toString(getFrontHeight()));
         SmartDashboard.putString("Pot Back value ", Double.toString(getBackHeight()));
         SmartDashboard.putString("Front IR ", Integer.toString(frontIR.getValue()));
