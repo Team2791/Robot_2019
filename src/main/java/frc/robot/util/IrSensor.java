@@ -9,9 +9,7 @@ public class IrSensor {
         sensor = new AnalogInput(channel);
     }
 
-    public double getInches() {
-        int value = sensor.getValue();
-        double cm = 4800.0/(value - 20);
-        return cm / 2.54;
+    public int getValue() {
+        return sensor.getValue();
     }
 }

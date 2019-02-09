@@ -12,8 +12,8 @@ public class Constants {
     public static final int kBackLifterRange = 1023;
     public static final double kLiftTime = 1.5;
 
-    public static final double kLowPlatformHeight = 18;
-    public static final double kHighPlatformHeight = 6;
+    public static final int kFrontPlatformCutoff = 1100;
+    public static final int kBackPlatformCutoff = 1100;
     public static final double kLifterDrivePower = 1;
 
     // Lift Constants All these constants need to be modified later on

@@ -103,11 +103,11 @@ public class Lifters extends Subsystem {
     // }
 
     public void debug() {
-        System.out.println("Front: " + isFrontRetracted() + ", " + isFrontExtended());
-        System.out.println("Back: " + isBackRetracted() + ", " + isBackExtended());
-        System.out.println("Pots: " + getFrontHeight() + ", " + getBackHeight());
-        System.out.println("IRs: " + frontIR.getInches() + ", " + backIR.getInches());
+        // System.out.println("Front: " + isFrontRetracted() + ", " + isFrontExtended());
+        // System.out.println("Back: " + isBackRetracted() + ", " + isBackExtended());
+        // System.out.println("Pots: " + getFrontHeight() + ", " + getBackHeight());
+        System.out.println("IRs: " + frontIR.getValue() + ", " + backIR.getValue());
 
-        System.out.println("");
+        // System.out.println("");
     }
 }
