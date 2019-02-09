@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.util.IrSensor;
 
@@ -103,11 +104,14 @@ public class Lifters extends Subsystem {
     // }
 
     public void debug() {
-        // System.out.println("Front: " + isFrontRetracted() + ", " + isFrontExtended());
-        // System.out.println("Back: " + isBackRetracted() + ", " + isBackExtended());
-        // System.out.println("Pots: " + getFrontHeight() + ", " + getBackHeight());
-        System.out.println("IRs: " + frontIR.getValue() + ", " + backIR.getValue());
-
+        SmartDashboard.putString("Front Lifters ", Boolean.toString(isFrontRetracted()));
+        SmartDashboard.putString("Front Lifters ", Boolean.toString(isFrontExtended()));
+        SmartDashboard.putString("Front Lifters ", Boolean.toString(isBackRetracted()));
+        SmartDashboard.putString("Front Lifters ", Boolean.toString(isBackExtended()));
+        SmartDashboard.putString("Pot Front value ", Double.toString(getFrontHeight()));
+        SmartDashboard.putString("Pot Back value ", Double.toString(getBackHeight()));
+        SmartDashboard.putString("Front IR ", Integer.toString(frontIR.getValue()));
+        SmartDashboard.putString("Back IR ", Integer.toString(backIR.getValue()));
         // System.out.println("");
     }
 }
