@@ -41,7 +41,11 @@ public class Lifters extends Subsystem {
     @Override
     protected void initDefaultCommand() {
     }
-
+    public void setLifterstoCoastMode(){ //sets Lifters to coast as a method for command
+        frontLifter.setNeutralMode(NeutralMode.Coast);
+        backLifter.setNeutralMode(NeutralMode.Coast);
+        lifterDrive.setNeutralMode(NeutralMode.Coast);
+    }
     public void extendFront(double output) {
         if(output < 0 && isFrontRetracted()) {
             frontLifter.set(ControlMode.PercentOutput, 0);
@@ -121,6 +125,12 @@ public class Lifters extends Subsystem {
         return 1023 - backLifter.getSensorCollection().getAnalogIn();
     }
 
+    public int getFrontIR(){
+        return frontIR.getValue();
+    }
+    public int getBackIR(){
+        return backIR.getValue();
+    }
     // public boolean isFrontOverLedge(boolean isHigh) {
     //     double comparison = isHigh ? Constants.kHighPlatformHeight : Constants.kLowPlatformHeight;
     //     return frontIR.getInches() <= comparison;
@@ -138,8 +148,8 @@ public class Lifters extends Subsystem {
         SmartDashboard.putString("Back Lifter Extended", Boolean.toString(isBackExtended()));
         SmartDashboard.putString("Pot Front value ", Double.toString(getFrontHeight()));
         SmartDashboard.putString("Pot Back value ", Double.toString(getBackHeight()));
-        SmartDashboard.putString("Front IR ", Integer.toString(frontIR.getValue()));
-        SmartDashboard.putString("Back IR ", Integer.toString(backIR.getValue()));
+        SmartDashboard.putString("Front IR ", Integer.toString(getFrontIR()));
+        SmartDashboard.putString("Back IR ", Integer.toString(getBackIR()));
         // System.out.println("");
     }
 }

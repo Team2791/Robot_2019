@@ -4,11 +4,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class RetractBothLifters extends Command {
-    public RetractBothLifters() {
+    private double output;
+    public RetractBothLifters(double output) {
+        super("RetractBothLifters");
+        requires(Robot.lifters);
+        this.output = output;
     }
 
     public void execute() {
-        Robot.lifters.ExtendBoth(-.75);
+        Robot.lifters.ExtendBoth(output);
     }
 
     public void end() {
