@@ -25,7 +25,7 @@ public class OI {
 
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1));
         driveRB.whileHeld(new ExtendBothLifters());
-        driveLB.whileHeld(new RetractBothLifters());
+        driveLB.whileHeld(new RetractBothLifters(-0.75));
         driveB.whileHeld(new DriveLifterWheel());
     }
 }
