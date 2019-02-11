@@ -11,11 +11,11 @@ public class StopLift extends Command {
     }
 
     public void execute() {
-        Robot.drivetrain.setMotors(0, 0);
+        Robot.elevator.setPower(0);
     }
 
     public void end() {
-        Robot.drivetrain.setMotors(0, 0);
+        Robot.elevator.setPower(0);
     }
 
     public boolean isFinished() {
