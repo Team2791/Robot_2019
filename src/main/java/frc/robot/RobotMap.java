@@ -39,4 +39,14 @@ public class RobotMap {
     public static final int kElevatorPot = 1;
     public static final int kBreakSolenoid = 2;
 
+    //HatchManipulator
+    public static final int kExtenderHatchSolenoid = -1;
+
+    public static final int kGrabberHatchSolenoid = -1;
+
+    public static final int kAlignerHatchSolenoid = -1;
+
+    //CargoManipulator
+    public static final int kCargoIntakeSolenoid = -1;
+    public static final int kExtendHatchSolenoid = -1;
 }

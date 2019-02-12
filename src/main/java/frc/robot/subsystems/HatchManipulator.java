@@ -1,40 +1,46 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.RobotMap;
 
 public class HatchManipulator extends Subsystem {
-    private DoubleSolenoid grabber;
+    private Solenoid extender, grabber, aligner;
     private boolean isOpen;
 
     public HatchManipulator() {
-        grabber = new DoubleSolenoid(RobotMap.kGrabberOpen, RobotMap.kGrabberClose);
+        extender = new Solenoid(RobotMap.kPCM, RobotMap.kExtendHatchSolenoid);
+        grabber = new Solenoid(RobotMap.kPCM, RobotMap.kGrabberHatchSolenoid);
+        aligner = new Solenoid(RobotMap.kPCM, RobotMap.kAlignerHatchSolenoid);
         closeGrabber();
     }
 
     @Override public void initDefaultCommand() {
     }
 
-    public void closeGrabber() {
-        grabber.set(DoubleSolenoid.Value.kReverse);
-        isOpen = false;
+    public void setExtender(boolean extended) {
+        extender.set(extended);
     }
 
-    public void openGrabber() {
-        grabber.set(DoubleSolenoid.Value.kForward);
-        isOpen = true;
+    public boolean getExtender() {
+        return extender.get();
     }
 
-    public void toggleGrabber() {
-        if(isOpen) {
-            closeGrabber();
-        } else {
-            openGrabber();
-        }
+    public void setGrabber(boolean open) {
+        grabber.set(open);
+    }
+    public boolean getGrabber() {
+        return grabber.get();
     }
 
-    public boolean getIsOpen() {
-        return isOpen;
+    }
+
+
+    public void debug() {
+        SmartDashboard.putBoolean("Manipulator Extender Solenoid", extender.get());
+        SmartDashboard.putBoolean("Manipulator Cube in gripper", isCubeInGripper());
+        SmartDashboard.putBoolean("Manipulator Cube jammed", isCubeJammed());
+        SmartDashboard.putNumber("Manipulator - Current", getCurrentUsage());
+        SmartDashboard.putNumber("Manipulator - Max Current", getMaxMotorCurrent());
     }
 }
