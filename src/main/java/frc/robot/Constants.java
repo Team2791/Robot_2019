@@ -30,6 +30,8 @@ public class Constants {
 	public static final int kElevatorMaxHeight = 0;
 	public static final int kElevatorBottomSafetyDistance = 0;
     public static final double kElelvatorMinHeight = 0;
+    //Joystick constant
+    public static final double DEADZONE = 0;
     
 
 }

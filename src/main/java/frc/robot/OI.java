@@ -7,6 +7,7 @@ import frc.robot.controller.AnalogButton;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExtendBothLifters;
 import frc.robot.commands.RetractBothLifters;
+import frc.robot.Joystick.GamePad;
 import frc.robot.commands.DriveLifterWheel;
 
 public class OI {
@@ -15,7 +16,8 @@ public class OI {
     private Button driveRB;
     private Button driveLB;
     private Button driveB;
-
+    public static GamePad driver = new GamePad(0);
+    public static GamePad operator = new GamePad(1);
     public OI() {
         driverStick = new Joystick(0);
         driveButton = new AnalogButton(driverStick, 3, 2, 0, 0.2);
