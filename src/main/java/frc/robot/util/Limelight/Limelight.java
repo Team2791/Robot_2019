@@ -60,7 +60,7 @@ public class Limelight {
         return targetArea.getDouble(0.0);
     }
 
-    public double targetValid() {
+    public boolean targetValid() {
         if (validTargets.getDouble(0.0) == 1.0) {
             return true;
         } else {
@@ -109,7 +109,6 @@ public class Limelight {
     public void setLed(LedMode mode) {
         if (mode == LedMode.On) {
             ledMode.setNumber(0);
-
         } else if (mode == LedMode.Off) {
             ledMode.setNumber(1);
         } else if (mode == LedMode.Blink) {
@@ -126,7 +125,6 @@ public class Limelight {
             camMode.setNumber(1);
         }
 
-
     }
 
     public void debug() {
@@ -134,7 +132,7 @@ public class Limelight {
         SmartDashboard.putString("Limelight Vertical", Double.toString(getVerticalOffset()));
         SmartDashboard.putString("Limelight Area", Double.toString(getTargetArea()));
         SmartDashboard.putString("Limelight Skew", Double.toString(getTargetSkew()));
-        SmartDashboard.putString("Limelight Latency", Double.toString(getLatency()));
+        SmartDashboard.putString("Limelight Latency", Double.toString(getPipelineLatency()));
         SmartDashboard.putString("Limelight Valid", Boolean.toString(targetValid()));
         SmartDashboard.putString("Limelight Distance from Object", Double.toString(getDistance()));
         SmartDashboard.putString("Limelight Sidelength of shortest side", Double.toString(getLengthShort()));
@@ -142,6 +140,5 @@ public class Limelight {
         SmartDashboard.putString("Limelight Horizontal sidelength", Double.toString(getLengthHori()));
         SmartDashboard.putString("Limelight Vertical sidelength", Double.toString(getLengthVert()));
         SmartDashboard.putString("Limelight Pipeline Index", Double.toString(getIndexPipe()));
-
     }
 }

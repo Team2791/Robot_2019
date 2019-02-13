@@ -21,7 +21,7 @@ public class FollowLimelight extends Command {
     public void execute() {
 
         
-        double thrust = 1;
+        double thrust = 0.5;
 
         
         thrust *= kMoveSpeed;
@@ -32,7 +32,6 @@ public class FollowLimelight extends Command {
         double turn = myLimelight.getHorizontalOffset();
 
         System.out.println(turn);
-        myLimelight.debug();
 
         turn *= kTurnSpeed;
         if(turn < 0.05 && turn > -0.05) {
