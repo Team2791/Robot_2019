@@ -7,13 +7,13 @@ import frc.robot.RobotMap;
 
 public class HatchManipulator extends Subsystem {
     private Solenoid extender, grabber, aligner;
-    private boolean isOpen;
+ 
 
     public HatchManipulator() {
         extender = new Solenoid(RobotMap.kPCM, RobotMap.kExtendHatchSolenoid);
         grabber = new Solenoid(RobotMap.kPCM, RobotMap.kGrabberHatchSolenoid);
         aligner = new Solenoid(RobotMap.kPCM, RobotMap.kAlignerHatchSolenoid);
-        closeGrabber();
+    
     }
 
     @Override public void initDefaultCommand() {
@@ -27,8 +27,8 @@ public class HatchManipulator extends Subsystem {
         return extender.get();
     }
 
-    public void setGrabber(boolean open) {
-        grabber.set(open);
+    public void setGrabber(boolean output) {
+        grabber.set(output);
     }
     public boolean getGrabber() {
         return grabber.get();
