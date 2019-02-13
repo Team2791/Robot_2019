@@ -33,14 +33,16 @@ public class HatchManipulator extends Subsystem {
         return grabber.get();
     }
 
+    public void setAligner(boolean extended) {
+        return aligner.set(extended);
+    }
+    public boolean getAligner() {
+        return aligner.get()
     }
 
-
     public void debug() {
-        SmartDashboard.putBoolean("Manipulator Extender Solenoid", extender.get());
-        SmartDashboard.putBoolean("Manipulator Cube in gripper", isCubeInGripper());
-        SmartDashboard.putBoolean("Manipulator Cube jammed", isCubeJammed());
-        SmartDashboard.putNumber("Manipulator - Current", getCurrentUsage());
-        SmartDashboard.putNumber("Manipulator - Max Current", getMaxMotorCurrent());
+        SmartDashboard.putBoolean("HatchManipulator Extender Solenoid", getExtender());
+        SmartDashboard.putBoolean("HatchManipulator Grabber Solenoid", getGrabber());
+        SmartDashboard.putBoolean("HatchManipulator Aligner Solenoid", getAligner());
     }
 }
