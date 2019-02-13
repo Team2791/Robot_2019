@@ -4,11 +4,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class RetractBackLifter extends Command {
-    public RetractBackLifter() {
+    private double output;
+    public RetractBackLifter(double output) {
+        super("RetractBackLifter");
+        requires(Robot.lifters);
+        this.output = output;
     }
 
     public void execute() {
-        Robot.lifters.extendBack(-0.75);
+        Robot.lifters.extendBack(output);
     }
 
     public void end() {

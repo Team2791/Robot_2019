@@ -17,6 +17,7 @@ import frc.robot.commands.StopLift;
 // import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -56,17 +57,16 @@ public class Elevator extends Subsystem {
     //     // followerVictor = new VictorSPX(RobotMap.LIFT_VICTOR);
     //     // followerVictor.follow(leaderTalon);
 
-    //     motorControllers = new BaseMotorController[] {
-    //         leaderTalon,
-    //   //      followerVictor
-    //     };
+        motorControllers = new BaseMotorController[] {
+            driveTalon
+        };
 
-    //     for (int i = 0; i < motorControllers.length; i++) {
-    //         motorControllers[i].setNeutralMode(NeutralMode.Brake);
-    //         // this will limit the motor controllers from shocking the lift with full power
-    //         // it will take them 0.5s to ramp up to full power.
-    //         motorControllers[i].configOpenloopRamp(0.25, 10);
-    //     }
+        for (int i = 0; i < motorControllers.length; i++) {
+            motorControllers[i].setNeutralMode(NeutralMode.Brake);
+            // this will limit the motor controllers from shocking the lift with full power
+            // it will take them 0.5s to ramp up to full power.
+            motorControllers[i].configOpenloopRamp(0.25, 10);
+        }
 
     }
 
