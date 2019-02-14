@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+
+// import edu.wpi.first.wpilibj.InterruptableSensorBase;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -84,11 +86,11 @@ public class Lifters extends Subsystem {
                 backLifter.set(ControlMode.PercentOutput, output);
             } else {
                 frontLifter.set(ControlMode.PercentOutput, output);
-                backLifter.set(ControlMode.PercentOutput, 3 * output / 4);
+                backLifter.set(ControlMode.PercentOutput,  1.5 * output );
             }
         } else if(backHeight > frontHeight) {
             if(output <= 0) {
-                frontLifter.set(ControlMode.PercentOutput, 3 * output / 4);
+                frontLifter.set(ControlMode.PercentOutput, 2 * output);
                 backLifter.set(ControlMode.PercentOutput, output);
             } else {
                 frontLifter.set(ControlMode.PercentOutput, output);

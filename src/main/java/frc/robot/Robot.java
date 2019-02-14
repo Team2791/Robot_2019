@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        drivetrain.setMotors(0, 0);
+       drivetrain.setMotors(0, 0);
     }
 
     @Override

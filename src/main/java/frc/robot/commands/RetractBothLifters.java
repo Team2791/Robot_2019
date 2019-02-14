@@ -5,14 +5,14 @@ import frc.robot.Robot;
 
 public class RetractBothLifters extends Command {
     private double output;
-    public RetractBothLifters(double output) {
-        super("RetractBothLifters");
-        requires(Robot.lifters);
-        this.output = output;
+    public RetractBothLifters() {
+        // super("RetractBothLifters");
+        // requires(Robot.lifters);
+        // this.output = output;
     }
 
     public void execute() {
-        Robot.lifters.ExtendBoth(output);
+        Robot.lifters.ExtendBoth(-0.75);
     }
 
     public void end() {
