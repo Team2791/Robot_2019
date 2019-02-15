@@ -5,6 +5,8 @@ import frc.robot.Robot;
 
 public class ExtendBothLifters extends Command {
     public ExtendBothLifters() {
+        super("ExtendBothLifters");
+        requires(Robot.lifters);
     }
 
     public void execute() {

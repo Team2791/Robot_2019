@@ -12,11 +12,13 @@ import frc.robot.RobotMap;
 import frc.robot.util.IrSensor;
 
 public class Lifters extends Subsystem {
-    TalonSRX frontLifter;
-    TalonSRX backLifter;
-    VictorSPX lifterDrive;
-    IrSensor frontIR;
-    IrSensor backIR;
+    private TalonSRX frontLifter;
+    private TalonSRX backLifter;
+    private VictorSPX lifterDrive;
+    private IrSensor frontIR;
+    private IrSensor backIR;
+    private int frontPotZero;
+    private int backPotZero;
 
     public Lifters() {
         frontLifter = new TalonSRX(RobotMap.kFrontLiftTalon);
@@ -34,6 +36,8 @@ public class Lifters extends Subsystem {
 
         frontIR = new IrSensor(RobotMap.kFrontIrReadout);
         backIR = new IrSensor(RobotMap.kBackIrReadout);
+        frontPotZero = Constants.kFrontLifterPotMin;
+        backPotZero = Constants.kBackLifterPotMin;
 
 		// TODO: Tune PID
     }
@@ -63,33 +67,36 @@ public class Lifters extends Subsystem {
     }
 
     public void ExtendBoth(double output) {
-        // double maxVel = Constants.kBackLifterRange / Constants.kLiftTime;
-        // if(output > 1) {
-        //     output = 1;
-        // } else if(output < -1) {
-        //     output = -1;
-        // }
+        int backHeight = getBackLifterHeight();
+        int frontHeight = getFrontLifterHeight();
 
-        // backLifter.set(ControlMode.Velocity, output * maxVel);
-        int backHeight = getBackHeight() - Constants.kBackLifterPotMin;
-        int frontHeight = getFrontHeight() - Constants.kFrontLifterPotMin;
+        extendBack(output);
 
         if(frontHeight > backHeight) {
             if(output >= 0) {
-                frontLifter.set(ControlMode.PercentOutput, output / 2);
-                backLifter.set(ControlMode.PercentOutput, output);
+                extendFront(output / 2);
             } else {
-                frontLifter.set(ControlMode.PercentOutput, output);
-                backLifter.set(ControlMode.PercentOutput, 3 * output / 4);
+                extendFront(5 * output / 4);
             }
         } else if(backHeight > frontHeight) {
             if(output <= 0) {
-                frontLifter.set(ControlMode.PercentOutput, 3 * output / 4);
-                backLifter.set(ControlMode.PercentOutput, output);
+                extendFront(output / 2);
             } else {
-                frontLifter.set(ControlMode.PercentOutput, output);
-                backLifter.set(ControlMode.PercentOutput,  output / 2);
+                extendFront(5 * output / 4);
             }
+        } else {
+            extendFront(output);
+        }
+    }
+
+    public void zeroPots()
+    {
+        if(isFrontRetracted()) {
+            frontPotZero = getFrontHeight();
+        }
+
+        if(isBackRetracted()) {
+            backPotZero = getBackHeight();
         }
     }
 
@@ -113,12 +120,24 @@ public class Lifters extends Subsystem {
         lifterDrive.set(ControlMode.PercentOutput, output);
     }
 
-    public int getFrontHeight() {
+    private int getFrontHeight() {
         return 1023 - frontLifter.getSensorCollection().getAnalogIn();
     }
 
-    public int getBackHeight() {
+    private int getBackHeight() {
         return 1023 - backLifter.getSensorCollection().getAnalogIn();
+    }
+
+    public int getFrontLifterHeight() {
+        return getFrontHeight() - frontPotZero;
+    }
+
+    public int getBackLifterHeight() {
+        return getBackHeight() - backPotZero;
+    }
+
+    public int getBackVelocity() {
+        return backLifter.getSensorCollection().getAnalogInVel();
     }
 
     // public boolean isFrontOverLedge(boolean isHigh) {
@@ -136,10 +155,12 @@ public class Lifters extends Subsystem {
         SmartDashboard.putString("Front Lifter Extended", Boolean.toString(isFrontExtended()));
         SmartDashboard.putString("Back Lifter Retracted", Boolean.toString(isBackRetracted()));
         SmartDashboard.putString("Back Lifter Extended", Boolean.toString(isBackExtended()));
-        SmartDashboard.putString("Pot Front value ", Double.toString(getFrontHeight()));
-        SmartDashboard.putString("Pot Back value ", Double.toString(getBackHeight()));
-        SmartDashboard.putString("Front IR ", Integer.toString(frontIR.getValue()));
-        SmartDashboard.putString("Back IR ", Integer.toString(backIR.getValue()));
-        // System.out.println("");
+        SmartDashboard.putNumber("Pot Front value ", getFrontHeight());
+        SmartDashboard.putNumber("Pot Back value ", getBackHeight());
+        SmartDashboard.putNumber("Pot Back velocity ", getBackVelocity());
+        SmartDashboard.putNumber("Front IR ", frontIR.getValue());
+        SmartDashboard.putNumber("Back IR ", backIR.getValue());
+        SmartDashboard.putNumber("Adjusted Front Pot", getFrontLifterHeight());
+        SmartDashboard.putNumber("Adjusted Back Pot", getBackLifterHeight());
     }
 }

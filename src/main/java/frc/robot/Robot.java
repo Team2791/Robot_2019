@@ -1,7 +1,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.commands.auto.AutoSetLifterPots;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HatchManipulator;
@@ -17,12 +19,16 @@ public class Robot extends TimedRobot {
     public static Elevator elevator;
     public static Lifters lifters;
 
+    private Command autoCommand;
+
 
     @Override
     public void robotInit() {
         drivetrain = new Drivetrain();
-        oi = new OI();
         lifters = new Lifters();
+        oi = new OI();
+
+        autoCommand = new AutoSetLifterPots();
     }
 
     @Override
@@ -49,10 +55,12 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        autoCommand.start();
     }
 
     @Override
     public void teleopInit() {
+        autoCommand.cancel();
     }
 
     @Override

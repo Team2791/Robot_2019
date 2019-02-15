@@ -6,20 +6,17 @@ import frc.robot.Robot;
 public class DriveForward extends Command {
     private double speed;
 
-    public DriveForward(double speed)
-    {
+    public DriveForward(double speed) {
         super("DriveForward");
         requires(Robot.drivetrain);
         this.speed = speed;
     }
 
-    public void execute()
-    {
+    public void execute() {
         Robot.drivetrain.setMotors(speed, speed);
     }
 
-    public boolean isFinished()
-    {
+    public boolean isFinished() {
         return false;
     }
 }

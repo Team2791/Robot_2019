@@ -7,6 +7,8 @@ import frc.robot.Robot;
 
 public class DriveLifterWheel extends Command {
   public DriveLifterWheel() {
+    super("DriveLifterWheel");
+    requires(Robot.lifters);
   }
 
   protected void execute() {

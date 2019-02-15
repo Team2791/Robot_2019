@@ -5,6 +5,8 @@ import frc.robot.Robot;
 
 public class RetractBackLifter extends Command {
     public RetractBackLifter() {
+        super("RetractBackLifter");
+        requires(Robot.lifters);
     }
 
     public void execute() {
