@@ -4,13 +4,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ExtendBothLifters extends Command {
-    public ExtendBothLifters() {
+    private double output;
+    public ExtendBothLifters(double output) {
         super("ExtendBothLifters");
         requires(Robot.lifters);
+        this.output = output;
     }
 
     public void execute() {
-        Robot.lifters.ExtendBoth(0.75);
+        Robot.lifters.ExtendBoth(output);
     }
 
     public void end() {

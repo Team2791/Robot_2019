@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+
+// import edu.wpi.first.wpilibj.InterruptableSensorBase;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -45,7 +47,11 @@ public class Lifters extends Subsystem {
     @Override
     protected void initDefaultCommand() {
     }
-
+    public void setLifterstoCoastMode(){ //sets Lifters to coast as a method for command
+        frontLifter.setNeutralMode(NeutralMode.Coast);
+        backLifter.setNeutralMode(NeutralMode.Coast);
+        lifterDrive.setNeutralMode(NeutralMode.Coast);
+    }
     public void extendFront(double output) {
         if(output < 0 && isFrontRetracted()) {
             frontLifter.set(ControlMode.PercentOutput, 0);
@@ -70,22 +76,25 @@ public class Lifters extends Subsystem {
         int backHeight = getBackLifterHeight();
         int frontHeight = getFrontLifterHeight();
 
-        extendBack(output);
-
         if(frontHeight > backHeight) {
             if(output >= 0) {
-                extendFront(output / 2);
+                extendFront(3 * output / 4);
+                extendBack(output);
             } else {
-                extendFront(5 * output / 4);
+                extendBack(3 * output / 4);
+                extendFront(output);
             }
         } else if(backHeight > frontHeight) {
             if(output <= 0) {
-                extendFront(output / 2);
+                extendFront(3 * output / 4);
+                extendBack(output);
             } else {
-                extendFront(5 * output / 4);
+                extendBack(3 * output / 4);
+                extendFront(output);
             }
         } else {
             extendFront(output);
+            extendBack(output);
         }
     }
 
@@ -140,15 +149,17 @@ public class Lifters extends Subsystem {
         return backLifter.getSensorCollection().getAnalogInVel();
     }
 
-    // public boolean isFrontOverLedge(boolean isHigh) {
-    //     double comparison = isHigh ? Constants.kHighPlatformHeight : Constants.kLowPlatformHeight;
-    //     return frontIR.getInches() <= comparison;
-    // }
+    public boolean isFrontOverLedge(boolean isHigh) {
+        // double comparison = isHigh ? Constants.kHighPlatformHeight : Constants.kLowPlatformHeight;
+        // return frontIR.getInches() <= comparison;
+        return false;
+    }
 
-    // public boolean isBackOverLedge(boolean isHigh) {
-    //     double comparison = isHigh ? Constants.kHighPlatformHeight : Constants.kLowPlatformHeight;
-    //     return backIR.getInches() <= comparison;
-    // }
+    public boolean isBackOverLedge(boolean isHigh) {
+        // double comparison = isHigh ? Constants.kHighPlatformHeight : Constants.kLowPlatformHeight;
+        // return backIR.getInches() <= comparison;
+        return false;
+    }
 
     public void debug() {
         SmartDashboard.putString("Front Lifter Retracted", Boolean.toString(isFrontRetracted()));

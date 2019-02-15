@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.StopDrive;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+// import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 public class Drivetrain extends Subsystem {
     private TalonSRX leftLeader;
@@ -19,8 +19,8 @@ public class Drivetrain extends Subsystem {
     private VictorSPX leftFollower2;
     private VictorSPX rightFollower1;
     private VictorSPX rightFollower2;
-    private ADXRS450_Gyro gyro;
-    private boolean gyroDisabled = false;
+    // private ADXRS450_Gyro gyro;
+    // private boolean gyroDisabled = false;
 
     private BaseMotorController[] leftDrive;
     private BaseMotorController[] rightDrive;
@@ -51,15 +51,15 @@ public class Drivetrain extends Subsystem {
         leftFollower2.follow(leftLeader);
         rightFollower1.follow(rightLeader);
         rightFollower2.follow(rightLeader);
-        try {
-			gyro = new ADXRS450_Gyro();// SPI.Port.kOnboardCS1
-			gyro.calibrate(); // takes 5 seconds
-			gyro.reset();
-			System.out.println("Gyro is working! :'('");
-		} catch (NullPointerException e) {
-			gyroDisabled = true;
-			System.out.println("Gyro is unplugged, Disabling Gyro");
-		}
+        // try {
+		// 	gyro = new ADXRS450_Gyro();// SPI.Port.kOnboardCS1
+		// 	gyro.calibrate(); // takes 5 seconds
+		// 	gyro.reset();
+		// 	System.out.println("Gyro is working! :'('");
+		// } catch (NullPointerException e) {
+		// 	gyroDisabled = true;
+		// 	System.out.println("Gyro is unplugged, Disabling Gyro");
+		// }
         setDriveSpeed(false);
         setBrakeMode(false);
         setMotors(0, 0);
@@ -88,40 +88,39 @@ public class Drivetrain extends Subsystem {
     public void setDriveSpeed(boolean isSlow) {
         speedMultiplier = isSlow ? Constants.kSlowDrive : Constants.kFastDrive;
     }
-    public double getGyroAngle(){
-        if(!gyroDisabled)
-            return gyro.getAngle();
-        System.err.println("Gyro is Disabled, Angle is Incorrect");
-        return 0.0;
-    }
-    public double getGyroRate() {
-        if (!gyroDisabled)
-            return gyro.getRate();
-        System.err.println("Gyro is Disabled, Rate is Incorrect");
-        return 0.0;
-    }
-    public double getGyroAngleInRadians() {
-        return getGyroAngle() * (Math.PI/180);
-    }
-    public void resetGyro() {
-        if(!gyroDisabled) {
-            gyro.reset();
-        } else { 
-            System.err.println("Gyro is Disabled, Unable to Reset");
-        }
-    }
-    public boolean getGyroDisabled() {
-        return gyroDisabled;
-    } 
-    public void calibrateGyro() {
-        if (!gyroDisabled) {
-            System.out.println("Gyro calibrating");
-            gyro.calibrate();
-            System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
-        }
-    }
+    // public double getGyroAngle(){
+    //     if(!gyroDisabled)
+    //         return gyro.getAngle();
+    //     System.err.println("Gyro is Disabled, Angle is Incorrect");
+    //     return 0.0;
+    // }
+    // public double getGyroRate() {
+    //     if (!gyroDisabled)
+    //         return gyro.getRate();
+    //     System.err.println("Gyro is Disabled, Rate is Incorrect");
+    //     return 0.0;
+    // }
+    // public double getGyroAngleInRadians() {
+    //     return getGyroAngle() * (Math.PI/180);
+    // }
+    // public void resetGyro() {
+    //     if(!gyroDisabled) {
+    //         gyro.reset();
+    //     } else { 
+    //         System.err.println("Gyro is Disabled, Unable to Reset");
+    //     }
+    // }
+    // public boolean getGyroDisabled() {
+    //     return gyroDisabled;
+    // } 
+    // public void calibrateGyro() {
+    //     if (!gyroDisabled) {
+    //         System.out.println("Gyro calibrating");
+    //         gyro.calibrate();
+    //         System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
+    //     }
+    // }
     public void debug(){
         // put PID values in here later
     }
 }  
-   
