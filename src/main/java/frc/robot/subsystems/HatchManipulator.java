@@ -10,7 +10,7 @@ public class HatchManipulator extends Subsystem {
  
 
     public HatchManipulator() {
-        extender = new Solenoid(RobotMap.kPCM, RobotMap.kExtendHatchSolenoid);
+        extender = new Solenoid(RobotMap.kPCM, RobotMap.kExtenderHatchSolenoid);
         grabber = new Solenoid(RobotMap.kPCM, RobotMap.kGrabberHatchSolenoid);
         aligner = new Solenoid(RobotMap.kPCM, RobotMap.kAlignerHatchSolenoid);
     

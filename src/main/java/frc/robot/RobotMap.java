@@ -29,7 +29,6 @@ public class RobotMap {
 
     //Elevator
     public static final int kElevatorTalon = 24;
-    public static final int kIntakeVictor = 35;
 
     public static final int kGrabberOpen = 0;
     public static final int kGrabberClose = 1;
@@ -47,6 +46,6 @@ public class RobotMap {
     public static final int kAlignerHatchSolenoid = -1;
 
     //CargoManipulator
-    public static final int kCargoIntakeSolenoid = -1;
-    public static final int kExtendHatchSolenoid = -1;
+    public static final int kRaiseCargoSolenoid = -1;
+    public static final int kIntakeVictor = 35;
 }
