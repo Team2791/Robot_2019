@@ -13,6 +13,8 @@ public class Constants {
     public static final int kFrontPlatformCutoff = 1100;
     public static final int kBackPlatformCutoff = 1100;
     public static final double kLifterDrivePower = 1;
+    public static final double kFullDangerCurrent = 134;
+    public static final int kDangerTimeout = 100;
 
     public static final double kLifterF = -0.02;
     public static final double kLifterP = 6;

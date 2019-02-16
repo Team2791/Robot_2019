@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
        drivetrain.setMotors(0, 0);
+       lifters.resetSystem();
     }
 
     @Override

@@ -23,6 +23,10 @@ public class Lifters extends Subsystem {
     private int backPotZero;
     private double proportional;
     private double feedForward;
+    private int frontDangerCounter;
+    private int backDangerCounter;
+    private boolean enabled;
+
     private double pid;
 
     public Lifters() {
@@ -47,6 +51,10 @@ public class Lifters extends Subsystem {
         feedForward = Constants.kLifterF;
         SmartDashboard.putNumber("LifterKP", proportional);
         SmartDashboard.putNumber("LifterKF", feedForward);
+
+        frontDangerCounter = 0;
+        backDangerCounter = 0;
+        enabled = true;
     }
 
     @Override
@@ -63,9 +71,16 @@ public class Lifters extends Subsystem {
             frontLifter.set(ControlMode.PercentOutput, 0);
         } else if(output > 0 && isFrontExtended()) {
             frontLifter.set(ControlMode.PercentOutput, 0);
-        } else{
+        } else {
             frontLifter.set(ControlMode.PercentOutput, output);
         }
+
+        if(getFrontCurrent() >= Math.abs(output) * Constants.kFullDangerCurrent) {
+            ++frontDangerCounter;
+        } else {
+            frontDangerCounter = frontDangerCounter < 1 ? 0 : frontDangerCounter - 1;
+        }
+        
     }
 
     public void extendBack(double output) {
@@ -73,12 +88,32 @@ public class Lifters extends Subsystem {
             backLifter.set(ControlMode.PercentOutput, 0);
         } else if(output > 0 && isBackExtended()) {
             backLifter.set(ControlMode.PercentOutput, 0);
-        } else{
+        } else {
             backLifter.set(ControlMode.PercentOutput, output);
+        }
+        
+        if(getBackCurrent() >= Math.abs(output) * Constants.kFullDangerCurrent) {
+            ++backDangerCounter;
+        } else {
+            frontDangerCounter = backDangerCounter < 1 ? 0 : backDangerCounter - 1;
         }
     }
 
+    public void resetSystem() {
+        enabled = true;
+    }
+
     public void ExtendBoth(double output) {
+        if(frontDangerCounter >= Constants.kDangerTimeout || backDangerCounter >= Constants.kDangerTimeout) {
+            enabled = false;
+        }
+        
+        if(!enabled) {
+            extendFront(0);
+            extendBack(0);
+            return;
+        }
+
         if(Math.abs(output) < 0.01) {
             extendFront(0);
             extendBack(0);
