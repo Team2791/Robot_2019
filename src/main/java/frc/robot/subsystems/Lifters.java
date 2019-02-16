@@ -105,15 +105,15 @@ public class Lifters extends Subsystem {
     }
 
     public void ExtendBoth(double output) {
-        if(frontDangerCounter >= Constants.kDangerTimeout || backDangerCounter >= Constants.kDangerTimeout) {
-            enabled = false;
-        }
+        // if(frontDangerCounter >= Constants.kDangerTimeout || backDangerCounter >= Constants.kDangerTimeout) {
+        //     enabled = false;
+        // }
         
-        if(!enabled) {
-            extendFront(0);
-            extendBack(0);
-            return;
-        }
+        // if(!enabled) {
+        //     extendFront(0);
+        //     extendBack(0);
+        //     return;
+        // }
 
         if(Math.abs(output) < 0.01) {
             extendFront(0);

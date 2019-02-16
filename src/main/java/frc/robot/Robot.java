@@ -53,13 +53,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-
+        autoCommand.start();
     }
 
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        autoCommand.start();
     }
 
     @Override

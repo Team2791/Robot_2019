@@ -10,7 +10,8 @@ public class AutoSetLifterPots extends Command {
     }
 
     public void execute() {
-        Robot.lifters.ExtendBoth(-.75);
+        Robot.lifters.extendBack(-.75);
+        Robot.lifters.extendFront(-.75);
     }
 
     public void end() {

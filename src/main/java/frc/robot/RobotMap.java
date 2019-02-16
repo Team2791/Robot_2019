@@ -15,7 +15,7 @@ package frc.robot;
  */
 public class RobotMap {
     //Robot Config
-    public static final boolean isFlightBot = true;
+    public static final boolean isFlightBot = false;
 
     //Global
     public static final int kPCM = 1;
