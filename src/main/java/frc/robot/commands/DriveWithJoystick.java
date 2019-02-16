@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class DriveWithJoystick extends Command {
@@ -17,10 +18,18 @@ public class DriveWithJoystick extends Command {
     }
 
     public void execute() {
-        double thrust = stick.getRawAxis(3) - stick.getRawAxis(2);
-        if(Math.abs(thrust) < deadzone) {
-            thrust = 0;
+        double thrust = 0;
+        if(stick.getRawButton(6)) {
+            thrust = Constants.kCreep;
+        } else if(stick.getRawButton(5)) {
+            thrust = -Constants.kCreep;
+        } else {
+            thrust = stick.getRawAxis(3) - stick.getRawAxis(2);
+            if(Math.abs(thrust) < deadzone) {
+                thrust = 0;
+            }
         }
+        
         double turn = stick.getRawAxis(0);
 
         if(turn < deadzone && turn > -deadzone) {
