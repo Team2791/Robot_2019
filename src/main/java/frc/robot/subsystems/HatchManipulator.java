@@ -28,10 +28,10 @@ public class HatchManipulator extends Subsystem {
     }
 
     public void setGrabber(boolean output) {
-        grabber.set(output);
+        grabber.set(!output);
     }
     public boolean getGrabber() {
-        return grabber.get();
+        return !grabber.get();
     }
 
     public void setAligner(boolean extended) {

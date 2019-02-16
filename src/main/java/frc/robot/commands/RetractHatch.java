@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.HatchManipulator;
 import frc.robot.*;
 
-public class CloseGrabber extends Command {
+public class RetractHatch extends Command {
     public void execute() {
-        Robot.hatchManipulator.setGrabber(false);
+        Robot.hatchManipulator.setExtender(false);
     }
 
     public boolean isFinished() {

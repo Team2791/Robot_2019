@@ -6,7 +6,7 @@ import frc.robot.*;
 
 public class OpenGrabber extends Command {
     public void execute() {
-        Robot.hatchManipulator.closeGrabber();
+        Robot.hatchManipulator.setGrabber(true);
     }
 
     public boolean isFinished() {

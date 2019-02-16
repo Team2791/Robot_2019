@@ -6,7 +6,7 @@ import frc.robot.*;
 
 public class ExtendHatch extends Command {
     public void execute() {
-        Robot.hatchManipulator.setExtender();
+        Robot.hatchManipulator.setExtender(true);
     }
 
     public boolean isFinished() {
