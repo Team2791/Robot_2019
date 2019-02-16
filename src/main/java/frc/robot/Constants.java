@@ -14,10 +14,10 @@ public class Constants {
     public static final int kBackPlatformCutoff = 1100;
     public static final double kLifterDrivePower = 1;
 
-    public static final double kLifterFrontF = 0;
-    public static final double kLifterBackF = 0;
-    public static final double kLifterFrontP = 0;
-    public static final double kLifterBackP = 0;
+    public static final double kLifterF = 0.25;
+    public static final double kLifterP = 0.25;
+    public static final double kLifterI = 0;
+    public static final double kLifterD = 0;
 
     // Elevator Constants All these constants need to be modified later on
 	public static final int kElevatorPotOffset = 0; 
