@@ -30,22 +30,20 @@ public class RobotMap {
     //Elevator
     public static final int kElevatorTalon = 24;
 
-    public static final int kGrabberOpen = 0;
-    public static final int kGrabberClose = 1;
 
     public static final int kElevatorTopLimit = 8;
     public static final int kElevatorBottomLimit = 9;
     public static final int kElevatorPot = 1;
-    public static final int kBreakSolenoid = 2;
+    public static final int kBreakSolenoid = 4;
 
     //HatchManipulator
-    public static final int kExtenderHatchSolenoid = -1;
+    public static final int kExtenderHatchSolenoid = 3;
 
-    public static final int kGrabberHatchSolenoid = -1;
+    public static final int kGrabberHatchSolenoid = 1;
 
-    public static final int kAlignerHatchSolenoid = -1;
+    public static final int kAlignerHatchSolenoid = 2;
 
     //CargoManipulator
-    public static final int kRaiseCargoSolenoid = -1;
+    public static final int kRaiseCargoSolenoid = 0;
     public static final int kIntakeVictor = 35;
 }

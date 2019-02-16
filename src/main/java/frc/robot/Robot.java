@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HatchManipulator;
@@ -16,9 +17,12 @@ public class Robot extends TimedRobot {
     public static CargoManipulator cargoManipulator; 
     public static Limelight limelight;
     public static Elevator elevator;
+    public static Compressor compressor;
 
     @Override
     public void robotInit() {
+        compressor = new Compressor(RobotMap.kPCM);
+        compressor.start();
         drivetrain = new Drivetrain();
         oi = new OI();
     }
