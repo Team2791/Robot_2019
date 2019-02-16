@@ -6,48 +6,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-// import edu.wpi.first.wpilibj.InterruptableSensorBase;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.util.IrSensor;
 
-class DiffPIDDriver implements PIDSource, PIDOutput {
-    private double output;
-    private Lifters lifters;
-
-    public DiffPIDDriver(Lifters lifters) {
-        this.lifters = lifters;
-    }
-
-    public void pidWrite(double output) {
-        this.output = output;
-    }
-
-    public PIDSourceType getPIDSourceType() {
-        return PIDSourceType.kDisplacement;
-    }
-
-    public void setPIDSourceType(PIDSourceType p) {
-    }
-
-    public double pidReadOut() {
-        return output;
-    }
-
-    public double pidGet() {
-        return lifters.getFrontLifterHeight() - lifters.getBackLifterHeight();
-    }
-}
-
 public class Lifters extends Subsystem {
-    
-
     private TalonSRX frontLifter;
     private TalonSRX backLifter;
     private VictorSPX lifterDrive;
@@ -55,8 +21,9 @@ public class Lifters extends Subsystem {
     private IrSensor backIR;
     private int frontPotZero;
     private int backPotZero;
-    private PIDController syncPID;
-    private DiffPIDDriver syncDriver;
+    private double proportional;
+    private double feedForward;
+    private double pid;
 
     public Lifters() {
         frontLifter = new TalonSRX(RobotMap.kFrontLiftTalon);
@@ -76,29 +43,21 @@ public class Lifters extends Subsystem {
         backIR = new IrSensor(RobotMap.kBackIrReadout);
         frontPotZero = Constants.kFrontLifterPotMin;
         backPotZero = Constants.kBackLifterPotMin;
-
-        syncDriver = new DiffPIDDriver(this);
-
-        // TODO: Tune PID
-        syncPID = new PIDController(
-            Constants.kLifterP,
-            Constants.kLifterI,
-            Constants.kLifterD,
-            Constants.kLifterF, 
-            syncDriver,
-            syncDriver,
-            0.02
-        );
+        proportional = Constants.kLifterP;
+        feedForward = Constants.kLifterF;
+        SmartDashboard.putNumber("LifterKP", proportional);
+        SmartDashboard.putNumber("LifterKF", feedForward);
     }
 
     @Override
     protected void initDefaultCommand() {
     }
-    public void setLifterstoCoastMode(){ //sets Lifters to coast as a method for command
-        frontLifter.setNeutralMode(NeutralMode.Coast);
-        backLifter.setNeutralMode(NeutralMode.Coast);
+
+    public void setLifterstoCoastMode() {
+        //sets Lifters to coast as a method for command
         lifterDrive.setNeutralMode(NeutralMode.Coast);
     }
+
     public void extendFront(double output) {
         if(output < 0 && isFrontRetracted()) {
             frontLifter.set(ControlMode.PercentOutput, 0);
@@ -120,28 +79,40 @@ public class Lifters extends Subsystem {
     }
 
     public void ExtendBoth(double output) {
+        if(Math.abs(output) < 0.01) {
+            extendFront(0);
+            extendBack(0);
+            return;
+        }
+
         int backHeight = getBackLifterHeight();
         int frontHeight = getFrontLifterHeight();
-
-        if(frontHeight > backHeight) {
-            if(output >= 0) {
-                extendFront(output / 2);
+        double diff = (double)(frontHeight - backHeight)/Constants.kLifetPotRange;
+        double pTerm = diff * proportional;
+        double feedback = pTerm + feedForward;
+        pid = feedback;
+        
+        //Motor speed should not go above 1 or below -1, so if we are close to either,
+        //we should only decrease the absolute value of motor outputs.
+        if(Math.abs(output) < 0.5) {
+            extendFront(output - feedback / 2);
+            extendBack(output + feedback / 2);
+        } else if(output > 0) {
+            if(feedback > 0) {
+                extendFront(output - feedback);
                 extendBack(output);
             } else {
-                extendBack(output / 2);
                 extendFront(output);
-            }
-        } else if(backHeight > frontHeight) {
-            if(output <= 0) {
-                extendFront(output / 2);
-                extendBack(output);
-            } else {
-                extendBack(output / 2);
-                extendFront(output);
+                extendBack(output + feedback);
             }
         } else {
-            extendFront(output);
-            extendBack(output);
+            if(feedback > 0) {
+                extendFront(output);
+                extendBack(output + feedback);
+            } else {
+                extendFront(output - feedback);
+                extendBack(output);
+            }
         }
     }
 
@@ -208,6 +179,14 @@ public class Lifters extends Subsystem {
         return false;
     }
 
+    public double getFrontCurrent() {
+        return Robot.pdp.getCurrent(RobotMap.kPowerFrontLift);
+    }
+
+    public double getBackCurrent() {
+        return Robot.pdp.getCurrent(RobotMap.kPowerBackLift);
+    }
+
     public void debug() {
         SmartDashboard.putBoolean("Front Lifter Retracted", isFrontRetracted());
         SmartDashboard.putBoolean("Front Lifter Extended", isFrontExtended());
@@ -215,12 +194,15 @@ public class Lifters extends Subsystem {
         SmartDashboard.putBoolean("Back Lifter Extended", isBackExtended());
         SmartDashboard.putNumber("Pot Front value ", getFrontHeight());
         SmartDashboard.putNumber("Pot Back value ", getBackHeight());
-        SmartDashboard.putNumber("Pot Back velocity ", getBackVelocity());
         SmartDashboard.putNumber("Front IR ", frontIR.getValue());
         SmartDashboard.putNumber("Back IR ", backIR.getValue());
         SmartDashboard.putNumber("Adjusted Front Pot", getFrontLifterHeight());
         SmartDashboard.putNumber("Adjusted Back Pot", getBackLifterHeight());
         SmartDashboard.putNumber("Adjusted Pot Diff", getFrontLifterHeight() - getBackLifterHeight());
-        SmartDashboard.putNumber("Diff PID Output", syncDriver.pidReadOut());
+        SmartDashboard.putNumber("PID Output", pid);
+        SmartDashboard.putNumber("Front Lift Current", getFrontCurrent());
+        SmartDashboard.putNumber("Back Lift Current", getBackCurrent());
+        proportional = SmartDashboard.getNumber("LifterKP", Constants.kLifterP);
+        feedForward = SmartDashboard.getNumber("LifterKF", Constants.kLifterF);
     }
 }

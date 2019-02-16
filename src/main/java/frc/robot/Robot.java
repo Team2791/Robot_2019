@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -18,6 +19,7 @@ public class Robot extends TimedRobot {
     public static Limelight limelight;
     public static Elevator elevator;
     public static Lifters lifters;
+    public static PowerDistributionPanel pdp;
 
     private Command autoCommand;
 
@@ -26,6 +28,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         drivetrain = new Drivetrain();
         lifters = new Lifters();
+        pdp = new PowerDistributionPanel(RobotMap.kPDP);
         oi = new OI();
 
         autoCommand = new AutoSetLifterPots();
