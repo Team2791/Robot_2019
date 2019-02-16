@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -163,18 +164,22 @@ public class Lifters extends Subsystem {
     }
 
     public boolean isFrontRetracted() {
+        if(RobotMap.isFlightBot) return frontLifter.getSensorCollection().isFwdLimitSwitchClosed();
         return frontLifter.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     public boolean isBackRetracted() {
+        if(RobotMap.isFlightBot) return backLifter.getSensorCollection().isFwdLimitSwitchClosed();
         return backLifter.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     public boolean isFrontExtended() {
+        if(RobotMap.isFlightBot) return frontLifter.getSensorCollection().isRevLimitSwitchClosed();
         return frontLifter.getSensorCollection().isFwdLimitSwitchClosed();
     }
      
     public boolean isBackExtended() {
+        if(RobotMap.isFlightBot) return backLifter.getSensorCollection().isRevLimitSwitchClosed();
         return backLifter.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
@@ -237,6 +242,7 @@ public class Lifters extends Subsystem {
         SmartDashboard.putNumber("PID Output", pid);
         SmartDashboard.putNumber("Front Lift Current", getFrontCurrent());
         SmartDashboard.putNumber("Back Lift Current", getBackCurrent());
+        SmartDashboard.putString("Bot Config", RobotMap.isFlightBot ? "Flight bot" : "Practice bot");
         proportional = SmartDashboard.getNumber("LifterKP", Constants.kLifterP);
         feedForward = SmartDashboard.getNumber("LifterKF", Constants.kLifterF);
     }
