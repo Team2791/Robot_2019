@@ -46,4 +46,5 @@ public class RobotMap {
     //CargoManipulator
     public static final int kRaiseCargoSolenoid = 0;
     public static final int kIntakeVictor = 35;
+    public static final int kCargoLimitSwitch = 0;
 }

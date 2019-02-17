@@ -6,14 +6,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class CargoManipulator extends Subsystem {
     private Solenoid raiserSolenoid;
     private VictorSPX intakeVictor;
+    private DigitalInput cargoSwitch;
 
     public CargoManipulator() {
         raiserSolenoid = new Solenoid(RobotMap.kPCM, RobotMap.kRaiseCargoSolenoid);
         intakeVictor = new VictorSPX(RobotMap.kIntakeVictor);
+        cargoSwitch = new DigitalInput(RobotMap.kCargoLimitSwitch);
     }
     @Override public void initDefaultCommand() {
     }
@@ -27,7 +30,11 @@ public class CargoManipulator extends Subsystem {
     public void setIntakeMotor(double output) {
         intakeVictor.set(ControlMode.PercentOutput, output);
     }
+    public boolean getCargoSwitchState(){
+        return !cargoSwitch.get();
+    }
     public void debug() {
         SmartDashboard.putBoolean("CargoManipulator Raiser", getRaiser());
+        SmartDashboard.putBoolean("Cargo Limit Switch State", getCargoSwitchState());
     }
 }
