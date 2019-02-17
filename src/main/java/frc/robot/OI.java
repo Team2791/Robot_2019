@@ -19,37 +19,27 @@ import frc.robot.commands.RaiseCargo;
 import frc.robot.commands.DropCargo;
 
 public class OI {
-    private Joystick driverStick;
+    private Joystick driverStick = new Joystick(0);
+    private Joystick operatorStick = new Joystick(1);
     private Button driveButton;
-    private Button driverA, driverB, driverX, driverY, driverRB, driverLB;
+    private Button driverA, driverB;
+    public Button operatorA, operatorB;
 
     public OI() {
         driverStick = new Joystick(0);
         initButtons();
         driveButton = new AnalogButton(driverStick, 3, 2, 0, 0.2);
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1));
-        driverA.whenPressed(new GetPanelAutomatedHeld());
-        driverA.whenReleased(new GetPanelAutomatedRelease());
-        driverB.whenPressed(new ScorePanelAutomatedHeld());
-        driverB.whenReleased(new ScorePanelAutomatedRelease());
-        driverX.whenPressed(new DropAligner());
-        driverX.whenReleased(new RaiseAligner());
-        driverY.whenPressed(new OpenGrabber());
-        driverY.whenReleased(new CloseGrabber());
-        driverRB.whenPressed(new ExtendHatch());
-        driverRB.whenReleased(new RetractHatch());
-        driverLB.whenPressed(new DropCargo());
-        driverLB.whenReleased(new RaiseCargo());
+        operatorA.whenPressed(new GetPanelAutomatedHeld());
+        operatorA.whenReleased(new GetPanelAutomatedRelease());
+        operatorB.whenPressed(new ScorePanelAutomatedHeld());
+        operatorB.whenReleased(new ScorePanelAutomatedRelease());
 
     }
     private void initButtons(){
         try{
-            driverA = new JoystickButton(driverStick, 1);
-            driverB = new JoystickButton(driverStick, 2);
-            driverX = new JoystickButton(driverStick, 3);
-            driverY = new JoystickButton(driverStick, 4);
-            driverLB = new JoystickButton(driverStick, 5);
-            driverRB = new JoystickButton(driverStick, 6);
+            operatorA = new JoystickButton(operatorStick, 1);
+            operatorB = new JoystickButton(operatorStick, 2);
         }
         catch (Exception error){
             System.out.println("Error Init With Buttons");

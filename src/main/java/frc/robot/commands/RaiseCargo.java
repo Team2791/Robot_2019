@@ -6,7 +6,7 @@ import frc.robot.*;
 
 public class RaiseCargo extends Command {
     public void execute() {
-        Robot.cargoManipulator.setRaiser(true);
+        Robot.cargoManipulator.setRaiser(false);
     }
 
     public boolean isFinished() {

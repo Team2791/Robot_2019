@@ -8,8 +8,9 @@ public class ScorePanelAutomatedRelease extends CommandGroup {
     public ScorePanelAutomatedRelease (){
         addSequential(new RaiseCargo()); //This needs to be in here to ensure that there is no collision
         addSequential(new CloseGrabber());
-        addSequential(new DoNothing(), 0.33);
+        addSequential(new DoNothing(), 0.25);
         addSequential(new RetractHatch());
+        addSequential(new DoNothing(), 0.33);
         addSequential(new RaiseAligner());
     }
 }

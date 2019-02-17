@@ -24,6 +24,8 @@ public class Robot extends TimedRobot {
         compressor = new Compressor(RobotMap.kPCM);
         compressor.start();
         drivetrain = new Drivetrain();
+        hatchManipulator = new HatchManipulator();
+        cargoManipulator = new CargoManipulator();
         oi = new OI();
     }
     
