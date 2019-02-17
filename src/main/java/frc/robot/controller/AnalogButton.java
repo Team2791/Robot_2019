@@ -44,6 +44,7 @@ public class AnalogButton extends Button {
     @Override public boolean get() {
         double total = 0;
         if(alternate >= 0 && Math.abs(stick.getRawAxis(alternate)) > dead) {
+            System.out.println(true);
             return true;
         }
 
@@ -55,6 +56,7 @@ public class AnalogButton extends Button {
             total -= stick.getRawAxis(negative);
         }
 
+        System.out.println(Math.abs(total) > dead);
         return Math.abs(total) > dead;
     }
 }
