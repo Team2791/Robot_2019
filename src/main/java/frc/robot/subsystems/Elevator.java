@@ -76,7 +76,7 @@ public class Elevator extends Subsystem {
 
     private void setPowerUp(double power) {
         if(closeToTop()) {
-            driveTalon.set(ControlMode.PercentOutput, -Constants.kElevatorMinPower);
+            setPowerUnsafe( -Constants.kElevatorMinPower);
         } else {
             driveTalon.set(ControlMode.PercentOutput, power);
         }
@@ -84,7 +84,7 @@ public class Elevator extends Subsystem {
     
     private void setPowerDown(double power) {
         if(closeToBottom()) {
-            driveTalon.set(ControlMode.PercentOutput, Constants.kElevatorMinPower);
+            setPowerUnsafe( Constants.kElevatorMinPower);
             } else {
             driveTalon.set(ControlMode.PercentOutput, power);
         }
