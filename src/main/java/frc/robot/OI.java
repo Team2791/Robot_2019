@@ -26,8 +26,8 @@ public class OI {
         // driveB = new JoystickButton(driverStick, 2);
 
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1));
-        driveRB.whileHeld(new ExtendBothLifters(0.75));
-        driveLB.whileHeld(new RetractBothLifters(-0.75));
+        driveRB.whileHeld(new ExtendBothLifters(1));
+        driveLB.whileHeld(new RetractBothLifters(-1));
     //    driveB.whileHeld(new DriveLifterWheel());
     }
 }

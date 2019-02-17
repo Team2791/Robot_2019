@@ -16,7 +16,7 @@ public class Constants {
     public static final double kFullDangerCurrent = 134;
     public static final int kDangerTimeout = 100;
 
-    public static final double kLifterF = -0.02;
+    public static final double kLifterF = 0.135;
     public static final double kLifterP = 16;
 
     // Elevator Constants All these constants need to be modified later on

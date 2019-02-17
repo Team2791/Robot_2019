@@ -10,11 +10,11 @@ import frc.robot.commands.SetLiftersToCoast;
 
 public class PlatformAuto3 extends CommandGroup {
     public PlatformAuto3 (){
-        addSequential(new ExtendBothLifters(0.75));
+        addSequential(new ExtendBothLifters(1));
         addSequential(new DriveLifterWheelBackIR());
-        addSequential(new RetractBackLifter(-0.75));
+        addSequential(new RetractBackLifter(-1));
         addSequential(new SetLiftersToCoast());
         addSequential(new DriveLifterWheelFrontIR());
-        addSequential(new RetractFrontLifter(-0.75));
+        addSequential(new RetractFrontLifter(-1));
     }
 }
