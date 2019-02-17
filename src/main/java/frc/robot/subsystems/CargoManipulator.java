@@ -7,11 +7,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.commands.CargoManipulator.StallIntakeCargoMotors;
 
 public class CargoManipulator extends Subsystem {
     private Solenoid raiserSolenoid;
     private VictorSPX intakeVictor;
     private DigitalInput cargoSwitch;
+    public boolean CargoControls = false;
 
     public CargoManipulator() {
         raiserSolenoid = new Solenoid(RobotMap.kPCM, RobotMap.kRaiseCargoSolenoid);
@@ -19,6 +21,7 @@ public class CargoManipulator extends Subsystem {
         cargoSwitch = new DigitalInput(RobotMap.kCargoLimitSwitch);
     }
     @Override public void initDefaultCommand() {
+        setDefaultCommand(new StallIntakeCargoMotors());
     }
 
     public void setRaiser(boolean extended) {
@@ -32,6 +35,15 @@ public class CargoManipulator extends Subsystem {
     }
     public boolean getCargoSwitchState(){
         return !cargoSwitch.get();
+    }
+
+    public boolean getCargoControls() {
+        //This should be false 99.9% of the time
+        return CargoControls;
+    }
+
+    public void setCargoControls(boolean sent){
+        CargoControls = sent;
     }
     public void debug() {
         SmartDashboard.putBoolean("CargoManipulator Raiser", getRaiser());

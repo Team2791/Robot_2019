@@ -7,7 +7,6 @@ import frc.robot.RobotMap;
 
 public class HatchManipulator extends Subsystem {
     private Solenoid extender, grabber, aligner;
- 
 
     public HatchManipulator() {
         extender = new Solenoid(RobotMap.kPCM, RobotMap.kExtenderHatchSolenoid);
@@ -17,6 +16,7 @@ public class HatchManipulator extends Subsystem {
     }
 
     @Override public void initDefaultCommand() {
+        
     }
 
     public void setExtender(boolean extended) {

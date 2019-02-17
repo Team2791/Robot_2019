@@ -4,28 +4,22 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.controller.AnalogButton;
-import frc.robot.commands.CloseGrabber;
 import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.DropAligner;
-import frc.robot.commands.ExtendHatch;
-import frc.robot.commands.GetPanelAutomatedHeld;
-import frc.robot.commands.GetPanelAutomatedRelease;
-import frc.robot.commands.RaiseAligner;
-import frc.robot.commands.RetractHatch;
-import frc.robot.commands.ScorePanelAutomatedHeld;
-import frc.robot.commands.ScorePanelAutomatedRelease;
-import frc.robot.commands.OpenGrabber;
-import frc.robot.commands.RaiseCargo;
-import frc.robot.commands.DropCargo;
-import frc.robot.commands.HoldCargoIntake;
-import frc.robot.commands.ReleaseCargoIntake;
-import frc.robot.commands.SetIntakeMotor;
+import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
+import frc.robot.commands.HatchManipulator.GetPanelAutomatedRelease;
+import frc.robot.commands.HatchManipulator.ScorePanelAutomatedHeld;
+import frc.robot.commands.HatchManipulator.ScorePanelAutomatedRelease;
+import frc.robot.commands.CargoManipulator.FastShootCargo;
+import frc.robot.commands.CargoManipulator.HoldCargoIntake;
+import frc.robot.commands.CargoManipulator.ReleaseCargoIntake;
+//import frc.robot.commands.CargoManipulator.SetIntakeMotor;
+import frc.robot.commands.CargoManipulator.SlowShootCargo;
+import frc.robot.commands.CargoManipulator.StopCargoMotor;
 
 public class OI {
     private Joystick driverStick = new Joystick(0);
     private Joystick operatorStick = new Joystick(1);
     private Button driveButton;
-    private Button driverA, driverB;
     private Button operatorA, operatorB, operatorRB, operatorLT, operatorLB;
 
     public OI() {
@@ -39,10 +33,10 @@ public class OI {
         operatorB.whenReleased(new ScorePanelAutomatedRelease());
         operatorRB.whenPressed(new HoldCargoIntake());
         operatorRB.whenReleased(new ReleaseCargoIntake());
-        operatorLB.whenPressed(new SetIntakeMotor(-0.25)); //Spit Ball Slow
-        operatorLB.whenReleased(new SetIntakeMotor(0.0));
-        operatorLT.whenPressed(new SetIntakeMotor(-0.7)); //Spit Ball Fast
-        operatorLT.whenReleased(new SetIntakeMotor(0.0));
+        operatorLB.whenPressed(new SlowShootCargo()); //Spit Ball Slow
+        operatorLB.whenReleased(new StopCargoMotor());
+        operatorLT.whenPressed(new FastShootCargo()); //Spit Ball Fast
+        operatorLT.whenReleased(new StopCargoMotor());
     }
     private void initButtons(){
         try{
