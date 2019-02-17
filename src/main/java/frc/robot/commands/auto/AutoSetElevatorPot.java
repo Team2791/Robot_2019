@@ -10,15 +10,10 @@ public class AutoSetElevatorPot extends Command {
     }
 
     public void execute() {
-        Robot.elevator.setPower(-1);
-    }
-
-    public void end() {
-        Robot.elevator.setPower(0);
         Robot.elevator.zeroPot();
     }
 
     public boolean isFinished() {
-        return Robot.elevator.atBottom();
+        return true;
     }
 }

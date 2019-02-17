@@ -32,6 +32,7 @@ public class Elevator extends Subsystem {
         driveTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         driveTalon.setSensorPhase(false);
         driveTalon.setNeutralMode(NeutralMode.Brake);
+        driveTalon.overrideLimitSwitchesEnable(false);
         elevatorZero = Constants.kBackLifterPotMin;
         elevatorMax = elevatorZero + Constants.kElevatorPotFullRange;
         //TODO: Tune PID
@@ -54,7 +55,7 @@ public class Elevator extends Subsystem {
     }
 
     public int getElevatorHeight() {
-        return getHeight();
+        return getHeight() - elevatorZero;
     }
 
     public int getVelocity() {
@@ -111,7 +112,7 @@ public class Elevator extends Subsystem {
         if(power > 0 && atBottom()) {
             driveTalon.set(ControlMode.PercentOutput, 0);
         } else if(power < 0 && atTop()) {
-            driveTalon.set(ControlMode.PercentOutput, 0);
+            driveTalon.set(ControlMode.PercentOutput, -Constants.kElevatorMinPower);
         } else {
             driveTalon.set(ControlMode.PercentOutput, power);
         }
@@ -150,6 +151,8 @@ public class Elevator extends Subsystem {
         SmartDashboard.putNumber("Elevator - break timer", breakReleaseTimer.get());
         SmartDashboard.putNumber("Elevator - Height", getHeight());
         SmartDashboard.putNumber("Elevator - Adjusted Height", getElevatorHeight());
+        SmartDashboard.putNumber("Elevator zero", elevatorZero);
+        SmartDashboard.putNumber("Elevator max", elevatorMax);
         SmartDashboard.putBoolean("Lift - Close to top", closeToTop());
         SmartDashboard.putBoolean("Lift - Close to bottom", closeToBottom());
     }
