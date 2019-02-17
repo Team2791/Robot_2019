@@ -33,7 +33,7 @@ public class Elevator extends Subsystem {
         driveTalon.setSensorPhase(false);
         driveTalon.setNeutralMode(NeutralMode.Brake);
         driveTalon.overrideLimitSwitchesEnable(false);
-        elevatorZero = Constants.kBackLifterPotMin;
+        elevatorZero = Constants.kElevatorMinHeight;
         elevatorMax = elevatorZero + Constants.kElevatorPotFullRange;
         //TODO: Tune PID
     }
@@ -48,16 +48,21 @@ public class Elevator extends Subsystem {
             elevatorZero = getHeight();
             elevatorMax = elevatorZero + Constants.kElevatorPotFullRange;
         }
-    }    
+    }
     
     private int getHeight() {
         return driveTalon.getSensorCollection().getAnalogIn();
     }
 
+    // public int getElevatorHeight() {
+    //     return getHeight() - elevatorZero;
+    // }
     public int getElevatorHeight() {
-        return getHeight() - elevatorZero;
+        return convertSRXUnitstoHeight(getVoltageFeedback()) + Constants.kPotOffset;
     }
-
+    public int getVoltageFeedback() {
+        return driveTalon.getSensorCollection().getVoltage();
+    }
     public int getVelocity() {
         return driveTalon.getSensorCollection().getAnalogInVel();
     }
@@ -69,11 +74,14 @@ public class Elevator extends Subsystem {
             setPowerUp(power);
         } else if(power > 0.01) {
             setPowerDown(power);
-        } else {
+        } else { 
             setPowerUnsafe(0);
         }
     }
-
+    public double convertSRXUnitstoHeight(int srxunits){
+        double height = srxunits/1023; // taking the raw value and dividing up maximum potentiometer angle 
+        return height * Constants.kElevatorPotFullRange;
+    }
     private void setPowerUp(double power) {
         if(closeToTop()) {
             setPowerUnsafe( -Constants.kElevatorMinPower);
@@ -154,8 +162,8 @@ public class Elevator extends Subsystem {
         SmartDashboard.putNumber("Elevator - Adjusted Height", getElevatorHeight());
         SmartDashboard.putNumber("Elevator zero", elevatorZero);
         SmartDashboard.putNumber("Elevator max", elevatorMax);
-        SmartDashboard.putBoolean("Lift - Close to top", closeToTop());
-        SmartDashboard.putBoolean("Lift - Close to bottom", closeToBottom());
+        SmartDashboard.putBoolean("Elevator - Close to top", closeToTop());
+        SmartDashboard.putBoolean("Elevator - Close to bottom", closeToBottom());
     }
 
 }
