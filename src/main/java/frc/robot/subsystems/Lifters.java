@@ -102,6 +102,7 @@ public class Lifters extends Subsystem {
 
     public void resetSystem() {
         enabled = true;
+        lifterDrive.setNeutralMode(NeutralMode.Brake);
     }
 
     public void ExtendBoth(double output) {
