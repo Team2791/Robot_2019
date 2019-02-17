@@ -111,7 +111,7 @@ public class Elevator extends Subsystem {
     public void setPowerUnsafe(double power) {
         if(power > 0 && atBottom()) {
             driveTalon.set(ControlMode.PercentOutput, 0);
-        } else if(power < 0 && atTop()) {
+        } else if(power < 0 && atTop() && breakSolenoid.get()) { // True means the break will be off
             driveTalon.set(ControlMode.PercentOutput, -Constants.kElevatorMinPower);
         } else {
             driveTalon.set(ControlMode.PercentOutput, power);
@@ -122,6 +122,7 @@ public class Elevator extends Subsystem {
         //TODO: Move elevator to position
         return liftPosition - driveTalon.getSensorCollection().getAnalogIn();
     }
+    
 
     public void setBreak(boolean breakOn) {
 
