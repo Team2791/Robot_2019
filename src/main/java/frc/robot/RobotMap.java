@@ -14,8 +14,13 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
+    //Robot Config
+    public static final boolean isFlightBot = false;
+
     //Global
     public static final int kPCM = 1;
+    public static final int kPDP = 0;
+
     //Drivetrain
     public static final int kLeftTalon = 20;
     public static final int kRightTalon = 21;
@@ -23,9 +28,11 @@ public class RobotMap {
     public static final int[] kRightVictors = {31, 33};
 
     //Lifters
-    public static final int kFrontLiftTalon = 22;
-    public static final int kBackLiftTalon = 23;
+    public static final int kFrontLiftTalon = 23;
+    public static final int kBackLiftTalon = 22;
     public static final int kRollerVictor = 34;
+    public static final int kFrontIrReadout = 1;
+    public static final int kBackIrReadout = 0;
 
     //Elevator
     public static final int kElevatorTalon = 24;
@@ -33,10 +40,9 @@ public class RobotMap {
 
     public static final int kGrabberOpen = 0;
     public static final int kGrabberClose = 1;
-
-    public static final int kElevatorTopLimit = 8;
-    public static final int kElevatorBottomLimit = 9;
-    public static final int kElevatorPot = 1;
     public static final int kBreakSolenoid = 2;
 
+    //PDP IDs
+    public static final int kPowerFrontLift = 3;
+    public static final int kPowerBackLift = 12;
 }

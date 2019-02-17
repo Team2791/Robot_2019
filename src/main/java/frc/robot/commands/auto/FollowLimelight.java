@@ -22,11 +22,11 @@ public class FollowLimelight extends Command {
     public void execute() {
 
         
-        double thrust = 1;
+        double thrust = 0.5;
 
         
         thrust *= kMoveSpeed;
-        if(Math.abs(thrust) < 0.1){
+        if(Math.abs(thrust) < 0.1) {
             thrust = 0;
         }
 
