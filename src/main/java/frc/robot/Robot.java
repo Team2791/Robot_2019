@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
         drivetrain = new Drivetrain();
         lifters = new Lifters();
         pdp = new PowerDistributionPanel(RobotMap.kPDP);
+        elevator = new Elevator();
         oi = new OI();
 
         autoCommand = new AutoSetLifterPots();
@@ -37,6 +38,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         lifters.debug();
+        elevator.debug();
     }
 
     @Override

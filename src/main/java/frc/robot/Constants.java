@@ -21,13 +21,12 @@ public class Constants {
     public static final double kLifterF = 0.135;
     public static final double kLifterP = 16;
 
-    // Elevator Constants All these constants need to be modified later on
-	public static final int kElevatorPotOffset = 0; 
-	public static final double kElevatorPotFullRange = 0; 
-	public static final int kElevatorTopSafetyDistance = 0;
-	public static final int kElevatorMaxHeight = 0;
-	public static final int kElevatorBottomSafetyDistance = 0;
-    public static final double kElelvatorMinHeight = 0;
+    // Elevator Constants All these constants need to be modified later on 
+	public static final int kElevatorPotFullRange = 985; 
+	public static final int kElevatorTopSafetyDistance = 200;
+	public static final int kElevatorBottomSafetyDistance = 200;
+    public static final int kElelvatorMinHeight = 20;
+    public static final double kElevatorMinPower = 0.5;
 
     //Joystick constant
     public static final double DEADZONE = 0;
