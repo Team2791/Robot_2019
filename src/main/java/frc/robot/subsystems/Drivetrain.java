@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.StopDrive;
@@ -88,6 +89,15 @@ public class Drivetrain extends Subsystem {
     public void setDriveSpeed(boolean isSlow) {
         speedMultiplier = isSlow ? Constants.kSlowDrive : Constants.kFastDrive;
     }
+
+    public int getLeftEncoder() {
+        return leftLeader.getSensorCollection().getQuadraturePosition();
+    }
+
+    public int getRightEncoder() {
+        return tightLeader.getSensorCollection().getQuadraturePosition();
+    }
+
     // public double getGyroAngle(){
     //     if(!gyroDisabled)
     //         return gyro.getAngle();
@@ -121,6 +131,7 @@ public class Drivetrain extends Subsystem {
     //     }
     // }
     public void debug(){
-        // put PID values in here later
+        SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
+        SmartDashboard.putNumber("Right Encoder", getLeftEncoder());
     }
 }  

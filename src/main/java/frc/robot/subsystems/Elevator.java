@@ -56,10 +56,16 @@ public class Elevator extends Subsystem {
     //     return getHeight() - elevatorZero;
     // }
     public int getElevatorHeight() {
+        return getHeight() - elevatorZero;
+    }
+
+    public double getSRXHeight() {
         return convertSRXUnitstoHeight(getVoltageFeedback()) + Constants.kPotOffset;
     }
+    
     public int getVoltageFeedback() {
-        return driveTalon.getSensorCollection().getVoltage();
+        // return driveTalon.getSensorCollection().getVoltage();
+        return 0;
     }
     public int getVelocity() {
         return driveTalon.getSensorCollection().getAnalogInVel();
@@ -77,7 +83,7 @@ public class Elevator extends Subsystem {
         }
     }
     public double convertSRXUnitstoHeight(int srxunits){
-        double height = srxunits/1023; // taking the raw value and dividing up maximum potentiometer angle 
+        double height = srxunits/1023.0; // taking the raw value and dividing up maximum potentiometer angle 
         return height * Constants.kElevatorPotFullRange;
     }
     private void setPowerUp(double power) {
