@@ -9,7 +9,5 @@ public class StopCargoMotor extends CommandGroup {
         addSequential(new SetCargoControlsFalse());
         addSequential(new RaiseCargo());
         addSequential(new SetIntakeMotor(0.0));
-        //addSequential(new DoNothing(),0.25);
-        //addSequential(new SetOverrideBooleanFalse());
     }
 }
