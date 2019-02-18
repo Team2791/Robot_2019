@@ -17,7 +17,7 @@ public class MoveElevator extends Command{
     }
 
     public void execute() {
-        Robot.elevator.setPower(-stick.getRawAxis(5));
+        Robot.elevator.setPower(-stick.getRawAxis(1));
     }
 
     public void end() {

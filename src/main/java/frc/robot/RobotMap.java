@@ -36,13 +36,26 @@ public class RobotMap {
 
     //Elevator
     public static final int kElevatorTalon = 24;
-    public static final int kIntakeVictor = 35;
 
     public static final int kGrabberOpen = 0;
     public static final int kGrabberClose = 1;
-    public static final int kBreakSolenoid = 2;
+    public static final int kBreakSolenoid = 4;
 
     //PDP IDs
     public static final int kPowerFrontLift = 3;
     public static final int kPowerBackLift = 12;
+
+    ;
+
+    //HatchManipulator
+    public static final int kExtenderHatchSolenoid = 3;
+
+    public static final int kGrabberHatchSolenoid = 1;
+
+    public static final int kAlignerHatchSolenoid = 2;
+
+    //CargoManipulator
+    public static final int kRaiseCargoSolenoid = 0;
+    public static final int kIntakeVictor = 35;
+    public static final int kCargoLimitSwitch = 0;
 }

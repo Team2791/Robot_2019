@@ -10,6 +10,8 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HatchManipulator;
 import frc.robot.subsystems.Lifters;
+import edu.wpi.first.wpilibj.Compressor;
+import frc.robot.subsystems.CargoManipulator;
 import frc.robot.util.Limelight;
 
 public class Robot extends TimedRobot {
@@ -17,10 +19,12 @@ public class Robot extends TimedRobot {
     public static OI oi;
     public static Drivetrain drivetrain;
     public static HatchManipulator hatchManipulator;
+    public static CargoManipulator cargoManipulator; 
     public static Limelight limelight;
     public static Elevator elevator;
     public static Lifters lifters;
     public static PowerDistributionPanel pdp;
+    public static Compressor compressor;
 
     private Command autoCommand;
 
@@ -32,15 +36,23 @@ public class Robot extends TimedRobot {
         lifters = new Lifters();
         pdp = new PowerDistributionPanel(RobotMap.kPDP);
         elevator = new Elevator();
+        compressor = new Compressor(RobotMap.kPCM);
+        compressor.start();
+        hatchManipulator = new HatchManipulator();
+        cargoManipulator = new CargoManipulator();
+        
         oi = new OI();
 
         autoCommand = new AutoSetElevatorPot();
     }
-
+    
     @Override
     public void robotPeriodic() {
         lifters.debug();
         elevator.debug();
+        cargoManipulator.debug();
+        hatchManipulator.debug();
+        drivetrain.debug();
     }
 
     @Override
