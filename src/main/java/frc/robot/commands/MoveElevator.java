@@ -13,7 +13,7 @@ public class MoveElevator extends Command{
     }
     public void initialize(){
         // commented this out because break hasn't been tested yet
-        //      Robot.elevator.setBreak(false);
+        Robot.elevator.setBreak(false);
     }
 
     public void execute() {
@@ -22,7 +22,7 @@ public class MoveElevator extends Command{
 
     public void end() {
         Robot.elevator.setPower(0);
-   //     Robot.elevator.setBreak(true);
+        Robot.elevator.setBreak(true);
     }
 
     public boolean isFinished() {

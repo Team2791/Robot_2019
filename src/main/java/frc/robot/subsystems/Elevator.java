@@ -72,13 +72,12 @@ public class Elevator extends Subsystem {
     }
 
     public void setPower(double power) {
-         //just added this code and commented it out because hasn't been tested
-       //Check if the break is released before moving
-        // if(breakReleaseTimer.get() < 0.12) {
-    	// 	setPowerUnsafe(0);
-    	// 	return;
-        // }
-       
+        //Check if the break is released before moving
+        if(breakReleaseTimer.get() < 0.12) {
+    		setPowerUnsafe(0);
+    		return;
+        }
+        
         //Negative power is up
         power *= -1;
         if(power < -0.01) {
@@ -110,7 +109,7 @@ public class Elevator extends Subsystem {
     }
 
     public boolean atBottom() {
-        return driveTalon.getSensorCollection().isFwdLimitSwitchClosed();
+        return driveTalon.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     public boolean closeToBottom() {
@@ -119,7 +118,7 @@ public class Elevator extends Subsystem {
     }
 
     public boolean atTop() {
-        return driveTalon.getSensorCollection().isRevLimitSwitchClosed();
+        return driveTalon.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
     public boolean closeToTop() {
@@ -138,20 +137,23 @@ public class Elevator extends Subsystem {
     }
 
     public int setPosition(int liftPosition) {
-        //TODO: Move elevator to position
-        return liftPosition - driveTalon.getSensorCollection().getAnalogIn();
+        int target = liftPosition + elevatorZero;
+        
+        driveTalon.set(ControlMode.Position, target);
+
+        return target - driveTalon.getSensorCollection().getAnalogIn();
     }
     
 
     public void setBreak(boolean breakOn) {
 
-         breakSolenoid.set(!breakOn); // Solenoid is default on. True means the break will be off
-
+        breakSolenoid.set(!breakOn); // Solenoid is default on. True means the break will be off
+        System.out.println(breakOn);
         
         if (breakOn) {
             // reset and stop the timer when we put the break on.
-            breakReleaseTimer.reset();
             breakReleaseTimer.stop();
+            breakReleaseTimer.reset();
             breakReleaseTimerStarted = false;
         } else {
             // when we release the break start the timer.

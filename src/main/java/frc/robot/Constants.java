@@ -27,6 +27,7 @@ public class Constants {
 	public static final int kElevatorBottomSafetyDistance = 200;
     public static final int kElevatorMinHeight = 20;
     public static final double kElevatorMinPower = 0.3;
+    public static final double kElevatorStallSpeed = -0.2;
     public static final double kPotOffset = -16.0;
 
     //Joystick constant

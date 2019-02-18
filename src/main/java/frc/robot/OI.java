@@ -9,8 +9,7 @@ import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExtendBothLifters;
 import frc.robot.commands.RetractBothLifters;
 import frc.robot.commands.MoveElevator;
-//import frc.robot.Joystick.GamePad;
-//import frc.robot.commands.DriveLifterWheel;
+import frc.robot.commands.StallElevator;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedRelease;
 import frc.robot.commands.HatchManipulator.ScorePanelAutomatedHeld;
@@ -40,7 +39,8 @@ public class OI {
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1));
         driverStart.whileHeld(new ExtendBothLifters(1));
         driverBack.whileHeld(new RetractBothLifters(-1));
-        operatorLS.whileHeld(new MoveElevator(driverStick));
+        operatorLS.whileHeld(new MoveElevator(operatorStick));
+        operatorLS.whenReleased(new StallElevator());
         
         driverA.whenPressed(new GetPanelAutomatedHeld());
         driverA.whenReleased(new GetPanelAutomatedRelease());

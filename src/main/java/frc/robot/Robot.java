@@ -4,8 +4,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.commands.auto.AutoSetElevatorPot;
-import frc.robot.commands.auto.AutoSetLifterPots;
+import frc.robot.commands.auto.AutoZeroAllPots;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HatchManipulator;
@@ -31,7 +30,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        System.out.println("Robot config: " + (RobotMap.isFlightBot ? "Flight bot" : "Practice bot"));
         drivetrain = new Drivetrain();
         lifters = new Lifters();
         pdp = new PowerDistributionPanel(RobotMap.kPDP);
@@ -43,7 +41,7 @@ public class Robot extends TimedRobot {
         
         oi = new OI();
 
-        autoCommand = new AutoSetElevatorPot();
+        autoCommand = new AutoZeroAllPots();
     }
     
     @Override
