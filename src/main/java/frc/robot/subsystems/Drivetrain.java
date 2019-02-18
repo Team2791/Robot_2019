@@ -95,7 +95,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public int getRightEncoder() {
-        return tightLeader.getSensorCollection().getQuadraturePosition();
+        return rightLeader.getSensorCollection().getQuadraturePosition();
     }
 
     // public double getGyroAngle(){

@@ -72,6 +72,13 @@ public class Elevator extends Subsystem {
     }
 
     public void setPower(double power) {
+         //just added this code and commented it out because hasn't been tested
+       //Check if the break is released before moving
+        // if(breakReleaseTimer.get() < 0.12) {
+    	// 	setPowerUnsafe(0);
+    	// 	return;
+        // }
+       
         //Negative power is up
         power *= -1;
         if(power < -0.01) {
@@ -123,7 +130,7 @@ public class Elevator extends Subsystem {
     public void setPowerUnsafe(double power) {
         if(power > 0 && atBottom()) {
             driveTalon.set(ControlMode.PercentOutput, 0);
-        } else if(power < 0 && atTop() && breakSolenoid.get()) { // True means the break will be off
+        } else if(power < 0 && atTop()) { 
             driveTalon.set(ControlMode.PercentOutput, -Constants.kElevatorMinPower);
         } else {
             driveTalon.set(ControlMode.PercentOutput, power);

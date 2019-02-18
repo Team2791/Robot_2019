@@ -11,6 +11,10 @@ public class MoveElevator extends Command{
         this.stick = stick;
         requires(Robot.elevator);
     }
+    public void initialize(){
+        // commented this out because break hasn't been tested yet
+        //      Robot.elevator.setBreak(false);
+    }
 
     public void execute() {
         Robot.elevator.setPower(-stick.getRawAxis(5));
@@ -18,6 +22,7 @@ public class MoveElevator extends Command{
 
     public void end() {
         Robot.elevator.setPower(0);
+   //     Robot.elevator.setBreak(true);
     }
 
     public boolean isFinished() {
