@@ -1,11 +1,10 @@
 package frc.robot;
 
 public class Constants {
-    public static final double kCreep = 0.2;
-    
     // Drivetrain constants
     public static final double kFastDrive = 1.0;
     public static final double kSlowDrive = 0.5;
+    public static final double kCreep = 0.2;
 
     // Lifters constants
     public static final int kFrontLifterPotMin = 40;
@@ -26,6 +25,10 @@ public class Constants {
 	public static final int kElevatorTopSafetyDistance = 200;
 	public static final int kElevatorBottomSafetyDistance = 200;
     public static final int kElevatorMinHeight = 20;
+    public static final double kElevatorF = 0.38;
+    public static final double kElevatorP = 1;
+    public static final double kElevatorI = 0;
+    public static final double kElevatorD = 0;
     public static final double kElevatorMinPower = 0.3;
     public static final double kElevatorStallSpeed = -0.2;
     public static final double kPotOffset = -16.0;

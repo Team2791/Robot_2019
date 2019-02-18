@@ -19,10 +19,9 @@ public class StallElevator extends Command {
     public void execute() {
         Robot.elevator.setBreak(true);
         if(!Robot.elevator.closeToBottom()) {
-            Robot.elevator.setPowerUnsafe(-Constants.kElevatorMinPower);
+            Robot.elevator.setPowerUnsafe(Constants.kElevatorMinPower);
         }
         ++frameCounter;
-        System.out.println(frameCounter);
     }
 
     public void end() {

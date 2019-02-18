@@ -20,6 +20,10 @@ public class Elevator extends Subsystem {
     private boolean breakReleaseTimerStarted = false;
     private int elevatorZero;
     private int elevatorMax;
+    private double kP;
+    private double kI;
+    private double kD;
+    private double kF;
 
     public Elevator() {
         driveTalon = new TalonSRX(RobotMap.kElevatorTalon);
@@ -28,14 +32,24 @@ public class Elevator extends Subsystem {
         breakReleaseTimer = new Timer();
 
         driveTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
-        driveTalon.setSensorPhase(false);
+        driveTalon.setSensorPhase(true);
+        driveTalon.setInverted(true);
         driveTalon.setNeutralMode(NeutralMode.Brake);
         driveTalon.overrideLimitSwitchesEnable(false);
         elevatorZero = Constants.kElevatorMinHeight;
         elevatorMax = elevatorZero + Constants.kElevatorPotFullRange;
-        //TODO: Tune PID
-    }
 
+        kP = Constants.kElevatorP;
+        kI = Constants.kElevatorI;
+        kD = Constants.kElevatorD;
+        kF = Constants.kElevatorF;
+
+        //TODO: Tune PID
+        SmartDashboard.putNumber("Elevator kP", kP);
+        SmartDashboard.putNumber("Elevator kI", kI);
+        SmartDashboard.putNumber("Elevator kD", kD);
+        SmartDashboard.putNumber("Elevator kF", kF);
+    }
 
     @Override
     protected void initDefaultCommand() {
@@ -78,23 +92,23 @@ public class Elevator extends Subsystem {
     		return;
         }
         
-        //Negative power is up
-        power *= -1;
-        if(power < -0.01) {
+        if(power > 0.01) {
             setPowerUp(power);
-        } else if(power > 0.01) {
+        } else if(power < -0.01) {
             setPowerDown(power);
-        } else { 
-            setPowerUnsafe(0);
+        } else {
+            setPowerUnsafe(power);
         }
     }
+
     public double convertSRXUnitstoHeight(int srxunits){
         double height = srxunits/1023.0; // taking the raw value and dividing up maximum potentiometer angle 
         return height * Constants.kElevatorPotFullRange;
     }
+
     private void setPowerUp(double power) {
         if(closeToTop()) {
-            setPowerUnsafe( -Constants.kElevatorMinPower);
+            setPowerUnsafe(Constants.kElevatorMinPower);
         } else {
             driveTalon.set(ControlMode.PercentOutput, power);
         }
@@ -102,8 +116,8 @@ public class Elevator extends Subsystem {
     
     private void setPowerDown(double power) {
         if(closeToBottom()) {
-            setPowerUnsafe( Constants.kElevatorMinPower);
-            } else {
+            setPowerUnsafe(-Constants.kElevatorMinPower);
+        } else {
             driveTalon.set(ControlMode.PercentOutput, power);
         }
     }
@@ -113,8 +127,7 @@ public class Elevator extends Subsystem {
     }
 
     public boolean closeToBottom() {
-         return getElevatorHeight() <= Constants.kElevatorBottomSafetyDistance;
-        
+        return getElevatorHeight() <= Constants.kElevatorBottomSafetyDistance;
     }
 
     public boolean atTop() {
@@ -122,15 +135,14 @@ public class Elevator extends Subsystem {
     }
 
     public boolean closeToTop() {
-         return getElevatorHeight() >= elevatorMax - Constants.kElevatorTopSafetyDistance;
-        
+        return getElevatorHeight() >= elevatorMax - Constants.kElevatorTopSafetyDistance;   
     }
 
     public void setPowerUnsafe(double power) {
-        if(power > 0 && atBottom()) {
+        if(power < 0 && atBottom()) {
             driveTalon.set(ControlMode.PercentOutput, 0);
-        } else if(power < 0 && atTop()) { 
-            driveTalon.set(ControlMode.PercentOutput, -Constants.kElevatorMinPower);
+        } else if(power > 0 && atTop()) { 
+            driveTalon.set(ControlMode.PercentOutput, Constants.kElevatorMinPower);
         } else {
             driveTalon.set(ControlMode.PercentOutput, power);
         }
@@ -139,16 +151,22 @@ public class Elevator extends Subsystem {
     public int setPosition(int liftPosition) {
         int target = liftPosition + elevatorZero;
         
+        driveTalon.config_kP(0, kP);
+        driveTalon.config_kI(0, kI);
+        driveTalon.config_kD(0, kD);
+        driveTalon.config_kF(0, kF);
         driveTalon.set(ControlMode.Position, target);
 
-        return target - driveTalon.getSensorCollection().getAnalogIn();
+        int error = target - getHeight();
+        SmartDashboard.putNumber("Height error", error);
+
+        return error;
     }
     
 
     public void setBreak(boolean breakOn) {
 
         breakSolenoid.set(!breakOn); // Solenoid is default on. True means the break will be off
-        System.out.println(breakOn);
         
         if (breakOn) {
             // reset and stop the timer when we put the break on.
@@ -177,6 +195,10 @@ public class Elevator extends Subsystem {
         SmartDashboard.putNumber("Elevator max", elevatorMax);
         SmartDashboard.putBoolean("Elevator - Close to top", closeToTop());
         SmartDashboard.putBoolean("Elevator - Close to bottom", closeToBottom());
+        kP = SmartDashboard.getNumber("Elevator kP", Constants.kElevatorP);
+        kI = SmartDashboard.getNumber("Elevator kI", Constants.kElevatorI);
+        kD = SmartDashboard.getNumber("Elevator kD", Constants.kElevatorD);
+        kF = SmartDashboard.getNumber("Elevator kF", Constants.kElevatorF);
     }
 
 }

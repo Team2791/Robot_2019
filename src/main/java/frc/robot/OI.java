@@ -4,12 +4,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.controller.AnalogButton;
+import frc.robot.controller.DPadButton;
 import frc.robot.controller.MultiButton;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExtendBothLifters;
 import frc.robot.commands.RetractBothLifters;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.StallElevator;
+import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedRelease;
 import frc.robot.commands.HatchManipulator.ScorePanelAutomatedHeld;
@@ -29,7 +31,7 @@ public class OI {
     private Button driverStart, driverBack;
     private Button driverA, driverB;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
-    private Button operatorLS;
+    private Button operatorLS, operatorDown;
 
     public OI() {
         driverStick = new Joystick(0);
@@ -55,6 +57,8 @@ public class OI {
         operatorLB.whenReleased(new StopCargoMotor());
         operatorLT.whenPressed(new FastShootCargo());
         operatorLT.whenReleased(new StopCargoMotor());
+
+        operatorDown.whenPressed(new SetElevatorPosition(492));
     }
 
     private void initButtons(){
@@ -76,6 +80,7 @@ public class OI {
             operatorLT = new AnalogButton(operatorStick, 2);
             operatorRT = new AnalogButton(operatorStick, 3);
             operatorLS = new AnalogButton(operatorStick, 1);
+            operatorDown = new DPadButton(operatorStick, 2);
         }
         catch (Exception error){
             System.out.println("Error Init With Buttons");

@@ -24,8 +24,17 @@ public class SetElevatorPosition extends Command {
         error = Integer.MAX_VALUE;
     }
 
+    public void initialize() {
+        Robot.elevator.setBreak(false);
+    }
+
     public void execute() {
         error = Robot.elevator.setPosition(target);
+    }
+
+    public void end() {
+        Robot.elevator.setBreak(true);
+        Robot.elevator.setPowerUnsafe(0);
     }
 
     public boolean isFinished() {
