@@ -32,7 +32,7 @@ public class RunLiftWithJoystick extends Command {
         //else {
         //    if(Robot.elevator.getHeight() < 12) {
         //    	speed = Math.max(-0.3, speed);
-        //    } //TODO NOAH FUCKED WITH THIS??
+        //    }
         //	Robot.elevator.setPower(speed);
         //}
         else{

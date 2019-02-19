@@ -22,24 +22,20 @@ public class Constants {
 
     // Elevator Constants All these constants need to be modified later on 
 	public static final int kElevatorPotFullRange = 985; 
-    public static final double kElevatorF = 0.38;
-    public static final double kElevatorP = 1;
-    public static final double kElevatorI = 0;
-    public static final double kElevatorD = 0;
     public static final double kElevatorMinPower = 0.3;
-    public static final double kElevatorStallSpeed = -0.2;
+    public static final double kElevatorStallSpeed = -0.2; //Dont worry about this guy
 
-    //NOAH IS HERE
+    //SHIT THAT HAS BEEN ADDED FOR MAGIC MOTION STUFF
 
     public static double kLIFT_HOLD_VOLTAGE = 0.01; //Noah is guessing that this is the stall voltage on the motors for when the moments between the target value being hit and the break being engaged
-    public static double kLIFT_P_VALUE = 100; //The P value of the lift's PID loop
+    public static double kLIFT_P_VALUE = 10; //The P value of the lift's PID loop
     public static double kLIFT_I_VALUE = 0.008; //The I value of the lift's PID loop
-    public static double kLIFT_D_VALUE = 100; //The D value of the lift's PID loop
-    public static final double LIFT_MAX_SPEED_RAW_UNITS = 10.0;// max velocity is 85 U/.1s up and 95 U/.1s down? //was 85
+    public static double kLIFT_D_VALUE = 50; //The D value of the lift's PID loop
+    public static final double LIFT_MAX_SPEED_RAW_UNITS = 85.0;// max velocity is 85 U/.1s up and 95 U/.1s down? //was 85
     public static final int MOTION_VELOCITY = (int) (LIFT_MAX_SPEED_RAW_UNITS * 1.0); 
-    public static final int MOTION_ACCELERATION = (int) (MOTION_VELOCITY / 0.25); //This is the amount of time it takes to reach cruising speed, this was 0.75 seconds last year, changed to 0.5 seconds this year because of springs
+    public static final int MOTION_ACCELERATION = (int) (MOTION_VELOCITY / 0.65); //This is the amount of time it takes to reach cruising speed, this was 0.75 seconds last year, changed to 0.5 seconds this year because of springs
     public static final int MM_PID_SLOT_ID = 0; //TODO Figure out what the fuck this means
-    public static final double LIFT_F_VALUE = 1023.0 / LIFT_MAX_SPEED_RAW_UNITS; // F-gain = (100% X 1023) / MAX_VEL
+    public static final double LIFT_F_VALUE = 15; // F-gain = (100% X 1023) / MAX_VEL
     public static final int kElevatorMinHeight = -20; //This is the minimum height of the elevator based on potentiometer values idrk
     public static final double kElevatorMaxHeight = -985; //This is the maximum height of the elevator based on potentiometer values idrk
     public static final int kElevatorBottomSafetyDistance = 100; //This is the difference between absolute bottom and where it will stop

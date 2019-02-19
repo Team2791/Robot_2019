@@ -25,19 +25,13 @@ public class Elevator extends Subsystem {
     private boolean breakReleaseTimerStarted = false;
     public static double speedModifier;
 
-
-
-    //private TalonSRX driveTalon;
-    //private Solenoid breakSolenoid;
-    //private Timer breakReleaseTimer;
-    //private boolean breakReleaseTimerStarted = false;
-    //private int elevatorZero;
-    //private int elevatorMax;
-    //private double kP;
-    //private double kI;
-    //private double kD;
-    //private double kF;
-
+    //The potentiometer we are using goes from -1023 to 0 full range.
+    //There is a bicycle disk break attached to a piston that allows us to stop the lift at the right height without needing stall current and other fancy shit
+    //The elevator has one vex pro 775 connected to a talon srx
+    //The goal of using magic motion is to be able to travel to a set potentiometer value upon a button press
+    //For example, when the operator presses the "Y" button, we want to travel to potentiometer value X, where X equals the proper lift height to score in the top goal of the rocketship
+    //Elevator 775 gear ration is a two stage box, with gear ratio 12:80 and then 18:54
+    
     public Elevator() {
         super("ShakerLift");
 
@@ -46,26 +40,22 @@ public class Elevator extends Subsystem {
         breakSolenoid = new Solenoid(RobotMap.kPCM, RobotMap.kBreakSolenoid); // RobotMap ids need to be changed
         breakReleaseTimer = new Timer();
         driveTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
-        driveTalon.setSensorPhase(true); //This was true //TODO FIX ME
+        driveTalon.setSensorPhase(true); //This is true because potentiometer is out of sync with the motor direction without this line
         //driveTalon.setInverted(true);
         driveTalon.setNeutralMode(NeutralMode.Brake);
         driveTalon.overrideLimitSwitchesEnable(false);
 
 
         // Setting up Magic Motion Profiling
-        // I don't know how it workis if you have leaders and followers, this code is just for leaderTalon
-        // https://www.ctr-electronics.com/downloads/pdf/Talon%20SRX%20Software%20Reference%20Manual.pdf  ---> Page 99
-        // TODO replace this ^^ with the current manual!
-        driveTalon.configNominalOutputForward(Constants.kLIFT_HOLD_VOLTAGE, 0);
+
+        driveTalon.configNominalOutputForward(Constants.kLIFT_HOLD_VOLTAGE, 0); //kLIFT_HOLD_VOLTAGE is a little bit of stall current to keep lift from falling back down before the break enables
         driveTalon.configNominalOutputReverse(0.0, 0);
 
     	SmartDashboard.putNumber("LIFT - MM - kP", Constants.kLIFT_P_VALUE);
     	SmartDashboard.putNumber("LIFT - MM - kI", Constants.kLIFT_I_VALUE);
     	SmartDashboard.putNumber("LIFT - MM - kD", Constants.kLIFT_D_VALUE);
-    	SmartDashboard.putNumber("Lift - MM - Target", 0);
+    	SmartDashboard.putNumber("Lift - MM - Target", 0); //Target magic motion value
         
-        //leaderTalon.
-//        leaderTalon.configPeakCurrentLimit(12, 1); // Need to tune these values, I am just guessing
         driveTalon.configMotionCruiseVelocity(Constants.MOTION_VELOCITY, 0);
         driveTalon.configMotionAcceleration(Constants.MOTION_ACCELERATION, 0);
         driveTalon.config_kF(Constants.MM_PID_SLOT_ID, Constants.LIFT_F_VALUE, 0);
@@ -118,7 +108,7 @@ public class Elevator extends Subsystem {
                 return potTravel * Constants.kElevatorPotFullRange;
             }
 
-    public void setManualPower(double power){
+    public void setManualPower(double power){ //This function has nothing to do with magic motion, only used for operator being able to control with joystick
         boolean pickedOne;
         pickedOne = false;
         if(atBottom() && pickedOne == false){
