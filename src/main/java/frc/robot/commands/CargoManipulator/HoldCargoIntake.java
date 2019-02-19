@@ -1,4 +1,6 @@
 package frc.robot.commands.CargoManipulator;
+
+import frc.robot.commands.HatchManipulator.RetractHatch;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.DoNothing;
@@ -7,6 +9,7 @@ import frc.robot.commands.DoNothing;
 //Then waits kRaiseCargoArmsDelayAfterButtonPressed, then reduces the intake motor speed to kCargoIntakeMotorStallSpeed, then raises the cargo intake arms
 public class HoldCargoIntake extends CommandGroup {
     public HoldCargoIntake() {
+        addSequential(new RetractHatch());
         addSequential(new SetCargoControlsTrue());
         addSequential(new DropCargo());
         addSequential(new SetIntakeMotor(Constants.kCargoIntakeMotorSpeed));

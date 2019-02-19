@@ -35,7 +35,7 @@ public class Constants {
     public static final int MOTION_VELOCITY = (int) (LIFT_MAX_SPEED_RAW_UNITS * 1.0); 
     public static final int MOTION_ACCELERATION = (int) (MOTION_VELOCITY / 0.65); //This is the amount of time it takes to reach cruising speed, this was 0.75 seconds last year, changed to 0.5 seconds this year because of springs
     public static final int MM_PID_SLOT_ID = 0; //TODO Figure out what the fuck this means
-    public static final double LIFT_F_VALUE = 15; // F-gain = (100% X 1023) / MAX_VEL
+    public static final double LIFT_F_VALUE = 0.38; // F-gain = (100% X 1023) / MAX_VEL
     public static final int kElevatorMinHeight = -20; //This is the minimum height of the elevator based on potentiometer values idrk
     public static final double kElevatorMaxHeight = -985; //This is the maximum height of the elevator based on potentiometer values idrk
     public static final int kElevatorBottomSafetyDistance = 100; //This is the difference between absolute bottom and where it will stop

@@ -7,6 +7,7 @@ import frc.robot.controller.AnalogButton;
 import frc.robot.controller.DPadButton;
 import frc.robot.controller.MultiButton;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.FrameRetraction;
 import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
@@ -29,6 +30,7 @@ public class OI {
     private Button driveButton;
     private Button driverLB, driverRB;
     private Button driverStart, driverBack;
+    private Button operatorStart;
     private Button driverA, driverB;
     private Button operatorRB, operatorLT, operatorLB, operatorRT, operatorDown;
     public Button operatorLS;
@@ -50,6 +52,8 @@ public class OI {
         operatorB.whenPressed(new SetLiftHeightMagicMotion(-200.0));
         operatorX.whenPressed(new SetLiftHeightMagicMotion(-300.0));
         operatorY.whenPressed(new SetLiftHeightMagicMotion(-250.0));
+
+        operatorStart.whenPressed(new FrameRetraction());
 
         driverA.whenPressed(new GetPanelAutomatedHeld());
         driverA.whenReleased(new GetPanelAutomatedRelease());
@@ -74,9 +78,10 @@ public class OI {
             operatorB = new JoystickButton(operatorStick, 2);
             operatorX = new JoystickButton(operatorStick, 3);
             operatorY = new JoystickButton(operatorStick, 4);
-            
+
             driverBack = new JoystickButton(driverStick, 7);
             driverStart = new JoystickButton(driverStick, 8);
+            operatorStart = new JoystickButton(driverStick, 8);
             driverRB = new JoystickButton(driverStick, 6);
             driverLB = new JoystickButton(driverStick, 5);
             driveButton = new MultiButton(new Button[] {
