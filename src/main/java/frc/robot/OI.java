@@ -7,8 +7,8 @@ import frc.robot.controller.AnalogButton;
 import frc.robot.controller.DPadButton;
 import frc.robot.controller.MultiButton;
 import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.ExtendBothLifters;
-import frc.robot.commands.RetractBothLifters;
+import frc.robot.commands.Lifter.ExtendBothLifters;
+import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedRelease;
@@ -33,7 +33,7 @@ public class OI {
     private Button operatorRB, operatorLT, operatorLB, operatorRT, operatorDown;
     public Button operatorLS;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed;
-    private Button operatorA;
+    private Button operatorA, operatorB, operatorX, operatorY;
 
     public OI() {
         driverStick = new Joystick(0);
@@ -47,6 +47,10 @@ public class OI {
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed));
         operatorA.whenPressed(new SetLiftHeightMagicMotion(-500.0));
+        operatorB.whenPressed(new SetLiftHeightMagicMotion(-200.0));
+        operatorX.whenPressed(new SetLiftHeightMagicMotion(-300.0));
+        operatorY.whenPressed(new SetLiftHeightMagicMotion(-250.0));
+
         driverA.whenPressed(new GetPanelAutomatedHeld());
         driverA.whenReleased(new GetPanelAutomatedRelease());
         driverB.whenPressed(new ScorePanelAutomatedHeld());
@@ -67,6 +71,10 @@ public class OI {
             driverA = new JoystickButton(driverStick, 1);
             driverB = new JoystickButton(driverStick, 2);
             operatorA = new JoystickButton(operatorStick, 1);
+            operatorB = new JoystickButton(operatorStick, 2);
+            operatorX = new JoystickButton(operatorStick, 3);
+            operatorY = new JoystickButton(operatorStick, 4);
+            
             driverBack = new JoystickButton(driverStick, 7);
             driverStart = new JoystickButton(driverStick, 8);
             driverRB = new JoystickButton(driverStick, 6);

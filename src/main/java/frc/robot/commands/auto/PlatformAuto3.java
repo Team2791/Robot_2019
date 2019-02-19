@@ -1,12 +1,12 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.DriveLifterWheelBackIR;
-import frc.robot.commands.DriveLifterWheelFrontIR;
-import frc.robot.commands.ExtendBothLifters;
-import frc.robot.commands.RetractBackLifter;
-import frc.robot.commands.RetractFrontLifter;
-import frc.robot.commands.SetLiftersToCoast;
+import frc.robot.commands.Lifter.DriveLifterWheelBackIR;
+import frc.robot.commands.Lifter.DriveLifterWheelFrontIR;
+import frc.robot.commands.Lifter.ExtendBothLifters;
+import frc.robot.commands.Lifter.RetractBackLifter;
+import frc.robot.commands.Lifter.RetractFrontLifter;
+import frc.robot.commands.Lifter.SetLiftersToCoast;
 
 public class PlatformAuto3 extends CommandGroup {
     public PlatformAuto3 (){
