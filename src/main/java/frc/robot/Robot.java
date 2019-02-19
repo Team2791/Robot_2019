@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.commands.auto.AutoZeroAllPots;
+import frc.robot.commands.auto.AutoSetLifterPots;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HatchManipulator;
@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
         
         oi = new OI();
 
-        autoCommand = new AutoZeroAllPots();
+        autoCommand = new AutoSetLifterPots();
     }
     
     @Override
