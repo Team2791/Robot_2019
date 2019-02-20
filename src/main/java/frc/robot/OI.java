@@ -48,7 +48,7 @@ public class OI {
         driverBack.whileHeld(new RetractBothLifters(-1));
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed));
-        operatorA.whenPressed(new SetLiftHeightMagicMotion(-500.0));
+        operatorA.whenPressed(new SetLiftHeightMagicMotion(-42.0));
         operatorB.whenPressed(new SetLiftHeightMagicMotion(-200.0));
         operatorX.whenPressed(new SetLiftHeightMagicMotion(-300.0));
         operatorY.whenPressed(new SetLiftHeightMagicMotion(-250.0));
