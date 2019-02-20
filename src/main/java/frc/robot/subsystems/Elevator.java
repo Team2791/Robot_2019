@@ -24,7 +24,7 @@ public class Elevator extends Subsystem {
     private Timer breakReleaseTimer;
     private boolean breakReleaseTimerStarted = false;
     public static double speedModifier;
-
+    private double maximumVelocity;
     //The potentiometer we are using goes from -1023 to 0 full range.
     //There is a bicycle disk break attached to a piston that allows us to stop the lift at the right height without needing stall current and other fancy shit
     //The elevator has one vex pro 775 connected to a talon srx
@@ -81,8 +81,12 @@ public class Elevator extends Subsystem {
 
 
     public double getHeight() {
-        return convertSRXUnitsToLiftHeight(getSRXVoltageFeedback()) + Constants.kPotOffset; //+1023 //TODO FIX ME
-        //return driveTalon.getSensorCollection().getAnalogIn();
+        return driveTalon.getSelectedSensorPosition(0);
+    }
+
+    public double getElevatorHeight(){
+        return getHeight() + Constants.kPotOffset;
+        //return convertSRXUnitsToLiftHeight(getSRXVoltageFeedback()) + Constants.kPotOffset;
     }
 
     public int getVelocity() {
@@ -223,7 +227,19 @@ public class Elevator extends Subsystem {
 		driveTalon.set(ControlMode.PercentOutput, power);
     }
 
+    public void MaximumVelocity() {
+        double liveVelocity;
+        liveVelocity = getVelocity();
+        if(liveVelocity > maximumVelocity){
+            maximumVelocity = liveVelocity;
+        }
+    }
+
+    public double getMaximumVelocity(){
+        return maximumVelocity;
+    }
     public void setTargetMagicMotion(double targetHeight) {
+        //targetHeight *= -1;
     	SmartDashboard.putNumber("Lift - MM - Target", convertLiftHeightToSRXUnits(targetHeight));
         driveTalon.set(ControlMode.MotionMagic, convertLiftHeightToSRXUnits(targetHeight));
     }
@@ -236,7 +252,9 @@ public class Elevator extends Subsystem {
     	return convertSRXUnitsToLiftHeight(getMagicMotionInstantError());
     }
 
+
     public void debug() {
+        MaximumVelocity();
         SmartDashboard.putBoolean("Elevator - Top Limit Switch value", atTop());
         SmartDashboard.putBoolean("Elevator - Bottom Limit Switch value", atBottom());
         SmartDashboard.putBoolean("Elevator - Break value", !breakSolenoid.get());
@@ -249,6 +267,7 @@ public class Elevator extends Subsystem {
         SmartDashboard.putNumber("Lift - SRX Return value", getSRXVoltageFeedback());
         SmartDashboard.putNumber("OperatorLSAxis", OI.operatorStick.getRawAxis(1));
         SmartDashboard.putNumber("ManualSpeed", Util.deadzone(Constants.DEADZONE, OI.operatorStick.getRawAxis(1),1.0) * Constants.MANUAL_POWER * Robot.elevator.speedModifier);
+        SmartDashboard.putNumber("MaximumVelocityReached", getMaximumVelocity());
     }
 
 }
