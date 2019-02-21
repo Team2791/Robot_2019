@@ -15,7 +15,17 @@ public class StopLift extends Command {
 
     @Override
     protected void execute() {
-    	Robot.elevator.setPower(0);
+        // if(Robot.elevator.getElevatorHeight()<100){
+        //     Robot.elevator.setPowerUnsafe(0);
+        // }
+        // else if(Robot.elevator.getMagicFinished()==true){
+        //     Robot.elevator.setPowerUnsafe(0.06);
+        // }
+        // else{
+        //     Robot.elevator.setPowerUnsafe(0);
+        // }
+        Robot.elevator.setPowerUnsafe(0);
+        Robot.elevator.setBreak(true);
 }
     
     @Override

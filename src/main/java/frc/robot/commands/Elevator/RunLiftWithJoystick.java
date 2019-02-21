@@ -18,15 +18,17 @@ public class RunLiftWithJoystick extends Command {
     }
   
     protected void initialize(){
+        Robot.elevator.setMagicFinished(false);
     	Robot.elevator.setBreak(false);
     }
 
     @Override
     protected void execute() {
-        double speed = Util.deadzone(Constants.DEADZONE,OI.operatorStick.getRawAxis(1), 1.0) * Constants.MANUAL_POWER * Robot.elevator.speedModifier;
+        double speed = Util.deadzone(Constants.DEADZONE,OI.operatorStick.getRawAxis(1), 1.0) * Constants.MANUAL_POWER * -1;
 
         if(Robot.oi.operatorLS.get()) {
-	        Robot.elevator.setManualPower(speed);
+            Robot.elevator.setPowerUnsafe(speed); //THIS SHOULD BE SET MANUAL POWER
+            
         } 
         
         //else {
@@ -38,7 +40,7 @@ public class RunLiftWithJoystick extends Command {
         else{
 
         }
-        Robot.elevator.setBreak(false);
+        // Robot.elevator.setBreak(false);
     }
 
     @Override
@@ -48,6 +50,7 @@ public class RunLiftWithJoystick extends Command {
 
     @Override
     protected void end(){
+        //Robot.elevator.setPowerUnsafe(0);
     	Robot.elevator.setBreak(true);
     }
     

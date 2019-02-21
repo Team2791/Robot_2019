@@ -23,8 +23,7 @@ public class Elevator extends Subsystem {
     private TalonSRX driveTalon;
     private Timer breakReleaseTimer;
     private boolean breakReleaseTimerStarted = false;
-    public static double speedModifier;
-    private double maximumVelocity;
+    public boolean magic = false;
     //The potentiometer we are using goes from -1023 to 0 full range.
     //There is a bicycle disk break attached to a piston that allows us to stop the lift at the right height without needing stall current and other fancy shit
     //The elevator has one vex pro 775 connected to a talon srx
@@ -36,13 +35,16 @@ public class Elevator extends Subsystem {
         super("ShakerLift");
 
 
-        driveTalon = new TalonSRX(RobotMap.kElevatorTalon);
+        driveTalon = new TalonSRX(RobotMap.kElevatorTalon); //This initializes the TalonSRX for the elevator called driveTalon
         breakSolenoid = new Solenoid(RobotMap.kPCM, RobotMap.kBreakSolenoid); // RobotMap ids need to be changed
         breakReleaseTimer = new Timer();
-        driveTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
-        driveTalon.setSensorPhase(true); //This is true because potentiometer is out of sync with the motor direction without this line
-        //driveTalon.setInverted(true);
+        driveTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog); //This sets up which sensor we want to use for magic motion, we set this to analog because we using a pot
+        driveTalon.setSensorPhase(true); //This should be true, to keep sensor in phase POSITIVE IS UP
+        driveTalon.setInverted(true); //This should be true, as green lights (Positive direction) = lift going UP
         driveTalon.setNeutralMode(NeutralMode.Brake);
+
+        //NOAH IS FUCKING HERE
+
         driveTalon.overrideLimitSwitchesEnable(false);
 
 
@@ -51,28 +53,25 @@ public class Elevator extends Subsystem {
         driveTalon.configNominalOutputForward(Constants.kLIFT_HOLD_VOLTAGE, 0); //kLIFT_HOLD_VOLTAGE is a little bit of stall current to keep lift from falling back down before the break enables
         driveTalon.configNominalOutputReverse(0.0, 0);
 
-    	SmartDashboard.putNumber("LIFT - MM - kP", Constants.kLIFT_P_VALUE);
-    	SmartDashboard.putNumber("LIFT - MM - kI", Constants.kLIFT_I_VALUE);
-    	SmartDashboard.putNumber("LIFT - MM - kD", Constants.kLIFT_D_VALUE);
-    	SmartDashboard.putNumber("Lift - MM - Target", 0); //Target magic motion value
+        driveTalon.configPeakOutputForward(1.0,0);
+        driveTalon.configPeakOutputReverse(-0.5,0); //TODO Tune this value - it is the maximum speed downwards
+
+        driveTalon.selectProfileSlot(0,0); //Just set this to 0,0 and don't ask questions idfk
+
+    	// SmartDashboard.putNumber("LIFT - MM - kP", Constants.kLIFT_P_VALUE);
+    	// SmartDashboard.putNumber("LIFT - MM - kI", Constants.kLIFT_I_VALUE);
+    	// SmartDashboard.putNumber("LIFT - MM - kD", Constants.kLIFT_D_VALUE);
+        // SmartDashboard.putNumber("Lift - MM - Target", 0); //Target magic motion value
         
-        driveTalon.configMotionCruiseVelocity(Constants.MOTION_VELOCITY, 0);
-        driveTalon.configMotionAcceleration(Constants.MOTION_ACCELERATION, 0);
-        driveTalon.config_kF(Constants.MM_PID_SLOT_ID, Constants.LIFT_F_VALUE, 0);
-        updateMagicMotionPIDGains();
-        speedModifier = 1;
+        driveTalon.config_kF(0, Constants.kELEVATOR_F_VALUE, 0);
+		driveTalon.config_kP(0, Constants.kELEVATOR_P_VALUE, 0);
+		driveTalon.config_kI(0, Constants.kELEVATOR_I_VALUE, 0);
+        driveTalon.config_kD(0, Constants.kELEVATOR_D_VALUE, 0);
+        
+        driveTalon.configMotionCruiseVelocity(Constants.kELEVATOR_VELOCITY, 0);
+        driveTalon.configMotionAcceleration(Constants.kELEVATOR_ACCELERATION, 0);
+
     }
-
-    public void updateMagicMotionPIDGains() {
-    	Constants.kLIFT_P_VALUE = SmartDashboard.getNumber("LIFT - MM - kP", Constants.kLIFT_P_VALUE);
-    	Constants.kLIFT_I_VALUE = SmartDashboard.getNumber("LIFT - MM - kI", Constants.kLIFT_I_VALUE);
-    	Constants.kLIFT_D_VALUE = SmartDashboard.getNumber("LIFT - MM - kD", Constants.kLIFT_D_VALUE);
-        driveTalon.config_kP(Constants.MM_PID_SLOT_ID, Constants.kLIFT_P_VALUE, 0);
-        driveTalon.config_kI(Constants.MM_PID_SLOT_ID, Constants.kLIFT_I_VALUE, 0);
-        driveTalon.config_kD(Constants.MM_PID_SLOT_ID, Constants.kLIFT_D_VALUE, 0);
-    }
-
-
 
     @Override
     protected void initDefaultCommand() {
@@ -80,194 +79,83 @@ public class Elevator extends Subsystem {
     }
 
 
-    public double getHeight() {
+    public double getSensorPosition() { //IN RAW FUCKING SENSOR UNITS!!!!!!!
         return driveTalon.getSelectedSensorPosition(0);
     }
-
+    public boolean getMagicFinished(){
+        return magic;
+    }
+    public void setMagicFinished(boolean status){
+        magic = status;
+    }
+    public void setBreak(boolean breakBool){
+        breakSolenoid.set(!breakBool);
+    }
     public double getElevatorHeight(){
-        return getHeight() + Constants.kPotOffset;
+        return getSensorPosition() + Constants.kPotOffset;
         //return convertSRXUnitsToLiftHeight(getSRXVoltageFeedback()) + Constants.kPotOffset;
     }
 
     public int getVelocity() {
-        return driveTalon.getSensorCollection().getAnalogInVel();
+        return driveTalon.getSelectedSensorVelocity(0);
     }
-
-    public int getSRXVoltageFeedback() {
-                return driveTalon.getSelectedSensorPosition(0);
-                // return driveTalon.getSensorCollection().getVoltage();
-                // return 0
-            }
-
-    public int getSRXVoltageVelocityFeedback() {
-                return driveTalon.getSelectedSensorVelocity(0);
-            }
-
-    public int convertLiftHeightToSRXUnits(double liftHeightIn) {
-                return (int) ((liftHeightIn - Constants.kPotOffset) / Constants.kElevatorPotFullRange * 1023);
-            }
-
-    public double convertSRXUnitsToLiftHeight(int SRXUnits) {
-                double potTravel = SRXUnits / 1023.0;
-                return potTravel * Constants.kElevatorPotFullRange;
-            }
-
-    public void setManualPower(double power){ //This function has nothing to do with magic motion, only used for operator being able to control with joystick
-        boolean pickedOne;
-        pickedOne = false;
-        if(atBottom() && pickedOne == false){
-            if(power<=0){
-                setPowerUnsafe(power);
-                pickedOne = true;
-            }
-            else{
-                //Don't allow the operator to move further down
-                setPowerUnsafe(0);
-                pickedOne=true;
-            }
-        }
-        else if(closeToBottom() && pickedOne == false){
-            if(power<=0){
-                setPowerUnsafe(power);
-                pickedOne = true;
-            }
-            else{
-                setPowerUnsafe(power * .25); //TODO Make this a variable
-                pickedOne = true;
-            }
-        }
-        else if(atTop() && pickedOne == false){
-            if(power>=0){
-                setPowerUnsafe(power);
-                pickedOne = true;
-            }
-            else{
-                setPowerUnsafe(0);
-                pickedOne = true;
-            }
-        }
-        else if(closeToTop() && pickedOne == false){
-            if(power>=0){
-                setPowerUnsafe(power);
-                pickedOne = true;
-            }
-            else{
-                setPowerUnsafe(power*.25);//TODO MAKE THIS A VARIABLE
-                pickedOne = true;
-            }
-        }
-        else{
-            setPowerUnsafe(power);
-            pickedOne = true;
-        }
-    }
-    public void setPower(double power) {
-                SmartDashboard.putNumber("Lift - set power input", power);
-                // make sure the break is released before we let it move
-                if(breakReleaseTimer.get() < 0.12) {
-                    setPowerUnsafe(0);
-                    return;
-                }
-                
-                if (atBottom()) {
-                    power = min(0, power);
-                } else if (closeToBottom()) {
-                    power = min(0.02, power); // was 0.2 without manipulator, if it needs to be something it can be -0.05 or something very small
-                } else if (atTop()) {
-                    power = max(-0.01, power); // let the lift hold itself at the top.
-                } else if (closeToTop()) {
-                    power = max(-0.25, power);
-                }
-        
-                // increasing speed from -0.45 to -.6 before Utica.
-                power = min(.60, power);
-                
-                // now we use the internal method that has direct control to the motor
-                // after we have made sure that power is a safe number.
-                setPowerUnsafe(power);
-            }
-
+    
     public boolean atBottom() {
-                return driveTalon.getSensorCollection().isRevLimitSwitchClosed() || getHeight() > Constants.kElevatorMinHeight - 1;
+                return driveTalon.getSensorCollection().isRevLimitSwitchClosed() || getSensorPosition() < Constants.kElevatorMinHeight + 1;
             }
         
-            
     public boolean closeToBottom() {
-                return getHeight() > Constants.kElevatorMinHeight - Constants.kElevatorBottomSafetyDistance;
+                return getSensorPosition() < Constants.kElevatorMinHeight + Constants.kElevatorBottomSafetyDistance;
             }
         
     public boolean atTop() {
-        return driveTalon.getSensorCollection().isFwdLimitSwitchClosed() || getHeight() < Constants.kElevatorMaxHeight + 1;
+        return driveTalon.getSensorCollection().isFwdLimitSwitchClosed() || getSensorPosition() > Constants.kElevatorMaxHeight - 1;
             }
         
     public boolean closeToTop() {
-                return getHeight() < Constants.kElevatorMaxHeight + Constants.kElevatorTopSafetyDistance;
+                return getSensorPosition() > Constants.kElevatorMaxHeight - Constants.kElevatorTopSafetyDistance;
             }
-
-    public void setBreak(boolean breakOn){
-        breakSolenoid.set(!breakOn); // Solenoid is default on. True means the break will be off
-        
-        if(breakOn) {
-        	// reset and stop the timer when we put the break on.
-        	breakReleaseTimer.reset();
-        	breakReleaseTimer.stop();
-        	breakReleaseTimerStarted = false;
-        } else {
-        	// when we release the break start the timer.
-        	// we need to check if we've already started the timer because the
-        	// start timer method also resets it.
-        	if(!breakReleaseTimerStarted) {
-        		breakReleaseTimer.start();
-        		breakReleaseTimerStarted = true;
-        	}
-        }
-    }
 
     public void setPowerUnsafe(double power) {
 		driveTalon.set(ControlMode.PercentOutput, power);
     }
 
-    public void MaximumVelocity() {
-        double liveVelocity;
-        liveVelocity = getVelocity();
-        if(liveVelocity > maximumVelocity){
-            maximumVelocity = liveVelocity;
+    //public int convertPotUnitsToSRXUnits(double PotUnits) {
+    //	return (int) ((PotUnits) / 10 * 1023); //ITS A 10 TURN POT
+    //}
+
+    public void setTargetMagicMotion(double targetHeight) {
+        if(getElevatorHeight()>targetHeight){
+            driveTalon.config_kP(0, Constants.kELEVATOR_DOWN_P_VALUE, 0);
+            driveTalon.set(ControlMode.MotionMagic, targetHeight);
+        }
+        else{
+            driveTalon.config_kP(0, Constants.kELEVATOR_P_VALUE, 0);
+            driveTalon.set(ControlMode.MotionMagic, targetHeight);
         }
     }
+    
+    public int getMagicMotionInstantError() { //RETURNS THE ERROR IN SRX UNITS
+    	return driveTalon.getClosedLoopError(0);
+    }
+    
+    //public double convertSRXInitsToPotUnits(int SRXUnits) {
+    //	double potTravel = SRXUnits / 1023.0;
+    //	return potTravel * 10; //ITS A 10 TURN POT
+    //}
 
-    public double getMaximumVelocity(){
-        return maximumVelocity;
-    }
-    public void setTargetMagicMotion(double targetHeight) {
-        //targetHeight *= -1;
-    	SmartDashboard.putNumber("Lift - MM - Target", convertLiftHeightToSRXUnits(targetHeight));
-        driveTalon.set(ControlMode.MotionMagic, convertLiftHeightToSRXUnits(targetHeight));
-    }
-    
-    public int getMagicMotionInstantError() {
-    	return driveTalon.getClosedLoopError(Constants.MM_PID_SLOT_ID);
-    }
-    
     public double getMagicMotionInstantErrorIn() {
-    	return convertSRXUnitsToLiftHeight(getMagicMotionInstantError());
+    	return getMagicMotionInstantError();
     }
 
 
     public void debug() {
-        MaximumVelocity();
         SmartDashboard.putBoolean("Elevator - Top Limit Switch value", atTop());
         SmartDashboard.putBoolean("Elevator - Bottom Limit Switch value", atBottom());
-        SmartDashboard.putBoolean("Elevator - Break value", !breakSolenoid.get());
-        SmartDashboard.putNumber("Elevator - break timer", breakReleaseTimer.get());
-        SmartDashboard.putNumber("Elevator - Height", getHeight());
-        SmartDashboard.putNumber("Lift - Velocity", getVelocity());
+        SmartDashboard.putNumber("Elevator - Height", getSensorPosition());
+        SmartDashboard.putNumber("Elevator - Velocity", getVelocity());
         SmartDashboard.putBoolean("Elevator - Close to top", closeToTop());
         SmartDashboard.putBoolean("Elevator - Close to bottom", closeToBottom());
-        SmartDashboard.putNumber("Lift - Velocity RAW", getSRXVoltageVelocityFeedback());
-        SmartDashboard.putNumber("Lift - SRX Return value", getSRXVoltageFeedback());
-        SmartDashboard.putNumber("OperatorLSAxis", OI.operatorStick.getRawAxis(1));
-        SmartDashboard.putNumber("ManualSpeed", Util.deadzone(Constants.DEADZONE, OI.operatorStick.getRawAxis(1),1.0) * Constants.MANUAL_POWER * Robot.elevator.speedModifier);
-        SmartDashboard.putNumber("MaximumVelocityReached", getMaximumVelocity());
     }
 
 }

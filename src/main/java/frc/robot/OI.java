@@ -48,10 +48,10 @@ public class OI {
         driverBack.whileHeld(new RetractBothLifters(-1));
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed));
-        operatorA.whenPressed(new SetLiftHeightMagicMotion(-42.0));
-        operatorB.whenPressed(new SetLiftHeightMagicMotion(-200.0));
-        operatorX.whenPressed(new SetLiftHeightMagicMotion(-300.0));
-        operatorY.whenPressed(new SetLiftHeightMagicMotion(-250.0));
+        operatorA.whenPressed(new SetLiftHeightMagicMotion(44.0));
+        operatorB.whenPressed(new SetLiftHeightMagicMotion(147.0)); //Get a panel
+        operatorX.whenPressed(new SetLiftHeightMagicMotion(606.0)); //Score panel l2
+        operatorY.whenPressed(new SetLiftHeightMagicMotion(1000.0));
 
         operatorStart.whenPressed(new FrameRetraction());
 

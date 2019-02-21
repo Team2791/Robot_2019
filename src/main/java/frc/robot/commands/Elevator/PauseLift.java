@@ -14,7 +14,7 @@ public class PauseLift extends Command {
     }
 
     protected void execute() {
-    	Robot.elevator.setPower(0);
+    	Robot.elevator.setPowerUnsafe(0);
     }
 
     protected boolean isFinished() {

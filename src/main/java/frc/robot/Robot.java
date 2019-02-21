@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
     public static Lifters lifters;
     public static PowerDistributionPanel pdp;
     public static Compressor compressor;
-
     private Command autoCommand;
 
 

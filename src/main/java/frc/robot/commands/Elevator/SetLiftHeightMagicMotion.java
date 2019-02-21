@@ -33,15 +33,14 @@ public class SetLiftHeightMagicMotion extends Command {
 
     @Override
     public boolean isFinished() {
-        double diff = Robot.elevator.getHeight() - targetHeight;
-        Robot.elevator.setBreak(true);
-        return finishDelayedBoolean.update(Math.abs(diff) < 0.6);
-   }
+        double diff = Robot.elevator.getSensorPosition() - targetHeight;
+        return finishDelayedBoolean.update(Math.abs(diff) < 5);
+    }
 
     @Override
     protected void end () {
-    	System.out.println("Lift magic motion done!");
-    	Robot.elevator.setPower(0);
+        System.out.println("Lift magic motion done!");
+        Robot.elevator.setMagicFinished(true);
     	Robot.elevator.setBreak(true);
     }
 
