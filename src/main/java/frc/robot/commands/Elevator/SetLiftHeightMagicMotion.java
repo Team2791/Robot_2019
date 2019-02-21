@@ -1,6 +1,7 @@
 package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 import frc.robot.util.DelayedBoolean;
@@ -34,13 +35,15 @@ public class SetLiftHeightMagicMotion extends Command {
     @Override
     public boolean isFinished() {
         double diff = Robot.elevator.getSensorPosition() - targetHeight;
-        return finishDelayedBoolean.update(Math.abs(diff) < 5);
+        if(Robot.elevator.atTop()){
+            return true;
+        }
+        return finishDelayedBoolean.update(Math.abs(diff) < Constants.kELEVATOR_ERROR_LEVEL);
     }
 
     @Override
     protected void end () {
         System.out.println("Lift magic motion done!");
-        Robot.elevator.setMagicFinished(true);
     	Robot.elevator.setBreak(true);
     }
 

@@ -12,6 +12,8 @@ import frc.robot.subsystems.Lifters;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.subsystems.CargoManipulator;
 import frc.robot.util.Limelight;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 
 public class Robot extends TimedRobot {
 
@@ -26,6 +28,8 @@ public class Robot extends TimedRobot {
     public static Compressor compressor;
     private Command autoCommand;
 
+    public static UsbCamera driver_cam;
+
 
     @Override
     public void robotInit() {
@@ -39,7 +43,7 @@ public class Robot extends TimedRobot {
         cargoManipulator = new CargoManipulator();
         
         oi = new OI();
-
+        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
         autoCommand = new AutoSetLifterPots();
     }
     

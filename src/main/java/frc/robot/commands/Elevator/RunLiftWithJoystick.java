@@ -18,7 +18,6 @@ public class RunLiftWithJoystick extends Command {
     }
   
     protected void initialize(){
-        Robot.elevator.setMagicFinished(false);
     	Robot.elevator.setBreak(false);
     }
 

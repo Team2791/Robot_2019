@@ -20,25 +20,28 @@ public class Constants {
     public static final double kLifterF = 0.135;
     public static final double kLifterP = 16;
 
-    // Elevator Constants All these constants need to be modified later on 
-	public static final int kElevatorPotFullRange = 985; 
-    public static final double kElevatorMinPower = 0.3;
-    public static final double kElevatorStallSpeed = -0.2; //Dont worry about this guy
-
     //SHIT THAT HAS BEEN ADDED FOR MAGIC MOTION STUFF
 
     public static double kLIFT_HOLD_VOLTAGE = 0.25; //Noah has determined this should be about 0.25
 
     public static double kELEVATOR_F_VALUE = 0.38; // F-gain = (100% X 1023) / MAX_VEL
-    public static double kELEVATOR_P_VALUE = 7; //The P value of the lift's PID loop //16 SHOULD be a pretty good value
-    public static double kELEVATOR_DOWN_P_VALUE = 1.5;
-    public static double kELEVATOR_I_VALUE = 0.0; //The I value of the lift's PID loop
-    public static double kELEVATOR_D_VALUE = 4.55; //The D value of the lift's PID loop 8 SHOULD be a pretty good value
-    public static int kELEVATOR_VELOCITY = 125; //106; //TUNE MEEE
-    public static int kELEVATOR_ACCELERATION = 300; //212; //TUNE MEEEEE
-    public static final double kElevatorMaxHeight = 1023; //This is the maximum height of the elevator based on potentiometer values idrk
-    public static final double kElevatorMinHeight = 41; //This is the minimum height of the elevator based on potentiometer values idrk
 
+    public static double kELEVATOR_P_VALUE = 7; //The P value of the lift's PID loop //16 SHOULD be a pretty good value
+    public static double kELEVATOR_UP_P_HEIGHT = 940; //The min height needed to use the UP P value
+    public static double kELEVATOR_DOWN_P_VALUE = 1.5;
+    public static double kELEVATOR_UP_P_VALUE = 12;
+    public static double kELEVATOR_I_VALUE = 0.0; //The I value of the lift's PID loop
+    public static double kELEVATOR_D_VALUE = 4.35; //The D value of the lift's PID loop 8 SHOULD be a pretty good value
+
+    public static double kELEVATOR_PANEL_ONE = 147.0;
+    public static double kELEVATOR_PANEL_TWO = 606.0;
+    public static double kELEVATOR_PANEL_THREE = 1000.0;
+
+    public static int kELEVATOR_VELOCITY = 100; //106; //TUNE MEEE
+    public static int kELEVATOR_ACCELERATION = 300; //212; //TUNE MEEEEE
+    public static final double kElevatorMaxHeight = 1004; //This is the maximum height of the elevator based on potentiometer values idrk
+    public static final double kElevatorMinHeight = 14; //This is the minimum height of the elevator based on potentiometer values idrk
+    public static final double kELEVATOR_ERROR_LEVEL = 5;
     public static final int kElevatorBottomSafetyDistance = 100; //This is the difference between absolute bottom and where it will stop
     public static final int kElevatorTopSafetyDistance = 100;
     public static final double MANUAL_POWER = 1.0; //Manual power is 0.75
