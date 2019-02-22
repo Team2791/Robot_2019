@@ -1,8 +1,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.robot.OI;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -10,13 +8,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import static java.lang.StrictMath.max;
-import static java.lang.StrictMath.min;
 import frc.robot.commands.Elevator.StopLift;
-import frc.robot.util.Util;
 public class Elevator extends Subsystem {
 
     private Solenoid breakSolenoid;
@@ -51,7 +45,7 @@ public class Elevator extends Subsystem {
         driveTalon.configNominalOutputReverse(0.0, 0);
 
         driveTalon.configPeakOutputForward(1.0,0);
-        driveTalon.configPeakOutputReverse(-0.75,0); //TODO Tune this value - it is the maximum speed downwards
+        driveTalon.configPeakOutputReverse(-0.75,0);
 
         driveTalon.selectProfileSlot(0,0); //Just set this to 0,0 and don't ask questions idfk
 

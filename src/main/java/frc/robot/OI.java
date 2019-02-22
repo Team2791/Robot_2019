@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.controller.AnalogButton;
-import frc.robot.controller.DPadButton;
 import frc.robot.controller.MultiButton;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.FrameRetraction;
 import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
+import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedRelease;
@@ -20,7 +20,7 @@ import frc.robot.commands.CargoManipulator.HoldCargoIntake;
 import frc.robot.commands.CargoManipulator.ReleaseCargoIntake;
 import frc.robot.commands.CargoManipulator.SlowShootCargo;
 import frc.robot.commands.CargoManipulator.StopCargoMotor;
-import frc.robot.commands.Elevator.SetLiftHeightMagicMotion;
+import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.util.Util;
 
@@ -32,8 +32,8 @@ public class OI {
     private Button driverStart, driverBack;
     private Button operatorStart;
     private Button driverA, driverB;
-    private Button operatorRB, operatorLT, operatorLB, operatorRT, operatorDown;
-    public Button operatorLS;
+    private Button operatorRB, operatorLT, operatorLB, operatorRT;
+    public Button operatorLS, operatorBack;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed;
     private Button operatorA, operatorB, operatorX, operatorY;
 
@@ -48,10 +48,10 @@ public class OI {
         driverBack.whileHeld(new RetractBothLifters(-1));
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed));
-        operatorA.whenPressed(new SetLiftHeightMagicMotion(Constants.kElevatorMinHeight + 3)); //This will make the lift go to 0
-        operatorB.whenPressed(new SetLiftHeightMagicMotion(Constants.kELEVATOR_PANEL_ONE)); //Get a panel
-        operatorX.whenPressed(new SetLiftHeightMagicMotion(Constants.kELEVATOR_PANEL_TWO)); //Score panel l2
-        operatorY.whenPressed(new SetLiftHeightMagicMotion(Constants.kELEVATOR_PANEL_THREE)); //Score panel l3
+        operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kElevatorMinHeight + 3)); //This will make the lift go to 0
+        operatorB.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_ONE, Constants.kELEVATOR_BALL_ONE));
+        operatorX.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_TWO, Constants.kELEVATOR_BALL_TWO));
+        operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE));
 
         operatorStart.whenPressed(new FrameRetraction());
 
@@ -80,6 +80,7 @@ public class OI {
             operatorY = new JoystickButton(operatorStick, 4);
 
             driverBack = new JoystickButton(driverStick, 7);
+            operatorBack = new JoystickButton(operatorStick,7);
             driverStart = new JoystickButton(driverStick, 8);
             operatorStart = new JoystickButton(driverStick, 8);
             driverRB = new JoystickButton(driverStick, 6);
@@ -95,7 +96,6 @@ public class OI {
             operatorLT = new AnalogButton(operatorStick, 2);
             operatorRT = new AnalogButton(operatorStick, 3);
             operatorLS = new AnalogButton(operatorStick, 1);
-            operatorDown = new DPadButton(operatorStick, 2);
         }
 
         catch (Exception error){

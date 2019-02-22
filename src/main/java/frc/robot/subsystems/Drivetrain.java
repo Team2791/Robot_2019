@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.StopDrive;
+import frc.robot.Robot;
 // import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 public class Drivetrain extends Subsystem {
@@ -62,7 +63,7 @@ public class Drivetrain extends Subsystem {
 		// 	System.out.println("Gyro is unplugged, Disabling Gyro");
 		// }
         setDriveSpeed(false);
-        setBrakeMode(false);
+        // setBrakeMode(false);
         setMotors(0, 0);
     }
 
@@ -74,17 +75,20 @@ public class Drivetrain extends Subsystem {
     }
 
     public void setMotors(double left, double right) {
+        SmartDashboard.putNumber("LeftSideOutput", left);
+        SmartDashboard.putNumber("RightSideOutput",right);
+
         leftLeader.set(ControlMode.PercentOutput, left * speedMultiplier);
         rightLeader.set(ControlMode.PercentOutput, right * speedMultiplier);
     }
 
-    public void setBrakeMode(boolean isbrake) {
-        NeutralMode mode = isbrake ? NeutralMode.Brake : NeutralMode.Coast;
-        for(int i = 0; i < leftDrive.length; ++i) {
-            leftDrive[i].setNeutralMode(mode);
-            rightDrive[i].setNeutralMode(mode);
-        }
-    }
+    // public void setBrakeMode(boolean isbrake) {
+    //     NeutralMode mode = isbrake ? NeutralMode.Brake : NeutralMode.Coast;
+    //     for(int i = 0; i < leftDrive.length; ++i) {
+    //         leftDrive[i].setNeutralMode(mode);
+    //         rightDrive[i].setNeutralMode(mode);
+    //     }
+    // }
 
     public void setDriveSpeed(boolean isSlow) {
         speedMultiplier = isSlow ? Constants.kSlowDrive : Constants.kFastDrive;
@@ -133,5 +137,11 @@ public class Drivetrain extends Subsystem {
     public void debug(){
         SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
         SmartDashboard.putNumber("Right Encoder", getLeftEncoder());
+        SmartDashboard.putNumber("Motor 0 Current", Robot.pdp.getCurrent(0));
+        SmartDashboard.putNumber("Motor 1 Current", Robot.pdp.getCurrent(1));
+        SmartDashboard.putNumber("Motor 2 Current", Robot.pdp.getCurrent(2));
+        SmartDashboard.putNumber("Motor 15 Current", Robot.pdp.getCurrent(15));
+        SmartDashboard.putNumber("Motor 14 Current", Robot.pdp.getCurrent(14));
+        SmartDashboard.putNumber("Motor 13 Current", Robot.pdp.getCurrent(13));
     }
 }  

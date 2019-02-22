@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
         cargoManipulator = new CargoManipulator();
         
         oi = new OI();
-        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
+        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0); //TODO create camera code that works with the C920
         autoCommand = new AutoSetLifterPots();
     }
     

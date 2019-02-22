@@ -5,6 +5,8 @@ public class Constants {
     public static final double kFastDrive = 1.0;
     public static final double kSlowDrive = 0.5;
     public static final double kCreep = 0.2;
+    public static final double kSlowish = 0.5;
+    //TODO different speeds based on height
 
     // Lifters constants
     public static final int kFrontLifterPotMin = 40;
@@ -26,21 +28,25 @@ public class Constants {
 
     public static double kELEVATOR_F_VALUE = 0.38; // F-gain = (100% X 1023) / MAX_VEL
 
-    public static double kELEVATOR_P_VALUE = 7; //The P value of the lift's PID loop //16 SHOULD be a pretty good value
-    public static double kELEVATOR_UP_P_HEIGHT = 940; //The min height needed to use the UP P value
-    public static double kELEVATOR_DOWN_P_VALUE = 1.5;
-    public static double kELEVATOR_UP_P_VALUE = 12;
+    public static double kELEVATOR_P_VALUE = 15; //12.5; //The P value of the lift's PID loop //16 SHOULD be a pretty good value
+    public static double kELEVATOR_UP_P_HEIGHT = 700; //The min height needed to use the UP P value
+    public static double kELEVATOR_DOWN_P_VALUE = 8; //5
+    public static double kELEVATOR_UP_P_VALUE = 19;//12; THIS WORKS ISH
     public static double kELEVATOR_I_VALUE = 0.0; //The I value of the lift's PID loop
     public static double kELEVATOR_D_VALUE = 4.35; //The D value of the lift's PID loop 8 SHOULD be a pretty good value
 
-    public static double kELEVATOR_PANEL_ONE = 147.0;
+    public static double kELEVATOR_PANEL_ONE = 114.0;
     public static double kELEVATOR_PANEL_TWO = 606.0;
     public static double kELEVATOR_PANEL_THREE = 1000.0;
+
+    public static double kELEVATOR_BALL_ONE = 100;
+    public static double kELEVATOR_BALL_TWO = 200;
+    public static double kELEVATOR_BALL_THREE = 300;
 
     public static int kELEVATOR_VELOCITY = 100; //106; //TUNE MEEE
     public static int kELEVATOR_ACCELERATION = 300; //212; //TUNE MEEEEE
     public static final double kElevatorMaxHeight = 1004; //This is the maximum height of the elevator based on potentiometer values idrk
-    public static final double kElevatorMinHeight = 14; //This is the minimum height of the elevator based on potentiometer values idrk
+    public static final double kElevatorMinHeight = 12; //This is the minimum height of the elevator based on potentiometer values idrk
     public static final double kELEVATOR_ERROR_LEVEL = 5;
     public static final int kElevatorBottomSafetyDistance = 100; //This is the difference between absolute bottom and where it will stop
     public static final int kElevatorTopSafetyDistance = 100;
@@ -57,10 +63,10 @@ public class Constants {
 
 
 	//Cargo Intake Values
-	public static final double kCargoIntakeMotorSpeed = 1.0; //0.75 //This is the intake speed for the cargo
+	public static final double kCargoIntakeMotorSpeed = 0.75; //0.75 //This is the intake speed for the cargo
 	public static final double kRaiseCargoArmsDelayAfterButtonPressed = 0.4; //This is the delay between when the ball presses the switch on the intake and when the intake is raised
 	public static final double kCargoIntakeMotorStallSpeed = 0.1; //This is the speed at which the intake will apply a constant stall on the ball when the switch is pressed
 	public static final double kCargoSlowShootMotorSpeed = -0.25;
 	public static final double kCargoFastShootMotorSpeed = -0.7;
-	public static final double kCargoIntakeHumanSpeed = 1.0; //0.5
+	public static final double kCargoIntakeHumanSpeed = 0.75; //0.5
 }

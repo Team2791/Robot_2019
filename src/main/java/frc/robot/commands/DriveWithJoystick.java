@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
 
 public class DriveWithJoystick extends Command {
     private Joystick stick;
@@ -26,7 +25,7 @@ public class DriveWithJoystick extends Command {
             thrust = -Constants.kCreep;
         } 
         else if(Robot.elevator.getSensorPosition() > 300){ //Noah added this to limit speed when elevator is up
-            thrust = Constants.kCreep * (stick.getRawAxis(3) - stick.getRawAxis(2));
+            thrust = Constants.kSlowish * (stick.getRawAxis(3) - stick.getRawAxis(2));
             if(Math.abs(thrust) < deadzone) {
                 thrust = 0;
             }
