@@ -19,6 +19,7 @@ public class Lifters extends Subsystem {
     private VictorSPX lifterDrive;
     private IrSensor frontIR;
     private IrSensor backIR;
+    
     private int frontPotZero;
     private int backPotZero;
     private double proportional;

@@ -36,16 +36,16 @@ public class Constants {
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
-    public static double kELEVATOR_PANEL_ONE = 101.0 - kPotOffset; //This is correct yay
-    public static double kELEVATOR_PANEL_TWO = 552.0 - kPotOffset; //This is correct yay
-    public static double kELEVATOR_PANEL_THREE = 982.0 - kPotOffset; //This is correct yay
+    public static double kELEVATOR_PANEL_ONE = 114.0 - kPotOffset; //This is correct yay
+    public static double kELEVATOR_PANEL_TWO = 565.0 - kPotOffset; //This is correct yay
+    public static double kELEVATOR_PANEL_THREE = 995.0 - kPotOffset; //This is correct yay
 
-    public static double kELEVATOR_BALL_ONE = 194 - kPotOffset; //THIS IS THE CARGO SHIP //This is correct yay
-    public static double kELEVATOR_BALL_TWO = 442 - kPotOffset; //This is correct yay
-    public static double kELEVATOR_BALL_THREE = 878 - kPotOffset; //This is correct yay
+    public static double kELEVATOR_BALL_ONE = 207 - kPotOffset; //THIS IS THE CARGO SHIP //This is correct yay
+    public static double kELEVATOR_BALL_TWO = 455 - kPotOffset; //This is correct yay
+    public static double kELEVATOR_BALL_THREE = 891 - kPotOffset; //This is correct yay
 
-    public static final double kElevatorMaxHeight = 1004 - kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
-    public static final double kElevatorMinHeight = 11 - kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
+    public static final double kElevatorMaxHeight = 1017 - kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
+    public static final double kElevatorMinHeight = 24 - kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
     public static final int kElevatorBottomSafetyDistance = 100;
     public static final int kElevatorTopSafetyDistance = 100;
     public static final double MANUAL_POWER = 1.0; //Manual power is 0.75

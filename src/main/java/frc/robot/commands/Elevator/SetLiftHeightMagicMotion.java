@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SetLiftHeightMagicMotion extends Command {
     private double targetHeight;
-    private Elevator elevator;
-    private DelayedBoolean finishDelayedBoolean;
+    protected Elevator elevator;
+    protected DelayedBoolean finishDelayedBoolean;
     
     
     public SetLiftHeightMagicMotion(double height) {
@@ -27,6 +27,7 @@ public class SetLiftHeightMagicMotion extends Command {
     protected void initialize() {
         elevator.setBreak(false);
         elevator.setTargetMagicMotion(targetHeight);
+        System.out.println("Trying to get to height "+targetHeight);
         finishDelayedBoolean.update(false);
     }
 
