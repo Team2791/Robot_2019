@@ -13,9 +13,10 @@ import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.subsystems.CargoManipulator;
 import frc.robot.util.Limelight;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+//import edu.wpi.first.wpilibj.CameraServer;
 
 public class Robot extends TimedRobot {
+    long loopCounter = 0;
 
     public static OI oi;
     public static Drivetrain drivetrain;
@@ -43,12 +44,16 @@ public class Robot extends TimedRobot {
         cargoManipulator = new CargoManipulator();
         
         oi = new OI();
-        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0); //TODO create camera code that works with the C920
+        //driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0); //TODO create camera code that works with the C920
         autoCommand = new AutoSetLifterPots();
     }
     
     @Override
     public void robotPeriodic() {
+        // only run the debug stuff once every 10 loops
+        if(++loopCounter % 10 != 0) {
+            return;
+        }
         lifters.debug();
         elevator.debug();
         cargoManipulator.debug();

@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import java.util.Random;
 
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -12,10 +13,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Elevator.StopLift;
 public class Elevator extends Subsystem {
+    int loopCounter = 0;
 
     private Solenoid breakSolenoid;
     private TalonSRX driveTalon;
     public boolean magic = false;
+
     //The potentiometer we are using goes from -1023 to 0 full range.
     //There is a bicycle disk break attached to a piston that allows us to stop the lift at the right height without needing stall current and other fancy shit
     //The elevator has one vex pro 775 connected to a talon srx
@@ -29,17 +32,12 @@ public class Elevator extends Subsystem {
 
         driveTalon = new TalonSRX(RobotMap.kElevatorTalon); //This initializes the TalonSRX for the elevator called driveTalon
         breakSolenoid = new Solenoid(RobotMap.kPCM, RobotMap.kBreakSolenoid); // RobotMap ids need to be changed
-        driveTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog); //This sets up which sensor we want to use for magic motion, we set this to analog because we using a pot
+        driveTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog); //This sets up which sensor we want to use, we set this to analog because we using a pot
         driveTalon.setSensorPhase(true); //This should be true, to keep sensor in phase POSITIVE IS UP
         driveTalon.setInverted(true); //This should be true, as green lights (Positive direction) = lift going UP
         driveTalon.setNeutralMode(NeutralMode.Brake);
 
-        //NOAH IS FUCKING HERE
-
         driveTalon.overrideLimitSwitchesEnable(false);
-
-
-        // Setting up Magic Motion Profiling
 
         driveTalon.configNominalOutputForward(Constants.kLIFT_HOLD_VOLTAGE, 0); //kLIFT_HOLD_VOLTAGE is a little bit of stall current to keep lift from falling back down before the break enables
         driveTalon.configNominalOutputReverse(0.0, 0);
@@ -47,16 +45,14 @@ public class Elevator extends Subsystem {
         driveTalon.configPeakOutputForward(1.0,0);
         driveTalon.configPeakOutputReverse(-0.75,0);
 
-        driveTalon.selectProfileSlot(0,0); //Just set this to 0,0 and don't ask questions idfk
+        driveTalon.selectProfileSlot(0,0); //Just set this to 0,0
 
         driveTalon.config_kF(0, Constants.kELEVATOR_F_VALUE, 0);
 		driveTalon.config_kP(0, Constants.kELEVATOR_P_VALUE, 0);
 		driveTalon.config_kI(0, Constants.kELEVATOR_I_VALUE, 0);
         driveTalon.config_kD(0, Constants.kELEVATOR_D_VALUE, 0);
-        
-        driveTalon.configMotionCruiseVelocity(Constants.kELEVATOR_VELOCITY, 0);
-        driveTalon.configMotionAcceleration(Constants.kELEVATOR_ACCELERATION, 0);
-
+        driveTalon.config_IntegralZone(0, Constants.kELEVATOR_I_ZONE_VALUE);
+ 
     }
 
     @Override
@@ -64,7 +60,7 @@ public class Elevator extends Subsystem {
         setDefaultCommand(new StopLift());
     }
 
-    public double getSensorPosition() { //IN RAW FUCKING SENSOR UNITS!!!!!!!
+    public double getSensorPosition() {
         return driveTalon.getSelectedSensorPosition(0);
     }
 
@@ -73,7 +69,7 @@ public class Elevator extends Subsystem {
     }
 
     public double getElevatorHeight(){
-        return getSensorPosition();
+        return getSensorPosition() - Constants.kPotOffset;
     }
 
     public int getVelocity() {
@@ -101,28 +97,23 @@ public class Elevator extends Subsystem {
     }
 
     public void setTargetMagicMotion(double targetHeight) {
-        if(targetHeight > Constants.kELEVATOR_UP_P_HEIGHT){
-            driveTalon.config_kP(0,Constants.kELEVATOR_UP_P_VALUE,0);
-            driveTalon.set(ControlMode.MotionMagic, targetHeight);
-        }
-        else if(getElevatorHeight()>targetHeight){
-            driveTalon.config_kP(0, Constants.kELEVATOR_DOWN_P_VALUE, 0);
-            driveTalon.set(ControlMode.MotionMagic, targetHeight);
-        }
-        else{
-            driveTalon.config_kP(0, Constants.kELEVATOR_P_VALUE, 0);
-            driveTalon.set(ControlMode.MotionMagic, targetHeight);
-        }
+        driveTalon.set(ControlMode.Position, targetHeight);
     }
     
-    public int getMagicMotionInstantError() {
+    public int getMagicMotionInstantError() { //This does not return what you would expect FYI
     	return driveTalon.getClosedLoopError(0);
     }
 
     public void debug() {
+        // only run the debug once every 20 loops to reduce cpu usage
+        // if(++loopCounter % 20 != 0) {
+        //     return;
+        // }
+        // TODO remove!
+
         SmartDashboard.putBoolean("Elevator - Top Limit Switch value", atTop());
         SmartDashboard.putBoolean("Elevator - Bottom Limit Switch value", atBottom());
-        SmartDashboard.putNumber("Elevator - Height", getSensorPosition());
+        SmartDashboard.putNumber("Elevator - Height", getElevatorHeight());
         SmartDashboard.putNumber("Elevator - Velocity", getVelocity());
         SmartDashboard.putBoolean("Elevator - Close to top", closeToTop());
         SmartDashboard.putBoolean("Elevator - Close to bottom", closeToBottom());

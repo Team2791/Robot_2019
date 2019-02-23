@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class MagicMotionHatchBall extends CommandGroup{
 private Joystick stick;
 
+// hatch height is the hight we want to go to if we are holding a hatch. ditto ball
     public MagicMotionHatchBall (Joystick stick, double HatchHeight, double BallHeight){
 
         this.stick = stick;

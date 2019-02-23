@@ -5,6 +5,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 import frc.robot.util.DelayedBoolean;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class SetLiftHeightMagicMotion extends Command {
@@ -26,25 +27,30 @@ public class SetLiftHeightMagicMotion extends Command {
     protected void initialize() {
         elevator.setBreak(false);
         elevator.setTargetMagicMotion(targetHeight);
+        finishDelayedBoolean.update(false);
     }
 
     @Override
     protected void execute() {
+        //elevator.setTargetMagicMotion(SmartDashboard.getNumber("Elevator target height", Constants.kElevatorMinHeight + 3));
     }
 
     @Override
     public boolean isFinished() {
-        double diff = Robot.elevator.getSensorPosition() - targetHeight;
+        double error = elevator.getMagicMotionInstantError();
+        // double error = Robot.elevator.getSensorPosition() - targetHeight;
+        //SmartDashboard.putNumber("Elevator - error", error);
+        
         if(Robot.elevator.atTop()){
             return true;
         }
-        return finishDelayedBoolean.update(Math.abs(diff) < Constants.kELEVATOR_ERROR_LEVEL);
+        return finishDelayedBoolean.update(Math.abs(error) < Constants.kELEVATOR_ERROR_LEVEL);
     }
 
     @Override
     protected void end () {
         System.out.println("Lift magic motion done!");
-    	Robot.elevator.setBreak(true);
+        Robot.elevator.setBreak(true);
     }
 
     @Override

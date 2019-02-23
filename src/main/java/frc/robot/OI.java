@@ -21,8 +21,10 @@ import frc.robot.commands.CargoManipulator.ReleaseCargoIntake;
 import frc.robot.commands.CargoManipulator.SlowShootCargo;
 import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
+import frc.robot.commands.Elevator.SetLiftHeightMagicMotion;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.util.Util;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
     public static Joystick driverStick;
