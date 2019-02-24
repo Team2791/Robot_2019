@@ -15,11 +15,12 @@ public class Constants {
     public static final int kLifetPotRange = 354;
     public static final int kFrontPlatformCutoff = 1100;
     public static final int kBackPlatformCutoff = 1100;
-    public static final double kLifterDrivePower = 1;
+    public static final double kLifterDrivePower = .3;
     public static final double kFullDangerCurrent = 134;
     public static final int kDangerTimeout = 100;
     public static final double kLifterF = 0.135;
-    public static final double kLifterP = 16;
+    public static final double kLifterP = 8; //16 reduced bc doubled output
+    public static final double k_IR_SENSOR_THREASHOLD = 1800; // TODO good name
 
     //Elevator constants
 

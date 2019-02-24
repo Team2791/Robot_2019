@@ -9,6 +9,7 @@ import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.FrameRetraction;
 import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
+import frc.robot.commands.Lifter.RetractFrontLifter;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
@@ -25,6 +26,10 @@ import frc.robot.commands.Elevator.SetLiftHeightMagicMotion;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.util.Util;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.Lifter.DriveLifterWheelBackIR;
+import frc.robot.commands.Lifter.RetractBackLifter;
+import frc.robot.commands.Lifter.SetLiftersToCoast;
+import frc.robot.commands.Lifter.DriveLifterWheelFrontIR;
 
 public class OI {
     public static Joystick driverStick;
@@ -36,6 +41,7 @@ public class OI {
     private Button driverA, driverB;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
+    private Button driverX, driverY;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed;
     private Button operatorA, operatorB, operatorX, operatorY;
 
@@ -46,7 +52,7 @@ public class OI {
         initUsed();
 
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1));
-        driverStart.whileHeld(new ExtendBothLifters(1));
+        driverStart.whileHeld(new ExtendBothLifters(.8));
         driverBack.whileHeld(new RetractBothLifters(-1));
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed));
@@ -56,11 +62,18 @@ public class OI {
         operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE));
 
         operatorStart.whenPressed(new FrameRetraction());
+        //TODO UNCOMMENT THESE
+        // driverA.whenPressed(new GetPanelAutomatedHeld());
+        // driverA.whenReleased(new GetPanelAutomatedRelease());
+        // driverB.whenPressed(new ScorePanelAutomatedHeld());
+        // driverB.whenReleased(new ScorePanelAutomatedRelease());
 
-        driverA.whenPressed(new GetPanelAutomatedHeld());
-        driverA.whenReleased(new GetPanelAutomatedRelease());
-        driverB.whenPressed(new ScorePanelAutomatedHeld());
-        driverB.whenReleased(new ScorePanelAutomatedRelease());
+        //TEMP
+        driverX.whenPressed(new DriveLifterWheelBackIR());
+        driverY.whenPressed(new RetractBackLifter(-1));
+        driverA.whenPressed(new DriveLifterWheelFrontIR());
+        driverB.whenPressed(new RetractFrontLifter(-1));
+
 
         operatorRT.whenPressed(new HoldCargoIntake()); 
         operatorRT.whenReleased(new ReleaseCargoIntake());
@@ -79,8 +92,9 @@ public class OI {
             operatorA = new JoystickButton(operatorStick, 1);
             operatorB = new JoystickButton(operatorStick, 2);
             operatorX = new JoystickButton(operatorStick, 3);
+            driverX = new JoystickButton(driverStick,3);
             operatorY = new JoystickButton(operatorStick, 4);
-
+            driverY = new JoystickButton(driverStick, 4);
             driverBack = new JoystickButton(driverStick, 7);
             operatorBack = new JoystickButton(operatorStick,7);
             driverStart = new JoystickButton(driverStick, 8);

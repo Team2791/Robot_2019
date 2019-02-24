@@ -135,25 +135,30 @@ public class Lifters extends Subsystem {
         //Motor speed should not go above 1 or below -1, so if we are close to either,
         //we should only decrease the absolute value of motor outputs.
         if(Math.abs(output) < 0.5) {
+            // IDK what this is for
             extendFront(output - feedback / 2);
             extendBack(output + feedback / 2);
-        } else if(output > 0) {
-            if(feedback > 0) {
-                extendFront(output - feedback);
-                extendBack(output);
-            } else {
-                extendFront(output);
-                extendBack(output + feedback);
-            }
-        } else { // output > 0.5
-            if(feedback > 0) {
-                extendFront(output);
-                extendBack(output + feedback);
-            } else {
-                extendFront(output - feedback);
-                extendBack(output);
-            }
+        } else {
+            extendFront(output - feedback);
+            extendBack(output + feedback);
         }
+        // } else if(output > 0) {
+        //     if(feedback > 0) {
+        //         extendFront(output - feedback);
+        //         extendBack(output);
+        //     } else {
+        //         extendFront(output);
+        //         extendBack(output + feedback);
+        //     }
+        // } else { // output > 0.5. This is where we are if we're lifting    
+        // if(feedback > 0) { // positive feedback means run the back harder
+        //         extendFront(output);
+        //         extendBack(output + feedback);
+        //     } else {
+        //         extendFront(output - feedback);
+        //         extendBack(output);
+        //     }
+        // }
     }
 
     public void zeroPots()
@@ -208,15 +213,11 @@ public class Lifters extends Subsystem {
     }
 
     public boolean isFrontOverLedge(boolean isHigh) {
-        // double comparison = isHigh ? Constants.kHighPlatformHeight : Constants.kLowPlatformHeight;
-        // return frontIR.getInches() <= comparison;
-        return false;
+        return frontIR.getValue() > Constants.k_IR_SENSOR_THREASHOLD; // TODO give this a good name
     }
 
     public boolean isBackOverLedge(boolean isHigh) {
-        // double comparison = isHigh ? Constants.kHighPlatformHeight : Constants.kLowPlatformHeight;
-        // return backIR.getInches() <= comparison;
-        return false;
+        return backIR.getValue() > Constants.k_IR_SENSOR_THREASHOLD; // TODO give this a good name
     }
 
     public double getFrontCurrent() {
@@ -234,8 +235,8 @@ public class Lifters extends Subsystem {
         SmartDashboard.putBoolean("LFT - Back Lifter Extended", isBackExtended());
         SmartDashboard.putNumber("LFT - Pot Front value raw", getFrontHeightRAW());
         SmartDashboard.putNumber("LFT - Pot Back value raw", getBackHeightRAW());
-        SmartDashboard.putNumber("LFT - Front IR ", frontIR.getValue());
-        SmartDashboard.putNumber("LFT - Back IR ", backIR.getValue());
+        SmartDashboard.putNumber("LFT - Front IR raw", frontIR.getValue());
+        SmartDashboard.putNumber("LFT - Back IR raw", backIR.getValue());
         SmartDashboard.putNumber("LFT - Adjusted Front Pot", getFrontLifterHeight());
         SmartDashboard.putNumber("LFT - Adjusted Back Pot", getBackLifterHeight());
         SmartDashboard.putNumber("LFT - Adjusted Pot Diff", getFrontLifterHeight() - getBackLifterHeight());
