@@ -10,6 +10,7 @@ import frc.robot.commands.FrameRetraction;
 import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.commands.Lifter.RetractFrontLifter;
+import frc.robot.commands.Lifter.RetractFrontLifterNoShock;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
@@ -29,6 +30,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Lifter.DriveLifterWheelBackIR;
 import frc.robot.commands.Lifter.RetractBackLifter;
 import frc.robot.commands.Lifter.SetLiftersToCoast;
+import frc.robot.commands.auto.DriveForwardForTime;
+import frc.robot.commands.auto.PlatformAuto3;
 import frc.robot.commands.Lifter.DriveLifterWheelFrontIR;
 
 public class OI {
@@ -51,6 +54,7 @@ public class OI {
         initButtons();
         initUsed();
 
+        // this should be the default command of the DT
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1));
         driverStart.whileHeld(new ExtendBothLifters(.8));
         driverBack.whileHeld(new RetractBothLifters(-1));
@@ -63,17 +67,17 @@ public class OI {
 
         operatorStart.whenPressed(new FrameRetraction());
         //TODO UNCOMMENT THESE
-        // driverA.whenPressed(new GetPanelAutomatedHeld());
-        // driverA.whenReleased(new GetPanelAutomatedRelease());
-        // driverB.whenPressed(new ScorePanelAutomatedHeld());
-        // driverB.whenReleased(new ScorePanelAutomatedRelease());
+        driverA.whenPressed(new GetPanelAutomatedHeld());
+        driverA.whenReleased(new GetPanelAutomatedRelease());
+        driverB.whenPressed(new ScorePanelAutomatedHeld());
+        driverB.whenReleased(new ScorePanelAutomatedRelease());
 
         //TEMP
-        driverX.whenPressed(new DriveLifterWheelBackIR());
-        driverY.whenPressed(new RetractBackLifter(-1));
-        driverA.whenPressed(new DriveLifterWheelFrontIR());
-        driverB.whenPressed(new RetractFrontLifter(-1));
-
+        driverX.whenPressed(new PlatformAuto3());
+        // driverY.whenPressed(new DriveForwardForTime(-0.18, .75));
+        // driverA.whenPressed(new DriveLifterWheelFrontIR());// this is dt speed
+        // driverB.whenPressed(new RetractFrontLifterNoShock(-1));
+        // operatorB.whenPressed(new RetractFrontLifter(.5));
 
         operatorRT.whenPressed(new HoldCargoIntake()); 
         operatorRT.whenReleased(new ReleaseCargoIntake());

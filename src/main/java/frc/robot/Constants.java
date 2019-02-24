@@ -21,6 +21,8 @@ public class Constants {
     public static final double kLifterF = 0.135;
     public static final double kLifterP = 8; //16 reduced bc doubled output
     public static final double k_IR_SENSOR_THREASHOLD = 1800; // TODO good name
+    public static final double kLifterFrontSlowHeight = 300; //320; //TODO Tune me
+    public static final double kLifterFrontSlowSpeed = -0.27; 
 
     //Elevator constants
 
@@ -30,23 +32,23 @@ public class Constants {
     public static double kELEVATOR_I_VALUE = 0.01; //The I value of the lift's PID loop
     public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
-    public static double kELEVATOR_ERROR_LEVEL = 15;
+    public static double kELEVATOR_ERROR_LEVEL = 10; // tuned with 15
 
     // MAKE SURE THAT THIS OFFSET IS USE EVERYWHERE IT NEEDS TO BE
     public static final double kPotOffset = 13.0;
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
-    public static double kELEVATOR_PANEL_ONE = 114.0 - kPotOffset; //This is correct yay
-    public static double kELEVATOR_PANEL_TWO = 565.0 - kPotOffset; //This is correct yay
-    public static double kELEVATOR_PANEL_THREE = 995.0 - kPotOffset; //This is correct yay
+    public static double kELEVATOR_PANEL_ONE = 114.0 + kPotOffset; //This is correct yay
+    public static double kELEVATOR_PANEL_TWO = 565.0 + kPotOffset; //This is correct yay
+    public static double kELEVATOR_PANEL_THREE = 995.0 + kPotOffset; //This is correct yay
 
-    public static double kELEVATOR_BALL_ONE = 207 - kPotOffset; //THIS IS THE CARGO SHIP //This is correct yay
-    public static double kELEVATOR_BALL_TWO = 455 - kPotOffset; //This is correct yay
-    public static double kELEVATOR_BALL_THREE = 891 - kPotOffset; //This is correct yay
+    public static double kELEVATOR_BALL_ONE = 207 + kPotOffset; //THIS IS THE CARGO SHIP //This is correct yay
+    public static double kELEVATOR_BALL_TWO = 455 + kPotOffset; //This is correct yay
+    public static double kELEVATOR_BALL_THREE = 891 + kPotOffset; //This is correct yay
 
-    public static final double kElevatorMaxHeight = 1017 - kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
-    public static final double kElevatorMinHeight = 24 - kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
+    public static final double kElevatorMaxHeight = 1017 + kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
+    public static final double kElevatorMinHeight = 24 + kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
     public static final int kElevatorBottomSafetyDistance = 100;
     public static final int kElevatorTopSafetyDistance = 100;
     public static final double MANUAL_POWER = 1.0; //Manual power is 0.75

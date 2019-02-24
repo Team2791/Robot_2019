@@ -19,4 +19,9 @@ public class DriveForward extends Command {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    protected void end() {
+        Robot.drivetrain.setMotors(0, 0);
+    }
 }

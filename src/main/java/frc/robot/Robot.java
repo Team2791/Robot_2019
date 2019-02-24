@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.subsystems.CargoManipulator;
 import frc.robot.util.Limelight;
 import edu.wpi.cscore.UsbCamera;
-//import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.CameraServer;
 
 public class Robot extends TimedRobot {
     long loopCounter = 0;
@@ -44,7 +44,9 @@ public class Robot extends TimedRobot {
         cargoManipulator = new CargoManipulator();
         
         oi = new OI();
-        //driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0); //TODO create camera code that works with the C920
+        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0); //TODO create camera code that works with the C920
+        // driver_cam.setResolution(320, 240); //
+        driver_cam.setResolution(160, 120); // low res = fast response
         autoCommand = new AutoSetLifterPots();
     }
     

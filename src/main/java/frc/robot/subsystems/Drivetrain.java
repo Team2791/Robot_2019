@@ -63,7 +63,7 @@ public class Drivetrain extends Subsystem {
 		// 	System.out.println("Gyro is unplugged, Disabling Gyro");
 		// }
         setDriveSpeed(false);
-        // setBrakeMode(false);
+        setBrakeMode(true);
         setMotors(0, 0);
     }
 
@@ -82,13 +82,13 @@ public class Drivetrain extends Subsystem {
         rightLeader.set(ControlMode.PercentOutput, right * speedMultiplier);
     }
 
-    // public void setBrakeMode(boolean isbrake) {
-    //     NeutralMode mode = isbrake ? NeutralMode.Brake : NeutralMode.Coast;
-    //     for(int i = 0; i < leftDrive.length; ++i) {
-    //         leftDrive[i].setNeutralMode(mode);
-    //         rightDrive[i].setNeutralMode(mode);
-    //     }
-    // }
+    public void setBrakeMode(boolean isbrake) {
+        NeutralMode mode = isbrake ? NeutralMode.Brake : NeutralMode.Coast;
+        for(int i = 0; i < leftDrive.length; ++i) {
+            leftDrive[i].setNeutralMode(mode);
+            rightDrive[i].setNeutralMode(mode);
+        }
+    }
 
     public void setDriveSpeed(boolean isSlow) {
         speedMultiplier = isSlow ? Constants.kSlowDrive : Constants.kFastDrive;

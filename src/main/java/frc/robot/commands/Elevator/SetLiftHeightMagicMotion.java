@@ -27,7 +27,7 @@ public class SetLiftHeightMagicMotion extends Command {
     protected void initialize() {
         elevator.setBreak(false);
         elevator.setTargetMagicMotion(targetHeight);
-        System.out.println("Trying to get to height "+targetHeight);
+        System.out.println("Trying to get to RAW height "+targetHeight);
         finishDelayedBoolean.update(false);
     }
 
@@ -40,7 +40,7 @@ public class SetLiftHeightMagicMotion extends Command {
     public boolean isFinished() {
         double error = elevator.getMagicMotionInstantError();
         // double error = Robot.elevator.getSensorPosition() - targetHeight;
-        //SmartDashboard.putNumber("Elevator - error", error);
+        // SmartDashboard.putNumber("Elevator - error", error);
         
         if(Robot.elevator.atTop()){
             return true;

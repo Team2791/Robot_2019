@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -19,15 +20,14 @@ public class Lifters extends Subsystem {
     private VictorSPX lifterDrive;
     private IrSensor frontIR;
     private IrSensor backIR;
-
-    private int frontPotZero;
-    private int backPotZero;
+    private Timer timeSinceStart;
+    private int frontPotZero = 191; // TODO remove this
+    private int backPotZero = 342; // TODO remove this
     private double proportional;
     private double feedForward;
     private int frontDangerCounter;
     private int backDangerCounter;
     private boolean enabled;
-
     private double pid;
 
     public Lifters() {
@@ -37,7 +37,7 @@ public class Lifters extends Subsystem {
         frontLifter.setNeutralMode(NeutralMode.Brake);
         backLifter.setNeutralMode(NeutralMode.Brake);
         lifterDrive.setNeutralMode(NeutralMode.Brake);
-
+        timeSinceStart = new Timer();
         frontLifter.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         frontLifter.setSensorPhase(false);
 
@@ -46,8 +46,9 @@ public class Lifters extends Subsystem {
 
         frontIR = new IrSensor(RobotMap.kFrontIrReadout);
         backIR = new IrSensor(RobotMap.kBackIrReadout);
-        frontPotZero = Constants.kFrontLifterPotMin;
-        backPotZero = Constants.kBackLifterPotMin;
+        // TODO rename these to be more clear that they're the offset and take the offets I put higher in the code and put them in constants.
+        // frontPotZero = Constants.kFrontLifterPotMin;
+        // backPotZero = Constants.kBackLifterPotMin;
         proportional = Constants.kLifterP;
         feedForward = Constants.kLifterF;
         SmartDashboard.putNumber("LifterKP", proportional);
