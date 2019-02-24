@@ -10,8 +10,18 @@ public class AutoSetLifterPots extends Command {
     }
 
     public void execute() {
-        Robot.lifters.extendBack(-.75);
-        Robot.lifters.extendFront(-.75);
+        
+        if(Robot.lifters.isBackRetracted()) {
+            Robot.lifters.extendBack(0);
+        } else {
+            Robot.lifters.extendBack(-.25);
+        }
+
+        if(Robot.lifters.isFrontRetracted()) {
+            Robot.lifters.extendFront(0);
+        } else {
+            Robot.lifters.extendFront(-.25);
+        }
     }
 
     public void end() {

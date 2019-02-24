@@ -51,14 +51,12 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         // only run the debug stuff once every 10 loops
-        if(++loopCounter % 10 != 0) {
-            return;
-        }
-        lifters.debug();
-        elevator.debug();
-        cargoManipulator.debug();
-        hatchManipulator.debug();
-        drivetrain.debug();
+        loopCounter += 1;
+        if(loopCounter % 10 == 0) { lifters.debug(); }
+        if(loopCounter % 10 == 1) { elevator.debug(); }
+        if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
+        if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
+        if(loopCounter % 10 == 4) { drivetrain.debug(); }
     }
 
     @Override

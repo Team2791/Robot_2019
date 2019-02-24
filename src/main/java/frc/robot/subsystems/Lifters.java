@@ -19,7 +19,7 @@ public class Lifters extends Subsystem {
     private VictorSPX lifterDrive;
     private IrSensor frontIR;
     private IrSensor backIR;
-    
+
     private int frontPotZero;
     private int backPotZero;
     private double proportional;
@@ -68,6 +68,8 @@ public class Lifters extends Subsystem {
     }
 
     public void extendFront(double output) {
+        // TODO comment this out so we don't slam the CPU
+        SmartDashboard.putNumber("LIFTER - front output", output);
         if(output < 0 && isFrontRetracted()) {
             frontLifter.set(ControlMode.PercentOutput, 0);
         } else if(output > 0 && isFrontExtended()) {
@@ -85,9 +87,10 @@ public class Lifters extends Subsystem {
     }
 
     public void extendBack(double output) {
-        if(output < 0 && isBackRetracted()) {
+        SmartDashboard.putNumber("LIFTER - back output", output);
+        if(output < 0 && isBackRetracted()) { // stop driving once we're fully back
             backLifter.set(ControlMode.PercentOutput, 0);
-        } else if(output > 0 && isBackExtended()) {
+        } else if(output > 0 && isBackExtended()) { // stop driving once we're fully out
             backLifter.set(ControlMode.PercentOutput, 0);
         } else {
             backLifter.set(ControlMode.PercentOutput, output);
@@ -142,7 +145,7 @@ public class Lifters extends Subsystem {
                 extendFront(output);
                 extendBack(output + feedback);
             }
-        } else {
+        } else { // output > 0.5
             if(feedback > 0) {
                 extendFront(output);
                 extendBack(output + feedback);
@@ -156,11 +159,11 @@ public class Lifters extends Subsystem {
     public void zeroPots()
     {
         if(isFrontRetracted()) {
-            frontPotZero = getFrontHeight();
+            frontPotZero = getFrontHeightRAW();
         }
 
         if(isBackRetracted()) {
-            backPotZero = getBackHeight();
+            backPotZero = getBackHeightRAW();
         }
     }
 
@@ -184,20 +187,20 @@ public class Lifters extends Subsystem {
         lifterDrive.set(ControlMode.PercentOutput, output);
     }
 
-    private int getFrontHeight() {
+    private int getFrontHeightRAW() {
         return 1023 - frontLifter.getSensorCollection().getAnalogIn();
     }
 
-    private int getBackHeight() {
+    private int getBackHeightRAW() {
         return 1023 - backLifter.getSensorCollection().getAnalogIn();
     }
 
     public int getFrontLifterHeight() {
-        return getFrontHeight() - frontPotZero;
+        return getFrontHeightRAW() - frontPotZero;
     }
 
     public int getBackLifterHeight() {
-        return getBackHeight() - backPotZero;
+        return getBackHeightRAW() - backPotZero;
     }
 
     public int getBackVelocity() {
@@ -225,20 +228,21 @@ public class Lifters extends Subsystem {
     }
 
     public void debug() {
-        SmartDashboard.putBoolean("Front Lifter Retracted", isFrontRetracted());
-        SmartDashboard.putBoolean("Front Lifter Extended", isFrontExtended());
-        SmartDashboard.putBoolean("Back Lifter Retracted", isBackRetracted());
-        SmartDashboard.putBoolean("Back Lifter Extended", isBackExtended());
-        SmartDashboard.putNumber("Pot Front value ", getFrontHeight());
-        SmartDashboard.putNumber("Pot Back value ", getBackHeight());
-        SmartDashboard.putNumber("Front IR ", frontIR.getValue());
-        SmartDashboard.putNumber("Back IR ", backIR.getValue());
-        SmartDashboard.putNumber("Adjusted Front Pot", getFrontLifterHeight());
-        SmartDashboard.putNumber("Adjusted Back Pot", getBackLifterHeight());
-        SmartDashboard.putNumber("Adjusted Pot Diff", getFrontLifterHeight() - getBackLifterHeight());
-        SmartDashboard.putNumber("PID Output", pid);
-        SmartDashboard.putNumber("Front Lift Current", getFrontCurrent());
-        SmartDashboard.putNumber("Back Lift Current", getBackCurrent());
+        SmartDashboard.putBoolean("LFT - Front Lifter Retracted", isFrontRetracted());
+        SmartDashboard.putBoolean("LFT - Front Lifter Extended", isFrontExtended());
+        SmartDashboard.putBoolean("LFT - Back Lifter Retracted", isBackRetracted());
+        SmartDashboard.putBoolean("LFT - Back Lifter Extended", isBackExtended());
+        SmartDashboard.putNumber("LFT - Pot Front value raw", getFrontHeightRAW());
+        SmartDashboard.putNumber("LFT - Pot Back value raw", getBackHeightRAW());
+        SmartDashboard.putNumber("LFT - Front IR ", frontIR.getValue());
+        SmartDashboard.putNumber("LFT - Back IR ", backIR.getValue());
+        SmartDashboard.putNumber("LFT - Adjusted Front Pot", getFrontLifterHeight());
+        SmartDashboard.putNumber("LFT - Adjusted Back Pot", getBackLifterHeight());
+        SmartDashboard.putNumber("LFT - Adjusted Pot Diff", getFrontLifterHeight() - getBackLifterHeight());
+        SmartDashboard.putNumber("LFT - PID Output", pid);
+        SmartDashboard.putNumber("LFT - Front Lift Current", getFrontCurrent());
+        SmartDashboard.putNumber("LFT - Back Lift Current", getBackCurrent());
+
         proportional = SmartDashboard.getNumber("LifterKP", Constants.kLifterP);
         feedForward = SmartDashboard.getNumber("LifterKF", Constants.kLifterF);
     }
