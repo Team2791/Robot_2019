@@ -14,6 +14,7 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
+
     //Global
     public static final int kPCM = 1;
     public static final int kPDP = 0;
@@ -36,7 +37,6 @@ public class RobotMap {
     public static final int kElevatorLimitTop = 0;
     public static final int kElevatorLimitBottom = 0;
 
-
     public static final int kGrabberOpen = 0;
     public static final int kGrabberClose = 1;
     public static final int kBreakSolenoid = 4;
@@ -45,13 +45,9 @@ public class RobotMap {
     public static final int kPowerFrontLift = 3;
     public static final int kPowerBackLift = 12;
 
-    ;
-
     //HatchManipulator
     public static final int kExtenderHatchSolenoid = 3;
-
     public static final int kGrabberHatchSolenoid = 1;
-
     public static final int kAlignerHatchSolenoid = 2;
 
     //CargoManipulator

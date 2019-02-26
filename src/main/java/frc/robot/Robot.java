@@ -44,15 +44,15 @@ public class Robot extends TimedRobot {
         cargoManipulator = new CargoManipulator();
         
         oi = new OI();
-        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0); //TODO create camera code that works with the C920
-        // driver_cam.setResolution(320, 240); //
+        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
         driver_cam.setResolution(160, 120); // low res = fast response
+
         autoCommand = new AutoSetLifterPots();
     }
     
     @Override
     public void robotPeriodic() {
-        // only run the debug stuff once every 10 loops
+        //EACH debug only runs once per 10 loops
         loopCounter += 1;
         if(loopCounter % 10 == 0) { lifters.debug(); }
         if(loopCounter % 10 == 1) { elevator.debug(); }

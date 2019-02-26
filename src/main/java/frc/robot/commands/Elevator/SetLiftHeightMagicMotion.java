@@ -5,8 +5,6 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 import frc.robot.util.DelayedBoolean;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 public class SetLiftHeightMagicMotion extends Command {
     private double targetHeight;

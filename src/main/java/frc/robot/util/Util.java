@@ -3,7 +3,6 @@ public class Util {
 
 	private Util() {}
 	
-	
     /**
      * This returns 0 if the value is between the min and the max and the val otherwise.
      * @param min
@@ -11,6 +10,7 @@ public class Util {
      * @param max
      * @return
      */
+
 	public static double deadzone(double min, double val, double max) {
 		double absVal = Math.abs(val);
 		double absMin = Math.abs(min);
@@ -24,13 +24,13 @@ public class Util {
 			return val < 0 ? -absMax : absMax;
 		}
 	}
-	
-	
+
     /**
      * @param encoderTicks count on encoder
      * @param wheelDiameter_inFeet
      * @return number of feet traveled based on encoder ticks read
      */
+
     public static double tickToFeet(double encoderTicks, double wheelDiameterInInches) {
         return (wheelDiameterInInches * Math.PI / encoderTicks);
     }
@@ -42,12 +42,4 @@ public class Util {
 		}
 		return total / numbers.length;
 	}
-    
-//    public static double generatePathHashCode(Waypoint[] path) {
-//        double hash = 1.0;
-//        for(int i = 0; i < path.length; i ++) {
-//            hash =  ((path[i].x * 3) + (path[i].y * 7) + (path[i].angle * 11));
-//        }
-//        return (int)Math.abs(hash * 1000);
-//    }
 }

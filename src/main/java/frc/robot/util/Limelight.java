@@ -4,17 +4,18 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import frc.robot.util.Limelight.CameraMode;
+//import frc.robot.util.Limelight.CameraMode;
 
 public class Limelight {
+
     NetworkTable table;
     private NetworkTableEntry camMode, ledMode, horizontalOffset, verticalOffset, targetArea, validTargets, targetSkew, pipelineLatency;
     private NetworkTableEntry lengthShort, lengthLong, lengthHori, lengthVert, indexPipe;
-  //  private static double kProportion = 1.56;
-  private static double kcameraHeight = .085;
-  private static double kobjectHeight = 0.5;
-  private static double kmountingAngle = 0;
-  private static double kangletoTarget = 0;
+    //  private static double kProportion = 1.56;
+    private static double kcameraHeight = .085;
+    private static double kobjectHeight = 0.5;
+    private static double kmountingAngle = 0;
+    private static double kangletoTarget = 0;
 
 
     public Limelight() {

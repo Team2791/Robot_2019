@@ -3,14 +3,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 import frc.robot.controller.AnalogButton;
 import frc.robot.controller.MultiButton;
+
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.FrameRetraction;
 import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
-import frc.robot.commands.Lifter.RetractFrontLifter;
-import frc.robot.commands.Lifter.RetractFrontLifterNoShock;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
@@ -22,17 +22,9 @@ import frc.robot.commands.CargoManipulator.HoldCargoIntake;
 import frc.robot.commands.CargoManipulator.ReleaseCargoIntake;
 import frc.robot.commands.CargoManipulator.SlowShootCargo;
 import frc.robot.commands.CargoManipulator.StopCargoMotor;
-import frc.robot.commands.Elevator.MagicMotionHatchBall;
-import frc.robot.commands.Elevator.SetLiftHeightMagicMotion;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
-import frc.robot.util.Util;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Lifter.DriveLifterWheelBackIR;
-import frc.robot.commands.Lifter.RetractBackLifter;
-import frc.robot.commands.Lifter.SetLiftersToCoast;
-import frc.robot.commands.auto.DriveForwardForTime;
 import frc.robot.commands.auto.PlatformAuto3;
-import frc.robot.commands.Lifter.DriveLifterWheelFrontIR;
+import frc.robot.util.Util;
 
 public class OI {
     public static Joystick driverStick;
@@ -44,7 +36,7 @@ public class OI {
     private Button driverA, driverB;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
-    private Button driverX, driverY;
+    private Button driverX;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed;
     private Button operatorA, operatorB, operatorX, operatorY;
 
@@ -54,63 +46,62 @@ public class OI {
         initButtons();
         initUsed();
 
-        // this should be the default command of the DT
-        driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1));
-        driverStart.whileHeld(new ExtendBothLifters(.8));
-        driverBack.whileHeld(new RetractBothLifters(-1));
+        driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1)); //TODO this should be the default command of the DT
+        driverStart.whileHeld(new ExtendBothLifters(.8)); //TODO NOT FOR COMPETITION
+        driverBack.whileHeld(new RetractBothLifters(-1)); //TODO NOT FOR COMPETITION
 
-        operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed));
-        operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kElevatorMinHeight + 3)); //This will make the lift go to 0
-        operatorB.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_ONE, Constants.kELEVATOR_BALL_ONE));
-        operatorX.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_TWO, Constants.kELEVATOR_BALL_TWO));
-        operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE));
+        operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed)); //Elevator manual drive
+        operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kElevatorMinHeight + 3)); //This will make the lift go to the bottom + 3 pot turns
+        operatorB.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_ONE, Constants.kELEVATOR_BALL_ONE)); //Sets elevator to panel height 1 / ball height 1
+        operatorX.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_TWO, Constants.kELEVATOR_BALL_TWO)); //Sets elevator to panel height 2 / ball height 2
+        operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE)); //Sets elevator to panel height 2 / ball height 2
 
-        operatorStart.whenPressed(new FrameRetraction());
-        //TODO UNCOMMENT THESE
-        driverA.whenPressed(new GetPanelAutomatedHeld());
-        driverA.whenReleased(new GetPanelAutomatedRelease());
-        driverB.whenPressed(new ScorePanelAutomatedHeld());
-        driverB.whenReleased(new ScorePanelAutomatedRelease());
+        operatorStart.whenPressed(new FrameRetraction()); //Moves everything within frame perimeter for defense
 
-        //TEMP
-        driverX.whenPressed(new PlatformAuto3());
-        // driverY.whenPressed(new DriveForwardForTime(-0.18, .75));
-        // driverA.whenPressed(new DriveLifterWheelFrontIR());// this is dt speed
-        // driverB.whenPressed(new RetractFrontLifterNoShock(-1));
-        // operatorB.whenPressed(new RetractFrontLifter(.5));
+        driverA.whenPressed(new GetPanelAutomatedHeld()); //Gets panel
+        driverA.whenReleased(new GetPanelAutomatedRelease()); //Gets panel
+        driverB.whenPressed(new ScorePanelAutomatedHeld()); //Scores panel
+        driverB.whenReleased(new ScorePanelAutomatedRelease()); //Scores panel
 
-        operatorRT.whenPressed(new HoldCargoIntake()); 
+        driverX.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
+
+        operatorRT.whenPressed(new HoldCargoIntake()); //Intakes cargo off floor
         operatorRT.whenReleased(new ReleaseCargoIntake());
-        operatorRB.whenPressed(new CargoHumanPlayerIntake());
+
+        operatorRB.whenPressed(new CargoHumanPlayerIntake()); //Intakes cargo from human player
         operatorRB.whenReleased(new StopCargoMotor());
-        operatorLB.whenPressed(new SlowShootCargo());
+
+        operatorLB.whenPressed(new SlowShootCargo()); //Shoots cargo slow
         operatorLB.whenReleased(new StopCargoMotor());
-        operatorLT.whenPressed(new FastShootCargo());
+
+        operatorLT.whenPressed(new FastShootCargo()); //Shoots cargo fast
         operatorLT.whenReleased(new StopCargoMotor());
     }
 
     private void initButtons(){
         try{
+//DRIVER BUTTONS//
             driverA = new JoystickButton(driverStick, 1);
             driverB = new JoystickButton(driverStick, 2);
-            operatorA = new JoystickButton(operatorStick, 1);
-            operatorB = new JoystickButton(operatorStick, 2);
-            operatorX = new JoystickButton(operatorStick, 3);
             driverX = new JoystickButton(driverStick,3);
-            operatorY = new JoystickButton(operatorStick, 4);
-            driverY = new JoystickButton(driverStick, 4);
             driverBack = new JoystickButton(driverStick, 7);
-            operatorBack = new JoystickButton(operatorStick,7);
             driverStart = new JoystickButton(driverStick, 8);
-            operatorStart = new JoystickButton(driverStick, 8);
             driverRB = new JoystickButton(driverStick, 6);
             driverLB = new JoystickButton(driverStick, 5);
+
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),
                 driverRB,
                 driverLB
             });
-            
+
+//OPERATOR BUTTONS//
+            operatorA = new JoystickButton(operatorStick, 1);
+            operatorB = new JoystickButton(operatorStick, 2);
+            operatorX = new JoystickButton(operatorStick, 3);
+            operatorY = new JoystickButton(operatorStick, 4);
+            operatorBack = new JoystickButton(operatorStick,7);
+            operatorStart = new JoystickButton(driverStick, 8);
             operatorRB = new JoystickButton(operatorStick, 6);
             operatorLB = new JoystickButton(operatorStick, 5);
             operatorLT = new AnalogButton(operatorStick, 2);
@@ -123,6 +114,7 @@ public class OI {
             error.printStackTrace();
         }
     }
+    
     private void initUsed(){
         operatorLeftJoystickUsed = new Button() {
 			@Override

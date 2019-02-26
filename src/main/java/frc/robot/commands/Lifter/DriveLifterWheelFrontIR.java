@@ -16,12 +16,9 @@ public class DriveLifterWheelFrontIR extends Command {
         frontOverLedge.update(false);
     }
     protected void execute() {
-        double driveTrainPower = -0.07; // todo make this a constant
-        //This negative value makes the drive train drive backwards
-        Robot.drivetrain.setMotors(driveTrainPower, driveTrainPower);
+        Robot.drivetrain.setMotors(Constants.kDrivetrainLifterCrawlSpeedFrontLifter, Constants.kDrivetrainLifterCrawlSpeedFrontLifter);
         if(Robot.lifters.isFrontOverLedge(true)) {
-            // TODO make this a constant
-            Robot.lifters.driveMotor(.15);
+            Robot.lifters.driveMotor(Constants.kLifterDrivePowerOverLedge);
         } else {
             Robot.lifters.driveMotor(Constants.kLifterDrivePower);
         }

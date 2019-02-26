@@ -1,5 +1,4 @@
 package frc.robot.commands.Elevator;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.Joystick;
 
