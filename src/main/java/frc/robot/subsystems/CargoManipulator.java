@@ -6,20 +6,20 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
-import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.commands.CargoManipulator.StallIntakeCargoMotors;
 
 public class CargoManipulator extends Subsystem {
     private Solenoid raiserSolenoid;
     private VictorSPX intakeVictor;
-    private DigitalInput cargoSwitch;
+    // private DigitalInput cargoSwitch;
     public boolean CargoControls = false;
 
     public CargoManipulator() {
         raiserSolenoid = new Solenoid(RobotMap.kPCM, RobotMap.kRaiseCargoSolenoid);
         intakeVictor = new VictorSPX(RobotMap.kIntakeVictor);
-        cargoSwitch = new DigitalInput(RobotMap.kCargoLimitSwitch);
+        // cargoSwitch = new DigitalInput(RobotMap.kCargoLimitSwitch);
 
         intakeVictor.setNeutralMode(NeutralMode.Brake);
     }
@@ -37,9 +37,9 @@ public class CargoManipulator extends Subsystem {
     public void setIntakeMotor(double output) {
         intakeVictor.set(ControlMode.PercentOutput, output);
     }
-    public boolean getCargoSwitchState(){
-        return !cargoSwitch.get();
-    }
+    // public boolean getCargoSwitchState(){
+    //     return !cargoSwitch.get();
+    // }
 
     public boolean getCargoControls() {
         //This should be false most of the time, when controlers are not being pressed
@@ -49,8 +49,12 @@ public class CargoManipulator extends Subsystem {
     public void setCargoControls(boolean sent){
         CargoControls = sent;
     }
+    public double getCargoCurrent(){
+        return Robot.pdp.getCurrent(RobotMap.kCargoIntakeVictorPDP);
+    }
     public void debug() {
         SmartDashboard.putBoolean("CargoManipulator Raiser", getRaiser());
-        SmartDashboard.putBoolean("Cargo Limit Switch State", getCargoSwitchState());
+        SmartDashboard.putNumber("CargoManipulator Current Draw", getCargoCurrent());
+        // SmartDashboard.putBoolean("Cargo Limit Switch State", getCargoSwitchState());
     }
 }

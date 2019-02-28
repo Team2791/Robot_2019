@@ -69,9 +69,11 @@ public class Constants {
 	//Cargo Intake Values
 	public static final double kCargoIntakeMotorSpeed = 0.65; //0.75 //This is the intake speed for the cargo
 	public static final double kRaiseCargoArmsDelayAfterButtonPressed = 0.4; //This is the delay between when the ball presses the switch on the intake and when the intake is raised
-	public static final double kCargoIntakeMotorStallSpeed = 0.15; //This is the speed at which the intake will apply a constant stall on the ball when the switch is pressed
+	public static final double kCargoIntakeMotorStallSpeed = 0.1; //was 0.15 //This is the speed at which the intake will apply a constant stall on the ball when the switch is pressed
 	public static final double kCargoSlowShootMotorSpeed = -0.25;
 	public static final double kCargoFastShootMotorSpeed = -0.7;
     public static final double kCargoIntakeHumanSpeed = 0.65;
+    public static final double kCargoIntakeCurrentThreshold = 5; //TODO TUNE ME ASAP
+    public static final double kCargoCurrentSpikeDelay = 0.3; //TODO TUNE ME ASAP
     //TODO Make some kind of logic that will suck the ball back in if the limit switch gets unpressed as a result of something that WAS NOT the driver shooting the ball
 }

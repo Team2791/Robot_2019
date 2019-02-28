@@ -1,5 +1,4 @@
 package frc.robot.commands.Elevator;
-import frc.robot.Robot;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class MagicMotionHatchBall extends SetLiftHeightMagicMotion {
@@ -20,7 +19,7 @@ private double ballHeight;
         @Override
     protected void initialize() {
         // condition ? true case : false case;
-        double targetHeight = stick.getRawButton(7) || Robot.cargoManipulator.getCargoSwitchState() ? ballHeight : hatchHeight; //Added this "or" statement here
+        double targetHeight = stick.getRawButton(7) ? ballHeight : hatchHeight; //Added this "or" statement here
 
         elevator.setBreak(false);
         elevator.setTargetMagicMotion(targetHeight);
