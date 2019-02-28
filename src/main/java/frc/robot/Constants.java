@@ -21,6 +21,7 @@ public class Constants {
     public static final double kDrivetrainLifterCrawlSpeedFrontLifter = -0.07;
     public static final double kDrivetrainLifterCrawlSpeedEndOfSequence = -0.18;
     public static final double kDrivetrainLifterEndOfSequenceTime = 0.75;
+    public static final double kLifterAutoTimerDelay = 1; //TODO NOT FOR COMPETITION
     public static final double kFullDangerCurrent = 134;
     public static final int kDangerTimeout = 100;
     public static final double kLifterF = 0.135;
@@ -58,7 +59,7 @@ public class Constants {
     
     //Joystick constant
     public static final double DEADZONE = 0.05;
-
+    //TODO ELEVATOR TOP BOTTOM CONSTANTS + CURRENT SENSING + CHECK LIFTER POTS + LIFTER DIRECTION + FULLY AUTO LVL 2
     //Hatch Manipulator Values
 	public static final double kGetPanelAutomatedReleaseRetractionDelay = 0.25;
 	public static final double kGetPanelAutomatedReleaseAlignerRetractionDelay = 1.0;

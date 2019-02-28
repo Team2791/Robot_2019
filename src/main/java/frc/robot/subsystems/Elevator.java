@@ -1,5 +1,4 @@
 package frc.robot.subsystems;
-import java.util.Random;
 
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -11,7 +10,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.commands.Elevator.StopLift;
+
 public class Elevator extends Subsystem {
     int loopCounter = 0;
 
@@ -105,12 +106,6 @@ public class Elevator extends Subsystem {
     }
 
     public void debug() {
-        // only run the debug once every 20 loops to reduce cpu usage
-        // if(++loopCounter % 20 != 0) {
-        //     return;
-        // }
-        // TODO remove!
-
         SmartDashboard.putBoolean("Elevator - Top Limit Switch value", atTop());
         SmartDashboard.putBoolean("Elevator - Bottom Limit Switch value", atBottom());
         SmartDashboard.putNumber("Elevator - Height", getElevatorHeight());

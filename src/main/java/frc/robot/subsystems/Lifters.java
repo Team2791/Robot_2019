@@ -8,19 +8,19 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Timer;
+
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.util.IrSensor;
 
 public class Lifters extends Subsystem {
+
     private TalonSRX frontLifter;
     private TalonSRX backLifter;
     private VictorSPX lifterDrive;
     private IrSensor frontIR;
     private IrSensor backIR;
-    private Timer timeSinceStart;
     private int frontPotZero = 191; // TODO remove this
     private int backPotZero = 342; // TODO remove this
     private double proportional;
@@ -37,7 +37,6 @@ public class Lifters extends Subsystem {
         frontLifter.setNeutralMode(NeutralMode.Brake);
         backLifter.setNeutralMode(NeutralMode.Brake);
         lifterDrive.setNeutralMode(NeutralMode.Brake);
-        timeSinceStart = new Timer();
         frontLifter.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         frontLifter.setSensorPhase(false);
 
@@ -69,8 +68,7 @@ public class Lifters extends Subsystem {
     }
 
     public void extendFront(double output) {
-        // TODO comment this out so we don't slam the CPU
-        SmartDashboard.putNumber("LIFTER - front output", output);
+        //SmartDashboard.putNumber("LIFTER - front output", output);
         if(output < 0 && isFrontRetracted()) {
             frontLifter.set(ControlMode.PercentOutput, 0);
         } else if(output > 0 && isFrontExtended()) {
@@ -214,11 +212,11 @@ public class Lifters extends Subsystem {
     }
 
     public boolean isFrontOverLedge(boolean isHigh) {
-        return frontIR.getValue() > Constants.k_IR_SENSOR_THREASHOLD; // TODO give this a good name
+        return frontIR.getValue() > Constants.k_IR_SENSOR_THREASHOLD;
     }
 
     public boolean isBackOverLedge(boolean isHigh) {
-        return backIR.getValue() > Constants.k_IR_SENSOR_THREASHOLD; // TODO give this a good name
+        return backIR.getValue() > Constants.k_IR_SENSOR_THREASHOLD;
     }
 
     public double getFrontCurrent() {

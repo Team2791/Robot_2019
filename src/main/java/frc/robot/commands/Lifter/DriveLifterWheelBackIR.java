@@ -17,9 +17,9 @@ public class DriveLifterWheelBackIR extends Command {
     }
 
     protected void execute() {
+        
         if(Robot.lifters.isBackOverLedge(true)) {
-            // TODO make this a constant
-            Robot.lifters.driveMotor(.15);
+            Robot.lifters.driveMotor(Constants.kLifterDrivePowerOverLedge);
         } else {
             Robot.lifters.driveMotor(Constants.kLifterDrivePower);
         }
