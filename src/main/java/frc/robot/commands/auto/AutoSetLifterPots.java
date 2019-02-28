@@ -20,7 +20,7 @@ public class AutoSetLifterPots extends Command {
         if(Robot.lifters.isFrontRetracted()) {
             Robot.lifters.extendFront(0);
         } else {
-            Robot.lifters.extendFront(-.25);
+            Robot.lifters.extendFront(-.40);
         }
     }
 

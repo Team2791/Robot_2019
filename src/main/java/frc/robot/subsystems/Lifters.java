@@ -21,8 +21,8 @@ public class Lifters extends Subsystem {
     private VictorSPX lifterDrive;
     private IrSensor frontIR;
     private IrSensor backIR;
-    private int frontPotZero = 191; // TODO remove this
-    private int backPotZero = 342; // TODO remove this
+    private int frontPotZero;// = 191; // TODO remove this
+    private int backPotZero;// = 342; // TODO remove this
     private double proportional;
     private double feedForward;
     private int frontDangerCounter;
@@ -46,8 +46,8 @@ public class Lifters extends Subsystem {
         frontIR = new IrSensor(RobotMap.kFrontIrReadout);
         backIR = new IrSensor(RobotMap.kBackIrReadout);
         // TODO rename these to be more clear that they're the offset and take the offets I put higher in the code and put them in constants.
-        // frontPotZero = Constants.kFrontLifterPotMin;
-        // backPotZero = Constants.kBackLifterPotMin;
+        frontPotZero = Constants.kFrontLifterPotMin;
+        backPotZero = Constants.kBackLifterPotMin;
         proportional = Constants.kLifterP;
         feedForward = Constants.kLifterF;
         SmartDashboard.putNumber("LifterKP", proportional);

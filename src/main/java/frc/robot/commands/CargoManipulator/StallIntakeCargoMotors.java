@@ -11,14 +11,9 @@ public class StallIntakeCargoMotors extends Command {
         requires(Robot.cargoManipulator);
     }
     public void execute() {
-        Robot.cargoManipulator.setIntakeMotor(Constants.kCargoIntakeMotorStallSpeed);
-        // if(Robot.cargoManipulator.getCargoSwitchState()==true && Robot.cargoManipulator.getCargoControls()==false){
-        //     Robot.cargoManipulator.setIntakeMotor(Constants.kCargoIntakeMotorStallSpeed);
-        // }
-
-        // else if(Robot.cargoManipulator.getCargoSwitchState()==false && Robot.cargoManipulator.getCargoControls()==false){
-        //     Robot.cargoManipulator.setIntakeMotor(0.0);
-        // }
+        if(Robot.cargoManipulator.getCargoControls()==false){
+            Robot.cargoManipulator.setIntakeMotor(Constants.kCargoIntakeMotorStallSpeed);
+        }
         
     }
 

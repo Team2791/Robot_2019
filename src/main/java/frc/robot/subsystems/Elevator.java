@@ -112,6 +112,7 @@ public class Elevator extends Subsystem {
         SmartDashboard.putNumber("Elevator - Velocity", getVelocity());
         SmartDashboard.putBoolean("Elevator - Close to top", closeToTop());
         SmartDashboard.putBoolean("Elevator - Close to bottom", closeToBottom());
+        SmartDashboard.putNumber("Elevator - RAW HEIGHT", getSensorPosition());
     }
 
 }

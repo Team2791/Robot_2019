@@ -21,7 +21,7 @@ public class Constants {
     public static final double kDrivetrainLifterCrawlSpeedFrontLifter = -0.07;
     public static final double kDrivetrainLifterCrawlSpeedEndOfSequence = -0.18;
     public static final double kDrivetrainLifterEndOfSequenceTime = 0.75;
-    public static final double kLifterAutoTimerDelay = 1; //TODO NOT FOR COMPETITION
+    public static final double kLifterAutoTimerDelay = 0; //TODO NOT FOR COMPETITION
     public static final double kFullDangerCurrent = 134;
     public static final int kDangerTimeout = 100;
     public static final double kLifterF = 0.135;
@@ -39,20 +39,20 @@ public class Constants {
     public static int kELEVATOR_I_ZONE_VALUE = 50;
     public static double kELEVATOR_ERROR_LEVEL = 10; // tuned with 15
 
-    public static final double kPotOffset = 13.0;
+    public static final double kPotOffset = 19.0;
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
-    public static double kELEVATOR_PANEL_ONE = 114.0 + kPotOffset;
-    public static double kELEVATOR_PANEL_TWO = 565.0 + kPotOffset;
-    public static double kELEVATOR_PANEL_THREE = 995.0 + kPotOffset;
+    public static double kELEVATOR_PANEL_ONE = 67.0 + kPotOffset;
+    public static double kELEVATOR_PANEL_TWO = 518 + kPotOffset;
+    public static double kELEVATOR_PANEL_THREE = 919 + kPotOffset;
 
-    public static double kELEVATOR_BALL_ONE = 207 + kPotOffset; //THIS IS THE CARGO SHIP
-    public static double kELEVATOR_BALL_TWO = 455 + kPotOffset;
-    public static double kELEVATOR_BALL_THREE = 891 + kPotOffset;
+    public static double kELEVATOR_BALL_ONE = 160 + kPotOffset; //THIS IS THE CARGO SHIP
+    public static double kELEVATOR_BALL_TWO = 408 + kPotOffset;
+    public static double kELEVATOR_BALL_THREE = 844 + kPotOffset;
 
-    public static final double kElevatorMaxHeight = 1017 + kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
-    public static final double kElevatorMinHeight = 24 + kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
+    public static final double kElevatorMaxHeight = 920 + kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
+    public static final double kElevatorMinHeight = 0 + kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
     public static final int kElevatorBottomSafetyDistance = 100;
     public static final int kElevatorTopSafetyDistance = 100;
     public static final double MANUAL_POWER = 0.75;
@@ -73,7 +73,6 @@ public class Constants {
 	public static final double kCargoSlowShootMotorSpeed = -0.25;
 	public static final double kCargoFastShootMotorSpeed = -0.7;
     public static final double kCargoIntakeHumanSpeed = 0.65;
-    public static final double kCargoIntakeCurrentThreshold = 5; //TODO TUNE ME ASAP
-    public static final double kCargoCurrentSpikeDelay = 0.3; //TODO TUNE ME ASAP
-    //TODO Make some kind of logic that will suck the ball back in if the limit switch gets unpressed as a result of something that WAS NOT the driver shooting the ball
+    public static final double kCargoIntakeCurrentThreshold = 5; //This seems to work pretty well lol
+    public static final double kCargoCurrentSpikeDelay = 0.3; //This seems to work pretty well lol
 }
