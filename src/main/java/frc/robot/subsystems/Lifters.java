@@ -15,20 +15,17 @@ import frc.robot.RobotMap;
 import frc.robot.util.IrSensor;
 
 public class Lifters extends Subsystem {
-
     private TalonSRX frontLifter;
     private TalonSRX backLifter;
     private VictorSPX lifterDrive;
     private IrSensor frontIR;
     private IrSensor backIR;
-    private int frontPotZero;// = 191; // TODO remove this
-    private int backPotZero;// = 342; // TODO remove this
+    private int frontPotZero;// = 191;
+    private int backPotZero;// = 342;
     private double proportional;
     private double feedForward;
-    private int frontDangerCounter;
-    private int backDangerCounter;
-    private boolean enabled;
     private double pid;
+    private double proportionalSPEEDY;
 
     public Lifters() {
         frontLifter = new TalonSRX(RobotMap.kFrontLiftTalon);
@@ -45,17 +42,13 @@ public class Lifters extends Subsystem {
 
         frontIR = new IrSensor(RobotMap.kFrontIrReadout);
         backIR = new IrSensor(RobotMap.kBackIrReadout);
-        // TODO rename these to be more clear that they're the offset and take the offets I put higher in the code and put them in constants.
         frontPotZero = Constants.kFrontLifterPotMin;
         backPotZero = Constants.kBackLifterPotMin;
         proportional = Constants.kLifterP;
+        proportionalSPEEDY = Constants.kLifterP * 2;
         feedForward = Constants.kLifterF;
         SmartDashboard.putNumber("LifterKP", proportional);
         SmartDashboard.putNumber("LifterKF", feedForward);
-
-        frontDangerCounter = 0;
-        backDangerCounter = 0;
-        enabled = true;
     }
 
     @Override
@@ -71,18 +64,14 @@ public class Lifters extends Subsystem {
         //SmartDashboard.putNumber("LIFTER - front output", output);
         if(output < 0 && isFrontRetracted()) {
             frontLifter.set(ControlMode.PercentOutput, 0);
-        } else if(output > 0 && isFrontExtended()) {
+        } 
+        else if(output > 0 && isFrontExtended()) {
             frontLifter.set(ControlMode.PercentOutput, 0);
-        } else {
+        }
+        else {
             frontLifter.set(ControlMode.PercentOutput, output);
         }
 
-        if(getFrontCurrent() >= Math.abs(output) * Constants.kFullDangerCurrent) {
-            ++frontDangerCounter;
-        } else {
-            frontDangerCounter = frontDangerCounter < 1 ? 0 : frontDangerCounter - 1;
-        }
-        
     }
 
     public void extendBack(double output) {
@@ -91,32 +80,18 @@ public class Lifters extends Subsystem {
             backLifter.set(ControlMode.PercentOutput, 0);
         } else if(output > 0 && isBackExtended()) { // stop driving once we're fully out
             backLifter.set(ControlMode.PercentOutput, 0);
-        } else {
+        } 
+        else {
             backLifter.set(ControlMode.PercentOutput, output);
         }
-        
-        if(getBackCurrent() >= Math.abs(output) * Constants.kFullDangerCurrent) {
-            ++backDangerCounter;
-        } else {
-            frontDangerCounter = backDangerCounter < 1 ? 0 : backDangerCounter - 1;
-        }
+
     }
 
     public void resetSystem() {
-        enabled = true;
         lifterDrive.setNeutralMode(NeutralMode.Brake);
     }
 
     public void ExtendBoth(double output) {
-        // if(frontDangerCounter >= Constants.kDangerTimeout || backDangerCounter >= Constants.kDangerTimeout) {
-        //     enabled = false;
-        // }
-        
-        // if(!enabled) {
-        //     extendFront(0);
-        //     extendBack(0);
-        //     return;
-        // }
 
         if(Math.abs(output) < 0.01) {
             extendFront(0);
@@ -141,24 +116,49 @@ public class Lifters extends Subsystem {
             extendFront(output - feedback);
             extendBack(output + feedback);
         }
-        // } else if(output > 0) {
-        //     if(feedback > 0) {
-        //         extendFront(output - feedback);
-        //         extendBack(output);
-        //     } else {
-        //         extendFront(output);
-        //         extendBack(output + feedback);
-        //     }
-        // } else { // output > 0.5. This is where we are if we're lifting    
-        // if(feedback > 0) { // positive feedback means run the back harder
-        //         extendFront(output);
-        //         extendBack(output + feedback);
-        //     } else {
-        //         extendFront(output - feedback);
-        //         extendBack(output);
-        //     }
-        // }
+
     }
+
+    public void ExtendBothSPEEDY(double output) {
+
+        if(Math.abs(output) < 0.01) {
+            extendFront(0);
+            extendBack(0);
+            return;
+        }
+
+        int backHeight = getBackLifterHeight();
+        int frontHeight = getFrontLifterHeight();
+        double diff = (double)(frontHeight - backHeight)/Constants.kLifetPotRange;
+        double pTerm = diff * proportionalSPEEDY;
+        double feedback = pTerm + feedForward;
+        pid = feedback;
+        
+        //Motor speed should not go above 1 or below -1, so if we are close to either,
+        //we should only decrease the absolute value of motor outputs.
+        if(Math.abs(output) < 0.5) {
+            extendFront(output - feedback / 2);
+            extendBack(output + feedback / 2);
+        } else if(output > 0) {
+            if(feedback > 0) {
+                extendFront(output - feedback);
+                extendBack(output);
+            } else {
+                extendFront(output);
+                extendBack(output + feedback);
+            }
+        } else {
+            if(feedback > 0) {
+                extendFront(output);
+                extendBack(output + feedback);
+            } else {
+                extendFront(output - feedback);
+                extendBack(output);
+            }
+        }
+    }
+
+
 
     public void zeroPots()
     {
@@ -180,22 +180,42 @@ public class Lifters extends Subsystem {
     }
 
     public boolean isFrontExtended() {
-        return frontLifter.getSensorCollection().isFwdLimitSwitchClosed();
+        if(frontLifter.getSensorCollection().isFwdLimitSwitchClosed() == true || getFrontLifterHeight() > Constants.kLifterFrontPotTopTravel){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isFrontAtPotValue(int potValue){
+        if(getFrontLifterHeight() > potValue){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isBackAtPotValue(int potValue){
+        if(getBackLifterHeight() > potValue){
+            return true;
+        }
+        return false;
     }
      
     public boolean isBackExtended() {
-        return backLifter.getSensorCollection().isFwdLimitSwitchClosed();
+        if(backLifter.getSensorCollection().isFwdLimitSwitchClosed() == true || getBackLifterHeight() > Constants.kLifterBackPotTopTravel){
+            return true;
+        }
+        return false;
     }
 
     public void driveMotor(double output) {
         lifterDrive.set(ControlMode.PercentOutput, output);
     }
 
-    private int getFrontHeightRAW() {
+    public int getFrontHeightRAW() {
         return 1023 - frontLifter.getSensorCollection().getAnalogIn();
     }
 
-    private int getBackHeightRAW() {
+    public int getBackHeightRAW() {
         return 1023 - backLifter.getSensorCollection().getAnalogIn();
     }
 
@@ -205,10 +225,6 @@ public class Lifters extends Subsystem {
 
     public int getBackLifterHeight() {
         return getBackHeightRAW() - backPotZero;
-    }
-
-    public int getBackVelocity() {
-        return backLifter.getSensorCollection().getAnalogInVel();
     }
 
     public boolean isFrontOverLedge(boolean isHigh) {
@@ -243,7 +259,7 @@ public class Lifters extends Subsystem {
         SmartDashboard.putNumber("LFT - Front Lift Current", getFrontCurrent());
         SmartDashboard.putNumber("LFT - Back Lift Current", getBackCurrent());
 
-        proportional = SmartDashboard.getNumber("LifterKP", Constants.kLifterP);
-        feedForward = SmartDashboard.getNumber("LifterKF", Constants.kLifterF);
+        //proportional = SmartDashboard.getNumber("LifterKP", Constants.kLifterP);
+        //feedForward = SmartDashboard.getNumber("LifterKF", Constants.kLifterF);
     }
 }

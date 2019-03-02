@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.commands.auto.AutoSetLifterPots;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HatchManipulator;
@@ -47,7 +46,7 @@ public class Robot extends TimedRobot {
         driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
         driver_cam.setResolution(160, 120); // low res = fast response
 
-        autoCommand = new AutoSetLifterPots();
+        // autoCommand = new AutoSetLifterPots();
     }
     
     @Override
@@ -75,7 +74,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autoCommand.start();
+        // autoCommand.start();
     }
 
     @Override

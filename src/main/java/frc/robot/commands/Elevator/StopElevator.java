@@ -3,9 +3,9 @@ package frc.robot.commands.Elevator;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class StopLift extends Command {
+public class StopElevator extends Command {
 
-    public StopLift() {
+    public StopElevator() {
     	requires(Robot.elevator);
     }
 
@@ -15,15 +15,6 @@ public class StopLift extends Command {
 
     @Override
     protected void execute() {
-        // if(Robot.elevator.getElevatorHeight()<100){
-        //     Robot.elevator.setPowerUnsafe(0);
-        // }
-        // else if(Robot.elevator.getMagicFinished()==true){
-        //     Robot.elevator.setPowerUnsafe(0.06);
-        // }
-        // else{
-        //     Robot.elevator.setPowerUnsafe(0);
-        // }
         Robot.elevator.setPowerUnsafe(0);
         Robot.elevator.setBreak(true);
 }
@@ -34,6 +25,8 @@ public class StopLift extends Command {
     }
     @Override
     protected void end () {
+        Robot.elevator.setPowerUnsafe(0);
+        Robot.elevator.setBreak(true);
 
     }
     protected void interrupted () {

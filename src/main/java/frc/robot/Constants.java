@@ -9,6 +9,11 @@ public class Constants {
     public static final double kSlowish = 0.5;
 
     // Lifters constants
+    public static final int kLiftersLevel2PotValue = 200; //TODO TUNE ME ASAP
+    public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
+    public static final double kLifterCurrentKiller = 60; //If motor crosses 60 amps after current spike
+    public static final double kLifterBackPotTopTravel = 800; //TODO TUNE ME ASAP
+    public static final double kLifterFrontPotTopTravel = 800; //TODO TUNE ME ASAP
     public static final int kFrontLifterPotMin = 40;
     public static final int kBackLifterPotMin = 50;
     public static final int kLifetPotRange = 354;
@@ -59,7 +64,7 @@ public class Constants {
     
     //Joystick constant
     public static final double DEADZONE = 0.05;
-    //TODO ELEVATOR TOP BOTTOM CONSTANTS + CURRENT SENSING + CHECK LIFTER POTS + LIFTER DIRECTION + FULLY AUTO LVL 2
+
     //Hatch Manipulator Values
 	public static final double kGetPanelAutomatedReleaseRetractionDelay = 0.25;
 	public static final double kGetPanelAutomatedReleaseAlignerRetractionDelay = 1.0;

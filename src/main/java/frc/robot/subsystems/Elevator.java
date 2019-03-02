@@ -10,8 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import frc.robot.commands.Elevator.StopLift;
+import frc.robot.commands.Elevator.StopElevator;
 
 public class Elevator extends Subsystem {
     int loopCounter = 0;
@@ -58,7 +57,7 @@ public class Elevator extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new StopLift());
+        setDefaultCommand(new StopElevator());
     }
 
     public double getSensorPosition() {

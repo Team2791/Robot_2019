@@ -44,6 +44,7 @@ public class RobotMap {
     //PDP IDs
     public static final int kPowerFrontLift = 3;
     public static final int kPowerBackLift = 12;
+    public static final int kCargoIntakeVictorPDP = 4;
 
     //HatchManipulator
     public static final int kExtenderHatchSolenoid = 3;
@@ -54,5 +55,4 @@ public class RobotMap {
     public static final int kRaiseCargoSolenoid = 0;
     public static final int kIntakeVictor = 35;
     public static final int kCargoLimitSwitch = 0;
-    public static final int kCargoIntakeVictorPDP = 4;
 }

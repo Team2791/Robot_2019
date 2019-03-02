@@ -9,7 +9,6 @@ import frc.robot.controller.MultiButton;
 
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.FrameRetraction;
-import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
@@ -24,6 +23,7 @@ import frc.robot.commands.CargoManipulator.SlowShootCargo;
 import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
+import frc.robot.commands.auto.StopTotal;
 import frc.robot.util.Util;
 
 public class OI {
@@ -36,7 +36,8 @@ public class OI {
     private Button driverA, driverB;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
-    private Button driverX;
+    private Button driverX, driverY;
+    private Button driverRS, driverLS;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed;
     private Button operatorA, operatorB, operatorX, operatorY;
 
@@ -47,8 +48,8 @@ public class OI {
         initUsed();
 
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1)); //TODO this should be the default command of the DT
-        driverStart.whileHeld(new ExtendBothLifters(.8)); //TODO NOT FOR COMPETITION
-        driverBack.whileHeld(new RetractBothLifters(-1)); //TODO NOT FOR COMPETITION
+        // driverStart.whileHeld(new ExtendBothLifters(.8,false,driverStick)); //NOT FOR COMPETITION
+        // driverBack.whileHeld(new RetractBothLifters(-1)); //NOT FOR COMPETITION
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed)); //Elevator manual drive
         operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kElevatorMinHeight + 3)); //This will make the lift go to the bottom + 3 pot turns
@@ -63,7 +64,8 @@ public class OI {
         driverB.whenPressed(new ScorePanelAutomatedHeld()); //Scores panel
         driverB.whenReleased(new ScorePanelAutomatedRelease()); //Scores panel
 
-        driverX.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
+        driverX.whenPressed(new PlatformAuto3(driverStick)); //Runs autonomous lifting sequence
+        driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         operatorRT.whenPressed(new HoldCargoIntake()); //Intakes cargo off floor
         operatorRT.whenReleased(new ReleaseCargoIntake());
@@ -84,10 +86,13 @@ public class OI {
             driverA = new JoystickButton(driverStick, 1);
             driverB = new JoystickButton(driverStick, 2);
             driverX = new JoystickButton(driverStick,3);
+            driverY = new JoystickButton(driverStick,4);
             driverBack = new JoystickButton(driverStick, 7);
             driverStart = new JoystickButton(driverStick, 8);
             driverRB = new JoystickButton(driverStick, 6);
             driverLB = new JoystickButton(driverStick, 5);
+            driverLS = new JoystickButton(driverStick,9);
+            driverRS = new JoystickButton(driverStick,10);
 
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),
@@ -122,6 +127,5 @@ public class OI {
 				return Math.abs(Util.deadzone(Constants.DEADZONE, operatorStick.getRawAxis(1), 1.0)) > 0.08;
 			}
 		};
-
     }
-}
+    }
