@@ -26,6 +26,8 @@ import frc.robot.commands.auto.StopTotal;
 import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
+import frc.robot.commands.CargoManipulator.ScoreInRocketCalculated;
+import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
 
                     //               _____
                     //              |     |
@@ -58,7 +60,7 @@ public class OI {
     private Button driverLB, driverRB;
     private Button driverStart, driverBack;
     private Button operatorStart;
-    private Button driverA, driverB;
+    private Button driverA, driverB, driverY;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
     private Button driverX, driverY;
@@ -92,6 +94,9 @@ public class OI {
         driverX.whenPressed(new PlatformAuto3(driverStick)); //Runs autonomous lifting sequence
         driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
+        driverY.whenPressed(new ScoreInRocketDropper());
+        driverY.whenReleased(new StopCargoMotor());
+        
         operatorRT.whenPressed(new HoldCargoIntake()); //Intakes cargo off floor
         operatorRT.whenReleased(new ReleaseCargoIntake());
 
