@@ -11,7 +11,7 @@ public class Constants {
     // Lifters constants
     public static final int kLiftersLevel2PotValue = 200; //TODO TUNE ME ASAP
     public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
-    public static final double kLifterCurrentKiller = 60; //If motor crosses 60 amps after current spike
+    public static final double kLifterCurrentKiller = 70; //If motor crosses 60 amps after current spike
     public static final double kLifterBackPotTopTravel = 800; //TODO TUNE ME ASAP
     public static final double kLifterFrontPotTopTravel = 800; //TODO TUNE ME ASAP
     public static final int kFrontLifterPotMin = 40;
@@ -19,7 +19,7 @@ public class Constants {
     public static final int kLifetPotRange = 354;
     public static final int kFrontPlatformCutoff = 1100;
     public static final int kBackPlatformCutoff = 1100;
-    public static final double kLifterExtensionSpeed = .8;
+    public static final double kLifterExtensionSpeed = .80;
     public static final double kLifterRetractionSpeed = -1;
     public static final double kLifterDrivePower = .4;
     public static final double kLifterDrivePowerOverLedge = .15;
@@ -27,13 +27,14 @@ public class Constants {
     public static final double kDrivetrainLifterCrawlSpeedEndOfSequence = -0.18;
     public static final double kDrivetrainLifterEndOfSequenceTime = 0.75;
     public static final double kLifterAutoTimerDelay = 0; //TODO NOT FOR COMPETITION
+    //TODO turn compressor off when climbing
     public static final double kFullDangerCurrent = 134;
     public static final int kDangerTimeout = 100;
     public static final double kLifterF = 0.135;
     public static final double kLifterP = 8; //16 reduced bc doubled output
     public static final double k_IR_SENSOR_THREASHOLD = 1800;
     public static final double kLifterFrontSlowHeight = 300;
-    public static final double kLifterFrontSlowSpeed = -0.27; 
+    public static final double kLifterFrontSlowSpeed = -0.2; 
 
     //Elevator constants
     public static double kLIFT_HOLD_VOLTAGE = 0.25;

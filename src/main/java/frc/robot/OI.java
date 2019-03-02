@@ -23,6 +23,8 @@ import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
 import frc.robot.commands.auto.StopTotal;
+import frc.robot.commands.Lifter.ExtendBothLifters;
+import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
 
                     //               _____
@@ -72,7 +74,7 @@ public class OI {
 
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1)); //TODO this should be the default command of the DT
         // driverStart.whileHeld(new ExtendBothLifters(.8,false,driverStick)); //NOT FOR COMPETITION
-        // driverBack.whileHeld(new RetractBothLifters(-1)); //NOT FOR COMPETITION
+        driverBack.whileHeld(new RetractBothLifters(-1)); //NOT FOR COMPETITION
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed)); //Elevator manual drive
         operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kElevatorMinHeight + 3)); //This will make the lift go to the bottom + 3 pot turns

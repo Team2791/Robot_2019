@@ -11,9 +11,9 @@ import frc.robot.commands.DoNothing;
 import frc.robot.commands.auto.DriveForwardForTime;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class PlatformAuto3 extends CommandGroup {
+public class PlatformAuto2 extends CommandGroup {
     public Joystick sticky;
-    public PlatformAuto3 (Joystick stick){
+    public PlatformAuto2 (Joystick stick){
         this.sticky = stick;
         addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true,sticky));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);

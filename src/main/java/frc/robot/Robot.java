@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        autoCommand.cancel();
+        // autoCommand.cancel();
     }
 
     @Override
