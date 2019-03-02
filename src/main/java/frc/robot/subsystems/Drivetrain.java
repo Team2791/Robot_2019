@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -21,6 +23,7 @@ public class Drivetrain extends Subsystem {
     private VictorSPX leftFollower2;
     private VictorSPX rightFollower1;
     private VictorSPX rightFollower2;
+    private DigitalInput lineSensors[];
     // private ADXRS450_Gyro gyro;
     // private boolean gyroDisabled = false;
 
@@ -41,6 +44,11 @@ public class Drivetrain extends Subsystem {
 
         leftDrive = new BaseMotorController[]{leftLeader, leftFollower1, leftFollower2};
         rightDrive = new BaseMotorController[]{rightLeader, rightFollower1, rightFollower2};
+
+        lineSensors = new DigitalInput[4];
+        for(int i = 0; i < 4; ++i) {
+            lineSensors[i] = new DigitalInput(RobotMap.kLineSensors[i]);
+        }
 
         for(int i = 0; i < rightDrive.length; ++i) {
             rightDrive[i].setInverted(true);
@@ -134,6 +142,16 @@ public class Drivetrain extends Subsystem {
     //         System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
     //     }
     // }
+
+    public int getLineSensors() {
+        int res = 0;
+        res |= lineSensors[0].get() ? 1 : 0;
+        res |= lineSensors[1].get() ? 2 : 0;
+        res |= lineSensors[2].get() ? 4 : 0;
+        res |= lineSensors[3].get() ? 8 : 0;
+        return res;
+    }
+
     public void debug(){
         SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
         SmartDashboard.putNumber("Right Encoder", getLeftEncoder());

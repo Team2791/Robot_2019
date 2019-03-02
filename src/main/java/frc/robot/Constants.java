@@ -35,6 +35,10 @@ public class Constants {
     public static final double k_IR_SENSOR_THREASHOLD = 1800;
     public static final double kLifterFrontSlowHeight = 300;
     public static final double kLifterFrontSlowSpeed = -0.2; 
+    public static final double kLineFollowStraight = 0.5;
+    public static final double kLineFollowTurnLow = 0.25;
+    public static final double kLineFollowTurnMid = 0;
+    public static final double kLineFollowTurnMax = -0.5;
 
     //Elevator constants
     public static double kLIFT_HOLD_VOLTAGE = 0.25;
