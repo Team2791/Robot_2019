@@ -73,11 +73,11 @@ public class Constants {
 	public static final double kScorePanelDelayHatchRetractionAndAlignerRaise = 1.0;
 
 	//Cargo Intake Values
-	public static final double kCargoIntakeMotorSpeed = 0.65; //0.75 //This is the intake speed for the cargo
+	public static final double kCargoIntakeMotorSpeed = 0.75;//0.65; //0.75 //This is the intake speed for the cargo
 	public static final double kRaiseCargoArmsDelayAfterButtonPressed = 0.4; //This is the delay between when the ball presses the switch on the intake and when the intake is raised
 	public static final double kCargoIntakeMotorStallSpeed = 0.1; //was 0.15 //This is the speed at which the intake will apply a constant stall on the ball when the switch is pressed
 	public static final double kCargoSlowShootMotorSpeed = -0.25;
-	public static final double kCargoFastShootMotorSpeed = -0.7;
+	public static final double kCargoFastShootMotorSpeed = -0.5;
     public static final double kCargoIntakeHumanSpeed = 0.65;
     public static final double kCargoIntakeCurrentThreshold = 12; //This seems to work pretty well lol
     public static final double kCargoCurrentSpikeDelay = 0.6; //This seems to work pretty well lol

@@ -63,7 +63,7 @@ public class OI {
     private Button driverA, driverB, driverY;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
-    private Button driverX, driverY;
+    private Button driverX;
     private Button driverRS, driverLS;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed;
     private Button operatorA, operatorB, operatorX, operatorY;
@@ -92,7 +92,7 @@ public class OI {
         driverB.whenReleased(new ScorePanelAutomatedRelease()); //Scores panel
 
         driverX.whenPressed(new PlatformAuto3(driverStick)); //Runs autonomous lifting sequence
-        driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
+        //driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         driverY.whenPressed(new ScoreInRocketDropper());
         driverY.whenReleased(new StopCargoMotor());
