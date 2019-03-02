@@ -9,7 +9,6 @@ import frc.robot.controller.MultiButton;
 
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.FrameRetraction;
-import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
@@ -25,6 +24,30 @@ import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
 import frc.robot.commands.auto.StopTotal;
 import frc.robot.util.Util;
+
+                    //               _____
+                    //              |     |
+                    //              | | | |
+                    //              |_____|
+                    //        ____ ___|_|___ ____
+                    //       ()___)         ()___)
+                    //       // /|           |\ \\
+                    //      // / |           | \ \\
+                    //     (___) |___________| (___)
+                    //     (___)   (_______)   (___)
+                    //     (___)     (___)     (___)
+                    //     (___)      |_|      (___)
+                    //     (___)  ___/___\___   | |
+                    //      | |  |           |  | |
+                    //      | |  |___________| /___\
+                    //     /___\  |||     ||| //   \\
+                    //    //   \\ |||     ||| \\   //
+                    //    \\   // |||     |||  \\ //
+                    //     \\ // ()__)   (__()
+                    //           ///       \\\
+                    //          ///         \\\
+                    //        _///___     ___\\\_
+                    //       |_______|   |_______|
 
 public class OI {
     public static Joystick driverStick;
