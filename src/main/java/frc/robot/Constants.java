@@ -63,7 +63,7 @@ public class Constants {
     //Hatch Manipulator Values
 	public static final double kGetPanelAutomatedReleaseRetractionDelay = 0.25;
 	public static final double kGetPanelAutomatedReleaseAlignerRetractionDelay = 1.0;
-	public static final double kScorePanelDelayGrabberCloseAndHatchRetraction = 0.25; //This is the delay between the grabber closing and the hatch retraction in the automated hatch scoring
+	public static final double kScorePanelDelayGrabberCloseAndHatchRetraction = 0.33; //This is the delay between the grabber closing and the hatch retraction in the automated hatch scoring
 	public static final double kScorePanelDelayHatchRetractionAndAlignerRaise = 1.0;
 
 	//Cargo Intake Values
@@ -73,6 +73,6 @@ public class Constants {
 	public static final double kCargoSlowShootMotorSpeed = -0.25;
 	public static final double kCargoFastShootMotorSpeed = -0.7;
     public static final double kCargoIntakeHumanSpeed = 0.65;
-    public static final double kCargoIntakeCurrentThreshold = 5; //This seems to work pretty well lol
-    public static final double kCargoCurrentSpikeDelay = 0.3; //This seems to work pretty well lol
+    public static final double kCargoIntakeCurrentThreshold = 12; //This seems to work pretty well lol
+    public static final double kCargoCurrentSpikeDelay = 0.6; //This seems to work pretty well lol
 }

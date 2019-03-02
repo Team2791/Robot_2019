@@ -25,6 +25,8 @@ import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
 import frc.robot.util.Util;
+import frc.robot.commands.CargoManipulator.ScoreInRocketCalculated;
+import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
 
 public class OI {
     public static Joystick driverStick;
@@ -33,7 +35,7 @@ public class OI {
     private Button driverLB, driverRB;
     private Button driverStart, driverBack;
     private Button operatorStart;
-    private Button driverA, driverB;
+    private Button driverA, driverB, driverY;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
     private Button driverX;
@@ -65,6 +67,9 @@ public class OI {
 
         driverX.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
 
+        driverY.whenPressed(new ScoreInRocketDropper());
+        driverY.whenReleased(new StopCargoMotor());
+        
         operatorRT.whenPressed(new HoldCargoIntake()); //Intakes cargo off floor
         operatorRT.whenReleased(new ReleaseCargoIntake());
 
@@ -84,6 +89,7 @@ public class OI {
             driverA = new JoystickButton(driverStick, 1);
             driverB = new JoystickButton(driverStick, 2);
             driverX = new JoystickButton(driverStick,3);
+            driverY = new JoystickButton(driverStick,4);
             driverBack = new JoystickButton(driverStick, 7);
             driverStart = new JoystickButton(driverStick, 8);
             driverRB = new JoystickButton(driverStick, 6);
