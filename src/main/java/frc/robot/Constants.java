@@ -7,6 +7,11 @@ public class Constants {
     public static final double kSlowDrive = 0.5;
     public static final double kCreep = 0.2;
     public static final double kSlowish = 0.5;
+    public static final double kLineFollowStraight = 0.5;
+    public static final double kLineFollowTurnLow = 0.25;
+    public static final double kLineFollowTurnMid = 0;
+    public static final double kLineFollowTurnMax = -0.5;
+    public static final double kLineVoltCutoff = 1;
 
     // Lifters constants
     public static final int kLiftersLevel2PotValue = 120; //TODO TUNE ME ASAP

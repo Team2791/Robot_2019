@@ -5,9 +5,11 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import frc.robot.controller.AnalogButton;
+import frc.robot.controller.DPadButton;
 import frc.robot.controller.MultiButton;
 
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.FollowLine;
 import frc.robot.commands.FrameRetraction;
 import frc.robot.commands.PreciseTurnJoystick;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
@@ -62,6 +64,7 @@ public class OI {
     private Button driverStart, driverBack;
     private Button operatorStart;
     private Button driverA, driverB, driverY;
+    private Button driverDPadDown;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
     private Button driverX;
@@ -111,6 +114,8 @@ public class OI {
 
         operatorLT.whenPressed(new FastShootCargo()); //Shoots cargo fast
         operatorLT.whenReleased(new StopCargoMotor());
+
+        driverDPadDown.whileHeld(new FollowLine());
     }
 
     private void initButtons(){
@@ -127,6 +132,7 @@ public class OI {
             driverLS = new JoystickButton(driverStick,9);
             driverRS = new JoystickButton(driverStick,10);
             driverRX = new AnalogButton(driverStick, 4);
+            driverDPadDown = new DPadButton(driverStick, DPadButton.kDPadDown);
 
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),
