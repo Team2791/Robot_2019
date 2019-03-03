@@ -130,8 +130,7 @@ public class OI {
 
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),
-                driverRB,
-                driverLB
+                driverRB
             });
 
 //OPERATOR BUTTONS//
