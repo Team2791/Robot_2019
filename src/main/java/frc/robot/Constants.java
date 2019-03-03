@@ -9,7 +9,8 @@ public class Constants {
     public static final double kSlowish = 0.5;
 
     // Lifters constants
-    public static final int kLiftersLevel2PotValue = 200; //TODO TUNE ME ASAP
+    public static final int kLiftersLevel2PotValue = 120; //TODO TUNE ME ASAP
+    public static final double kLifterFrontSlowHeightLevel2 = 90; //TODO TUNE ME
     public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
     public static final double kLifterCurrentKiller = 70; //If motor crosses 60 amps after current spike
     public static final double kLifterBackPotTopTravel = 800; //TODO TUNE ME ASAP

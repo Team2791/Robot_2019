@@ -15,7 +15,8 @@ public class PlatformAuto3 extends CommandGroup {
     public Joystick sticky;
     public PlatformAuto3 (Joystick stick){
         this.sticky = stick;
-        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true,sticky));
+        addSequential(new AutoSetLifterPots());
+        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true,sticky,false));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
         addSequential(new DriveLifterWheelBackIR());
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
@@ -23,7 +24,7 @@ public class PlatformAuto3 extends CommandGroup {
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
         addSequential(new DriveLifterWheelFrontIR());
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
-        addSequential(new RetractFrontLifterNoShock(Constants.kLifterRetractionSpeed));
+        addSequential(new RetractFrontLifterNoShock(Constants.kLifterRetractionSpeed,false));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
         addSequential(new DriveForwardForTime(Constants.kDrivetrainLifterCrawlSpeedEndOfSequence,Constants.kDrivetrainLifterEndOfSequenceTime));
     }

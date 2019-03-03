@@ -9,6 +9,7 @@ import frc.robot.controller.MultiButton;
 
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.FrameRetraction;
+import frc.robot.commands.PreciseTurnJoystick;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
@@ -28,7 +29,7 @@ import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
 import frc.robot.commands.CargoManipulator.ScoreInRocketCalculated;
 import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
-
+import frc.robot.commands.auto.PlatformAuto2;
                     //               _____
                     //              |     |
                     //              | | | |
@@ -65,9 +66,9 @@ public class OI {
     public Button operatorLS, operatorBack;
     private Button driverX;
     private Button driverRS, driverLS;
+    private Button driverRX;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed;
     private Button operatorA, operatorB, operatorX, operatorY;
-
     public OI() {
         driverStick = new Joystick(0);
         operatorStick = new Joystick(1);
@@ -91,12 +92,14 @@ public class OI {
         driverB.whenPressed(new ScorePanelAutomatedHeld()); //Scores panel
         driverB.whenReleased(new ScorePanelAutomatedRelease()); //Scores panel
 
-        driverX.whenPressed(new PlatformAuto3(driverStick)); //Runs autonomous lifting sequence
+        driverX.whenPressed(new PlatformAuto2(driverStick)); //Runs autonomous lifting sequence
         //driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         driverY.whenPressed(new ScoreInRocketDropper());
         driverY.whenReleased(new StopCargoMotor());
         
+        driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
+
         operatorRT.whenPressed(new HoldCargoIntake()); //Intakes cargo off floor
         operatorRT.whenReleased(new ReleaseCargoIntake());
 
@@ -123,6 +126,7 @@ public class OI {
             driverLB = new JoystickButton(driverStick, 5);
             driverLS = new JoystickButton(driverStick,9);
             driverRS = new JoystickButton(driverStick,10);
+            driverRX = new AnalogButton(driverStick, 4);
 
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),
