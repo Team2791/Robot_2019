@@ -25,6 +25,7 @@ import frc.robot.commands.CargoManipulator.SlowShootCargo;
 import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
+import frc.robot.commands.auto.ShootOverPOS;
 import frc.robot.commands.auto.StopTotal;
 import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
@@ -70,7 +71,7 @@ public class OI {
     private Button driverX;
     private Button driverRS, driverLS;
     private Button driverRX;
-    protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed;
+    protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed, operatorDPadDown;
     private Button operatorA, operatorB, operatorX, operatorY;
     public OI() {
         driverStick = new Joystick(0);
@@ -116,6 +117,8 @@ public class OI {
         operatorLT.whenReleased(new StopCargoMotor());
 
         driverDPadDown.whileHeld(new FollowLine());
+        operatorDPadDown.whenPressed(new ShootOverPOS(operatorStick));
+        operatorDPadDown.whenReleased(new StopCargoMotor());
     }
 
     private void initButtons(){
@@ -133,6 +136,7 @@ public class OI {
             driverRS = new JoystickButton(driverStick,10);
             driverRX = new AnalogButton(driverStick, 4);
             driverDPadDown = new DPadButton(driverStick, DPadButton.kDPadDown);
+            operatorDPadDown = new DPadButton(operatorStick, DPadButton.kDPadDown);
 
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),

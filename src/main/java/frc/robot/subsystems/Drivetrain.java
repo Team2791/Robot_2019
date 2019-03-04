@@ -24,6 +24,7 @@ public class Drivetrain extends Subsystem {
     private VictorSPX rightFollower1;
     private VictorSPX rightFollower2;
     private AnalogInput lineSensors[];
+    private boolean lineFound = false;
     // private ADXRS450_Gyro gyro;
     // private boolean gyroDisabled = false;
 
@@ -149,7 +150,13 @@ public class Drivetrain extends Subsystem {
         res |= lineSensors[1].getAverageVoltage() > Constants.kLineVoltCutoff ? 2 : 0;
         res |= lineSensors[2].getAverageVoltage() > Constants.kLineVoltCutoff ? 4 : 0;
         res |= lineSensors[3].getAverageVoltage() > Constants.kLineVoltCutoff ? 8 : 0;
+        lineFound = (res & 15) > 0;
         return res;
+    }
+
+    public double getLineSensor(int index)
+    {
+        return lineSensors[index].getAverageVoltage();
     }
 
     public void debug(){
@@ -161,5 +168,7 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Motor 15 Current", Robot.pdp.getCurrent(15));
         SmartDashboard.putNumber("Motor 14 Current", Robot.pdp.getCurrent(14));
         SmartDashboard.putNumber("Motor 13 Current", Robot.pdp.getCurrent(13));
+        SmartDashboard.putNumber("Line Active", getLineSensors());
+        SmartDashboard.putBoolean("Line Found", lineFound);
     }
 }  

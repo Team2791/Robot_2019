@@ -7,11 +7,9 @@ public class Constants {
     public static final double kSlowDrive = 0.5;
     public static final double kCreep = 0.2;
     public static final double kSlowish = 0.5;
-    public static final double kLineFollowStraight = 0.5;
-    public static final double kLineFollowTurnLow = 0.25;
-    public static final double kLineFollowTurnMid = 0;
-    public static final double kLineFollowTurnMax = -0.5;
-    public static final double kLineVoltCutoff = 1;
+    public static final double kLineFollowStraight = 0.3;
+    public static final double kLineFollowTurn = 0.5;
+    public static final double kLineVoltCutoff = 0.6;
 
     // Lifters constants
     public static final int kLiftersLevel2PotValue = 120; //TODO TUNE ME ASAP
@@ -49,11 +47,14 @@ public class Constants {
     public static double kELEVATOR_I_VALUE = 0.01; //The I value of the lift's PID loop
     public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
-    public static double kELEVATOR_ERROR_LEVEL = 10; // tuned with 15
 
     public static final double kPotOffset = 19.0;
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
+
+    public static double kELEVATOR_ERROR_LEVEL = 10; // tuned with 15
+    public static double kElevatorShootOverHeight = 900 + kPotOffset;
+
 
     public static double kELEVATOR_PANEL_ONE = 67.0 + kPotOffset;
     public static double kELEVATOR_PANEL_TWO = 518 + kPotOffset;
