@@ -1,6 +1,4 @@
-/**
- * Do NOT modify this file unless you know what you are doing.
- */
+//Do NOT modify this file unless you know what you are doing.
 
 package frc.robot;
 
