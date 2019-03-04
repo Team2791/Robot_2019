@@ -9,7 +9,7 @@ import frc.robot.controller.DPadButton;
 import frc.robot.controller.MultiButton;
 
 import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.FollowLine;
+import frc.robot.commands.FollowLineAndSetLift;
 import frc.robot.commands.FrameRetraction;
 import frc.robot.commands.PreciseTurnJoystick;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
@@ -65,7 +65,7 @@ public class OI {
     private Button driverStart, driverBack;
     private Button operatorStart;
     private Button driverA, driverB, driverY;
-    private Button driverDPadDown;
+    private Button driverDPadDown, driverDPadRight, driverDPadUp;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
     private Button driverX;
@@ -103,6 +103,9 @@ public class OI {
         driverY.whenReleased(new StopCargoMotor());
         
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
+        driverDPadDown.whileHeld(new FollowLineAndSetLift(kELEVATOR_PANEL_ONE));
+        driverDPadRight.whileHeld(new FollowLineAndSetLift(kELEVATOR_PANEL_TWO));
+        driverDPadUp.whileHeld(new FollowLineAndSetLift(kELEVATOR_PANEL_THREE));
 
         operatorRT.whenPressed(new HoldCargoIntake()); //Intakes cargo off floor
         operatorRT.whenReleased(new ReleaseCargoIntake());
@@ -116,7 +119,6 @@ public class OI {
         operatorLT.whenPressed(new FastShootCargo()); //Shoots cargo fast
         operatorLT.whenReleased(new StopCargoMotor());
 
-        driverDPadDown.whileHeld(new FollowLine());
         operatorDPadDown.whenPressed(new ShootOverPOS(operatorStick));
         operatorDPadDown.whenReleased(new StopCargoMotor());
     }
@@ -136,8 +138,8 @@ public class OI {
             driverRS = new JoystickButton(driverStick,10);
             driverRX = new AnalogButton(driverStick, 4);
             driverDPadDown = new DPadButton(driverStick, DPadButton.kDPadDown);
-            operatorDPadDown = new DPadButton(operatorStick, DPadButton.kDPadDown);
-
+            driverDPadRight = new DPadButton(driverStick, DPadButton.kDPadRight);
+            driverDPadUp = new DPadButton(driverStick, DPadButton.kDPadUp);
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),
                 driverRB
@@ -155,6 +157,7 @@ public class OI {
             operatorLT = new AnalogButton(operatorStick, 2);
             operatorRT = new AnalogButton(operatorStick, 3);
             operatorLS = new AnalogButton(operatorStick, 1);
+            operatorDPadDown = new DPadButton(operatorStick, DPadButton.kDPadDown);
         }
 
         catch (Exception error){
