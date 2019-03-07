@@ -61,6 +61,7 @@ public class Constants {
     public static double kELEVATOR_PANEL_THREE = 919 + kPotOffset;
 
     public static double kELEVATOR_BALL_ONE = 160 + kPotOffset; //THIS IS THE CARGO SHIP
+    public static double kELEVATOR_BALL_SLAM_SHIP = 244 + kPotOffset;
     public static double kELEVATOR_BALL_TWO = 408 + kPotOffset;
     public static double kELEVATOR_BALL_THREE = 844 + kPotOffset;
 
@@ -86,6 +87,6 @@ public class Constants {
 	public static final double kCargoSlowShootMotorSpeed = -0.25;
 	public static final double kCargoFastShootMotorSpeed = -0.5;
     public static final double kCargoIntakeHumanSpeed = 0.65;
-    public static final double kCargoIntakeCurrentThreshold = 12; //This seems to work pretty well lol
+    public static final double kCargoIntakeCurrentThreshold = 14; //This seems to work pretty well lol
     public static final double kCargoCurrentSpikeDelay = 0.6; //This seems to work pretty well lol
 }

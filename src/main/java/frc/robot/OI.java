@@ -21,6 +21,7 @@ import frc.robot.commands.HatchManipulator.ScorePanelAutomatedRelease;
 import frc.robot.commands.CargoManipulator.FastShootCargo;
 import frc.robot.commands.CargoManipulator.HoldCargoIntake;
 import frc.robot.commands.CargoManipulator.ReleaseCargoIntake;
+import frc.robot.commands.CargoManipulator.ScoreCargoShip;
 import frc.robot.commands.CargoManipulator.SlowShootCargo;
 import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
@@ -65,13 +66,13 @@ public class OI {
     private Button driverStart, driverBack;
     private Button operatorStart;
     private Button driverA, driverB, driverY;
-    private Button driverDPadDown, driverDPadRight, driverDPadUp;
+    private Button driverDPadDown, driverDPadRight, driverDPadUp, driverDPadLeft;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
     private Button driverX;
     private Button driverRS, driverLS;
     private Button driverRX;
-    protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed, operatorDPadDown;
+    protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed, operatorDPadDown, operatorDPadLeft;
     private Button operatorA, operatorB, operatorX, operatorY;
     public OI() {
         driverStick = new Joystick(0);
@@ -85,7 +86,7 @@ public class OI {
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed)); //Elevator manual drive
         operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kElevatorMinHeight + 3)); //This will make the lift go to the bottom + 3 pot turns
-        operatorB.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_ONE, Constants.kELEVATOR_BALL_ONE)); //Sets elevator to panel height 1 / ball height 1
+        operatorB.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_ONE, Constants.kELEVATOR_BALL_SLAM_SHIP)); //Sets elevator to panel height 1 / ball height 1
         operatorX.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_TWO, Constants.kELEVATOR_BALL_TWO)); //Sets elevator to panel height 2 / ball height 2
         operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE)); //Sets elevator to panel height 2 / ball height 2
 
@@ -103,9 +104,13 @@ public class OI {
         driverY.whenReleased(new StopCargoMotor());
         
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
-        driverDPadDown.whileHeld(new FollowLineAndSetLift(kELEVATOR_PANEL_ONE));
-        driverDPadRight.whileHeld(new FollowLineAndSetLift(kELEVATOR_PANEL_TWO));
-        driverDPadUp.whileHeld(new FollowLineAndSetLift(kELEVATOR_PANEL_THREE));
+        driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE));
+        driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));
+        driverDPadUp.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
+        // driverDPadLeft.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_BALL_ONE));
+
+        operatorDPadLeft.whenPressed(new ScoreCargoShip());
+        operatorDPadLeft.whenReleased(new StopCargoMotor());
 
         operatorRT.whenPressed(new HoldCargoIntake()); //Intakes cargo off floor
         operatorRT.whenReleased(new ReleaseCargoIntake());
@@ -140,6 +145,7 @@ public class OI {
             driverDPadDown = new DPadButton(driverStick, DPadButton.kDPadDown);
             driverDPadRight = new DPadButton(driverStick, DPadButton.kDPadRight);
             driverDPadUp = new DPadButton(driverStick, DPadButton.kDPadUp);
+            driverDPadLeft = new DPadButton(driverStick, DPadButton.kDPadLeft);
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),
                 driverRB
@@ -158,6 +164,7 @@ public class OI {
             operatorRT = new AnalogButton(operatorStick, 3);
             operatorLS = new AnalogButton(operatorStick, 1);
             operatorDPadDown = new DPadButton(operatorStick, DPadButton.kDPadDown);
+            operatorDPadLeft = new DPadButton(operatorStick, DPadButton.kDPadLeft);
         }
 
         catch (Exception error){
