@@ -170,5 +170,8 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Motor 13 Current", Robot.pdp.getCurrent(13));
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
+        for(int i = 0; i < 4; ++ i) {
+            SmartDashboard.putNumber("Line Voltage" + i, getLineSensor(i));
+        }
     }
 }  

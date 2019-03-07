@@ -55,23 +55,23 @@ public class ExtendBothLifters extends Command {
             end();
         }
 
-        if(startupCounter.get() > Constants.kLifterCurrentProtectionSpikeTimer && Robot.lifters.getFrontCurrent() > Constants.kLifterCurrentKiller){
-            //This stops the command if the front lifter draws too much power after the first second
-            System.out.println("Front lifter current protection engaged");
-            end();
-        }
+        // if(startupCounter.get() > Constants.kLifterCurrentProtectionSpikeTimer && Robot.lifters.getFrontCurrent() > Constants.kLifterCurrentKiller){
+        //     //This stops the command if the front lifter draws too much power after the first second
+        //     System.out.println("Front lifter current protection engaged");
+        //     end();
+        // }
 
-        if(startupCounter.get() > Constants.kLifterCurrentProtectionSpikeTimer && Robot.lifters.getBackCurrent() > Constants.kLifterCurrentKiller){
-            //This stops the command if the rear lifter draws too much power after the first second
-            System.out.println("Rear lifter current protection engaged");
-            end();
-        }
+        // if(startupCounter.get() > Constants.kLifterCurrentProtectionSpikeTimer && Robot.lifters.getBackCurrent() > Constants.kLifterCurrentKiller){
+        //     //This stops the command if the rear lifter draws too much power after the first second
+        //     System.out.println("Rear lifter current protection engaged");
+        //     end();
+        // }
         
-        if(inFullAutoMode == true && sticky.getRawButton(8)==true){
+        // if(inFullAutoMode == true && sticky.getRawButton(8)==true){
             //This will only happen if the driver is pressing down on Start
-                Robot.lifters.ExtendBothSPEEDY(output);
-                System.out.println("Entering Lifter SPEED MODE");
-        }
+                // Robot.lifters.ExtendBothSPEEDY(output);
+                // System.out.println("Entering Lifter SPEED MODE");
+        // }
 
         Robot.lifters.ExtendBoth(output);
         

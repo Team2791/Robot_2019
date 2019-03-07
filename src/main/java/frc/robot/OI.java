@@ -27,11 +27,12 @@ import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
 // import frc.robot.commands.auto.StopTotal;
-// import frc.robot.commands.Lifter.ExtendBothLifters;
+import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
 // import frc.robot.commands.CargoManipulator.ScoreInRocketCalculated;
 import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
+import frc.robot.commands.auto.AutoSetLifterPots;
 import frc.robot.commands.auto.PlatformAuto2;
                     //               _____
                     //              |     |
@@ -90,6 +91,9 @@ public class OI {
         operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE)); //Sets elevator to panel height 2 / ball height 2
 
         operatorStart.whenPressed(new FrameRetraction()); //Moves everything within frame perimeter for defense
+        //THESE TWO LINES ARE FOR TESTING
+        // driverA.whenPressed(new AutoSetLifterPots());
+        // driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
 
         driverA.whenPressed(new GetPanelAutomatedHeld()); //Gets panel
         driverA.whenReleased(new GetPanelAutomatedRelease()); //Gets panel

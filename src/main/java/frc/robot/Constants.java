@@ -9,14 +9,14 @@ public class Constants {
     public static final double kSlowish = 0.5;
     public static final double kLineFollowStraight = 0.3;
     public static final double kLineFollowTurn = 0.5;
-    public static final double kLineVoltCutoff = 0.6;
+    public static final double kLineVoltCutoff = 1.4;
 
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;
     public static final int kLiftersLevel2PotValue = 120;
     public static final double kLifterFrontSlowHeightLevel2 = 90;
     public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
-    public static final double kLifterCurrentKiller = 70; //If motor crosses 60 amps after current spike
+    public static final double kLifterCurrentKiller = 100; //If motor crosses 60 amps after current spike
     public static final double kLifterBackPotTopTravel = 800; //TODO TUNE ME ASAP
     public static final double kLifterFrontPotTopTravel = 800; //TODO TUNE ME ASAP
     public static final int kFrontLifterPotMin = 40;
@@ -24,7 +24,7 @@ public class Constants {
     public static final int kLifetPotRange = 354;
     public static final int kFrontPlatformCutoff = 1100;
     public static final int kBackPlatformCutoff = 1100;
-    public static final double kLifterExtensionSpeed = .80;
+    public static final double kLifterExtensionSpeed = .85; //Was .8
     public static final double kLifterRetractionSpeed = -1;
     public static final double kLifterDrivePower = .4;
     public static final double kLifterDrivePowerOverLedge = .15;
@@ -48,7 +48,7 @@ public class Constants {
     public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final double kPotOffset = 19.0;
+    public static final double kPotOffset = 8.0; //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
