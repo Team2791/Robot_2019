@@ -43,9 +43,8 @@ public class ExtendBothLifters extends Command {
         frontDiff = Math.abs(currentFrontPotValue - lastFrontPotValue);
         rearDiff = Math.abs(currentBackPotValue - lastBackPotValue);
 
-        if(frontDiff > 50 || rearDiff > 50){
-            //TODO make this a constant
-            //This stops the command if the lifter sees that the pot moved more than 50 units in one loop
+        if(frontDiff > Constants.kLifterPotTicksInOneLoopForShutdown || rearDiff > Constants.kLifterPotTicksInOneLoopForShutdown){
+            //This stops the command if the lifter sees that the pot moved more than kLifterPotTicksInOneLoopForShutdown units in one loop
             System.out.println("Lifter pot diff error");
             end();
         }

@@ -12,8 +12,9 @@ public class Constants {
     public static final double kLineVoltCutoff = 0.6;
 
     // Lifters constants
-    public static final int kLiftersLevel2PotValue = 120; //TODO TUNE ME ASAP
-    public static final double kLifterFrontSlowHeightLevel2 = 90; //TODO TUNE ME
+    public static final int kLifterPotTicksInOneLoopForShutdown = 50;
+    public static final int kLiftersLevel2PotValue = 120;
+    public static final double kLifterFrontSlowHeightLevel2 = 90;
     public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
     public static final double kLifterCurrentKiller = 70; //If motor crosses 60 amps after current spike
     public static final double kLifterBackPotTopTravel = 800; //TODO TUNE ME ASAP
@@ -30,8 +31,7 @@ public class Constants {
     public static final double kDrivetrainLifterCrawlSpeedFrontLifter = -0.07;
     public static final double kDrivetrainLifterCrawlSpeedEndOfSequence = -0.18;
     public static final double kDrivetrainLifterEndOfSequenceTime = 0.75;
-    public static final double kLifterAutoTimerDelay = 0; //TODO NOT FOR COMPETITION
-    //TODO turn compressor off when climbing
+    public static final double kLifterAutoTimerDelay = 0;
     public static final double kFullDangerCurrent = 134;
     public static final int kDangerTimeout = 100;
     public static final double kLifterF = 0.135;

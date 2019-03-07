@@ -9,12 +9,14 @@ import frc.robot.commands.Lifter.RetractBackLifter;
 import frc.robot.commands.Lifter.RetractFrontLifterNoShock;
 import frc.robot.commands.DoNothing;
 import frc.robot.commands.auto.DriveForwardForTime;
+import frc.robot.commands.auto.TurnOffCompressor;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class PlatformAuto2 extends CommandGroup {
     public Joystick sticky;
     public PlatformAuto2 (Joystick stick){
         this.sticky = stick;
+        addSequential(new TurnOffCompressor());
         addSequential(new AutoSetLifterPots());
         addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true,sticky,true));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);

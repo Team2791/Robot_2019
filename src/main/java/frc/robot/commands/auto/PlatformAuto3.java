@@ -15,6 +15,7 @@ public class PlatformAuto3 extends CommandGroup {
     public Joystick sticky;
     public PlatformAuto3 (Joystick stick){
         this.sticky = stick;
+        addSequential(new TurnOffCompressor());
         addSequential(new AutoSetLifterPots());
         addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true,sticky,false));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);

@@ -26,12 +26,11 @@ import frc.robot.commands.CargoManipulator.SlowShootCargo;
 import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
-import frc.robot.commands.auto.ShootOverPOS;
-import frc.robot.commands.auto.StopTotal;
-import frc.robot.commands.Lifter.ExtendBothLifters;
+// import frc.robot.commands.auto.StopTotal;
+// import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
-import frc.robot.commands.CargoManipulator.ScoreInRocketCalculated;
+// import frc.robot.commands.CargoManipulator.ScoreInRocketCalculated;
 import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
 import frc.robot.commands.auto.PlatformAuto2;
                     //               _____
@@ -80,7 +79,7 @@ public class OI {
         initButtons();
         initUsed();
 
-        driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1)); //TODO this should be the default command of the DT
+        driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1)); //this should be the default command of the DT
         // driverStart.whileHeld(new ExtendBothLifters(.8,false,driverStick)); //NOT FOR COMPETITION
         driverBack.whileHeld(new RetractBothLifters(-1)); //NOT FOR COMPETITION
 
@@ -98,6 +97,7 @@ public class OI {
         driverB.whenReleased(new ScorePanelAutomatedRelease()); //Scores panel
 
         driverX.whenPressed(new PlatformAuto2(driverStick)); //Runs autonomous lifting sequence
+        driverStart.whenPressed(new PlatformAuto3(driverStick)); //Runs autonomous lifting sequence
         //driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         driverY.whenPressed(new ScoreInRocketDropper());
@@ -107,7 +107,6 @@ public class OI {
         driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE));
         driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));
         driverDPadUp.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
-        // driverDPadLeft.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_BALL_ONE));
 
         operatorDPadLeft.whenPressed(new ScoreCargoShip());
         operatorDPadLeft.whenReleased(new StopCargoMotor());
@@ -124,8 +123,8 @@ public class OI {
         operatorLT.whenPressed(new FastShootCargo()); //Shoots cargo fast
         operatorLT.whenReleased(new StopCargoMotor());
 
-        operatorDPadDown.whenPressed(new ShootOverPOS(operatorStick));
-        operatorDPadDown.whenReleased(new StopCargoMotor());
+        // operatorDPadDown.whenPressed(new ShootOverPOS(operatorStick));
+        // operatorDPadDown.whenReleased(new StopCargoMotor());
     }
 
     private void initButtons(){
