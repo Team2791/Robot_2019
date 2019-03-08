@@ -38,6 +38,15 @@ public class Elevator extends Subsystem {
         driveTalon.setInverted(true); //This should be true, as green lights (Positive direction) = lift going UP
         driveTalon.setNeutralMode(NeutralMode.Brake);
 
+        /*
+            Enable the current limit such that when it exceeds 45A for 40 msec, limit the current draw to 30A
+        */
+        //NOTE COMMENTING THIS OUT WILL NOT DISABLE IT, YOU NEED TO SET THE NEXT 3 VALUES TO 0 and the last to false
+        driveTalon.configContinuousCurrentLimit(30);
+        driveTalon.configPeakCurrentLimit(45);
+        driveTalon.configPeakCurrentDuration(10);
+        driveTalon.enableCurrentLimit(true);
+
         driveTalon.overrideLimitSwitchesEnable(false);
 
         driveTalon.configNominalOutputForward(Constants.kLIFT_HOLD_VOLTAGE, 0); //kLIFT_HOLD_VOLTAGE is a little bit of stall current to keep lift from falling back down before the break enables
@@ -53,7 +62,6 @@ public class Elevator extends Subsystem {
 		driveTalon.config_kI(0, Constants.kELEVATOR_I_VALUE, 0);
         driveTalon.config_kD(0, Constants.kELEVATOR_D_VALUE, 0);
         driveTalon.config_IntegralZone(0, Constants.kELEVATOR_I_ZONE_VALUE);
- 
     }
 
     @Override
@@ -78,20 +86,20 @@ public class Elevator extends Subsystem {
     }
     
     public boolean atBottom() {
-                return driveTalon.getSensorCollection().isRevLimitSwitchClosed() || getSensorPosition() < Constants.kElevatorMinHeight + 1;
-            }
+        return driveTalon.getSensorCollection().isRevLimitSwitchClosed() || getSensorPosition() < Constants.kElevatorMinHeight + 1;
+    }
         
     public boolean closeToBottom() {
-                return getSensorPosition() < Constants.kElevatorMinHeight + Constants.kElevatorBottomSafetyDistance;
-            }
+        return getSensorPosition() < Constants.kElevatorMinHeight + Constants.kElevatorBottomSafetyDistance;
+    }
         
     public boolean atTop() {
         return driveTalon.getSensorCollection().isFwdLimitSwitchClosed() || getSensorPosition() > Constants.kElevatorMaxHeight - 1;
-            }
+    }
         
     public boolean closeToTop() {
-                return getSensorPosition() > Constants.kElevatorMaxHeight - Constants.kElevatorTopSafetyDistance;
-            }
+        return getSensorPosition() > Constants.kElevatorMaxHeight - Constants.kElevatorTopSafetyDistance;
+    }
 
     public void setPowerUnsafe(double power) {
 		driveTalon.set(ControlMode.PercentOutput, power);

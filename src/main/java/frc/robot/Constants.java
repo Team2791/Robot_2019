@@ -48,7 +48,7 @@ public final class Constants {
     public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final double kPotOffset = 4.0; //Comp //19.0 for practice
+    public static final int kPotOffset = 23; //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
@@ -65,8 +65,8 @@ public final class Constants {
     public static double kELEVATOR_BALL_TWO = 408 + kPotOffset;
     public static double kELEVATOR_BALL_THREE = 844 + kPotOffset;
 
-    public static final double kElevatorMaxHeight = 920 + kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
-    public static final double kElevatorMinHeight = 0 + kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
+    public static final int kElevatorMaxHeight = 920 + kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
+    public static final int kElevatorMinHeight = 0 + kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
     public static final int kElevatorBottomSafetyDistance = 100;
     public static final int kElevatorTopSafetyDistance = 100;
     public static final double MANUAL_POWER = 0.75;
