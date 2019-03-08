@@ -74,6 +74,40 @@ public class Drivetrain extends Subsystem {
         setDriveSpeed(false);
         setBrakeMode(true);
         setMotors(0, 0);
+
+        leftLeader.configPeakCurrentLimit(41);
+        leftLeader.configPeakCurrentDuration(1);
+        leftLeader.configContinuousCurrentLimit(40);
+        leftLeader.enableCurrentLimit(true);
+
+        rightLeader.configPeakCurrentLimit(41);
+        rightLeader.configPeakCurrentDuration(1);
+        rightLeader.configContinuousCurrentLimit(40);
+        rightLeader.enableCurrentLimit(true);
+    }
+
+    public void setLimit() {
+        leftLeader.configPeakCurrentLimit(41);
+        leftLeader.configPeakCurrentDuration(1);
+        leftLeader.configContinuousCurrentLimit(40);
+        leftLeader.enableCurrentLimit(true);
+
+        rightLeader.configPeakCurrentLimit(41);
+        rightLeader.configPeakCurrentDuration(1);
+        rightLeader.configContinuousCurrentLimit(40);
+        rightLeader.enableCurrentLimit(true);
+    }
+
+    public void disableLimit() {
+        leftLeader.enableCurrentLimit(false);
+        leftLeader.configPeakCurrentLimit(0);
+        leftLeader.configPeakCurrentDuration(0);
+        leftLeader.configContinuousCurrentLimit(0);
+
+        rightLeader.enableCurrentLimit(false);
+        rightLeader.configPeakCurrentLimit(0);
+        rightLeader.configPeakCurrentDuration(0);
+        rightLeader.configContinuousCurrentLimit(0);
     }
 
     public void initDefaultCommand() {
