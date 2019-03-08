@@ -15,9 +15,9 @@ public class HoldCargoIntake extends CommandGroup {
         addSequential(new SetCargoControlsTrue());
         addSequential(new DropCargo());
         addSequential(new SetIntakeMotor(Constants.kCargoIntakeMotorSpeed));
-        addSequential(new CheckForBall());
-        addSequential(new DoNothing(), Constants.kRaiseCargoArmsDelayAfterButtonPressed);
-        addSequential(new SetIntakeMotor(Constants.kCargoIntakeMotorStallSpeed));
-        addSequential(new RaiseCargo());
+        // addSequential(new CheckForBall());
+        // addSequential(new DoNothing(), Constants.kRaiseCargoArmsDelayAfterButtonPressed);
+        // addSequential(new SetIntakeMotor(Constants.kCargoIntakeMotorStallSpeed));
+        // addSequential(new RaiseCargo());
     }
 }
