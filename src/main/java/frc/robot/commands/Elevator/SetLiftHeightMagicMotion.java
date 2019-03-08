@@ -31,6 +31,7 @@ public class SetLiftHeightMagicMotion extends Command {
 
     @Override
     protected void execute() {
+        Robot.elevator.command = "SetLiftHeightMagicMotion";
         //elevator.setTargetMagicMotion(SmartDashboard.getNumber("Elevator target height", Constants.kElevatorMinHeight + 3));
     }
 

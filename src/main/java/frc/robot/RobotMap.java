@@ -24,7 +24,8 @@ public class RobotMap {
     public static final int kRightTalon = 21;
     public static final int[] kLeftVictors = {30, 32};
     public static final int[] kRightVictors = {31, 33};
-    public static final int[] kLineSensors = {4, 5, 6, 7}; //Values unknown
+    // public static final int[] kLineSensors = {4, 5, 6, 7};
+    public static final int[] kLineSensors = {7, 6, 5, 4};
 
     //Lifters
     public static final int kFrontLiftTalon = 23;

@@ -23,6 +23,7 @@ public class RunLiftWithJoystick extends Command {
 
     @Override
     protected void execute() {
+        Robot.elevator.command = "RunLiftWithJoystick";
         double speed = Util.deadzone(Constants.DEADZONE,OI.operatorStick.getRawAxis(1), 1.0) * Constants.MANUAL_POWER * -1;
 
         if(Robot.oi.operatorLS.get()) {

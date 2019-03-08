@@ -43,9 +43,8 @@ public class ExtendBothLifters extends Command {
         frontDiff = Math.abs(currentFrontPotValue - lastFrontPotValue);
         rearDiff = Math.abs(currentBackPotValue - lastBackPotValue);
 
-        if(frontDiff > 50 || rearDiff > 50){
-            //TODO make this a constant
-            //This stops the command if the lifter sees that the pot moved more than 50 units in one loop
+        if(frontDiff > Constants.kLifterPotTicksInOneLoopForShutdown || rearDiff > Constants.kLifterPotTicksInOneLoopForShutdown){
+            //This stops the command if the lifter sees that the pot moved more than kLifterPotTicksInOneLoopForShutdown units in one loop
             System.out.println("Lifter pot diff error");
             end();
         }
@@ -56,23 +55,23 @@ public class ExtendBothLifters extends Command {
             end();
         }
 
-        if(startupCounter.get() > Constants.kLifterCurrentProtectionSpikeTimer && Robot.lifters.getFrontCurrent() > Constants.kLifterCurrentKiller){
-            //This stops the command if the front lifter draws too much power after the first second
-            System.out.println("Front lifter current protection engaged");
-            end();
-        }
+        // if(startupCounter.get() > Constants.kLifterCurrentProtectionSpikeTimer && Robot.lifters.getFrontCurrent() > Constants.kLifterCurrentKiller){
+        //     //This stops the command if the front lifter draws too much power after the first second
+        //     System.out.println("Front lifter current protection engaged");
+        //     end();
+        // }
 
-        if(startupCounter.get() > Constants.kLifterCurrentProtectionSpikeTimer && Robot.lifters.getBackCurrent() > Constants.kLifterCurrentKiller){
-            //This stops the command if the rear lifter draws too much power after the first second
-            System.out.println("Rear lifter current protection engaged");
-            end();
-        }
+        // if(startupCounter.get() > Constants.kLifterCurrentProtectionSpikeTimer && Robot.lifters.getBackCurrent() > Constants.kLifterCurrentKiller){
+        //     //This stops the command if the rear lifter draws too much power after the first second
+        //     System.out.println("Rear lifter current protection engaged");
+        //     end();
+        // }
         
-        if(inFullAutoMode == true && sticky.getRawButton(8)==true){
+        // if(inFullAutoMode == true && sticky.getRawButton(8)==true){
             //This will only happen if the driver is pressing down on Start
-                Robot.lifters.ExtendBothSPEEDY(output);
-                System.out.println("Entering Lifter SPEED MODE");
-        }
+                // Robot.lifters.ExtendBothSPEEDY(output);
+                // System.out.println("Entering Lifter SPEED MODE");
+        // }
 
         Robot.lifters.ExtendBoth(output);
         
