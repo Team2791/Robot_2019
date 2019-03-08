@@ -22,7 +22,9 @@ public class DriveWithJoystick extends Command {
         if(stick.getRawButton(6)) {
             thrust = Constants.kCreep;
         }
-         
+        else if(stick.getRawButton(5)) {
+            thrust = -Constants.kCreep;
+        }
         else if(Robot.elevator.getSensorPosition() > 300){ //Noah added this to limit speed when elevator is up
             thrust = Constants.kSlowish * (stick.getRawAxis(3) - stick.getRawAxis(2));
             if(Math.abs(thrust) < deadzone) {
@@ -43,6 +45,10 @@ public class DriveWithJoystick extends Command {
 
         if(isSquaredTurn) {
             turn *= Math.abs(turn);
+        }
+
+        if(stick.getRawButton(2)) {
+            turn /= 2;
         }
 
         if(stick.getRawButton(5)) {

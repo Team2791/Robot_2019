@@ -148,7 +148,8 @@ public class OI {
             driverDPadLeft = new DPadButton(driverStick, DPadButton.kDPadLeft);
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),
-                driverRB
+                driverRB,
+                driverLB
             });
 
 //OPERATOR BUTTONS//

@@ -48,7 +48,7 @@ public final class Constants {
     public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final double kPotOffset = 8.0; //Comp //19.0 for practice
+    public static final double kPotOffset = 4.0; //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
