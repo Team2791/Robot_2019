@@ -7,10 +7,10 @@ public class Constants {
     public static final double kSlowDrive = 0.5;
     public static final double kCreep = 0.2;
     public static final double kSlowish = 0.5;
-    public static final double kLineFollowStraight = 0.3;
+    public static final double kLineFollowStraight = 0.27;
     public static final double kLineFollowTurn = 0.5;
-    public static final double kLineVoltCutoff = 1.4;
-
+    public static final double kLineVoltCutoff = 1.0; //1.4
+    
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;
     public static final int kLiftersLevel2PotValue = 120;

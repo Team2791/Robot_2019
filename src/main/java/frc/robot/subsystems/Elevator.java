@@ -18,6 +18,7 @@ public class Elevator extends Subsystem {
     private Solenoid breakSolenoid;
     private TalonSRX driveTalon;
     public boolean magic = false;
+    public String command = "";
 
     //The potentiometer we are using goes from -1023 to 0 full range.
     //There is a bicycle disk break attached to a piston that allows us to stop the lift at the right height without needing stall current and other fancy shit
@@ -112,6 +113,7 @@ public class Elevator extends Subsystem {
         SmartDashboard.putBoolean("Elevator - Close to top", closeToTop());
         SmartDashboard.putBoolean("Elevator - Close to bottom", closeToBottom());
         SmartDashboard.putNumber("Elevator - RAW HEIGHT", getSensorPosition());
+        SmartDashboard.putString("Elevator Command", command);
     }
 
 }

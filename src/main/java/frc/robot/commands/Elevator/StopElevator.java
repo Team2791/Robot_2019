@@ -17,6 +17,7 @@ public class StopElevator extends Command {
     protected void execute() {
         Robot.elevator.setPowerUnsafe(0);
         Robot.elevator.setBreak(true);
+        Robot.elevator.command = "StopElevator";
 }
     
     @Override

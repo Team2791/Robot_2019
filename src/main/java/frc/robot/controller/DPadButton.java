@@ -17,6 +17,9 @@ public class DPadButton extends Button {
     }
 
     public boolean get() {
+        if(stick.getPOV() == -1) {
+            return false;
+        }
         return stick.getPOV() == direction * 90 ||
             stick.getPOV() == (direction * 90 - 45) % 360 ||
             stick.getPOV() == (direction * 90 + 45) % 360;

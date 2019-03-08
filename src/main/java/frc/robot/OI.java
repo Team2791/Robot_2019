@@ -81,8 +81,8 @@ public class OI {
         initUsed();
 
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1)); //this should be the default command of the DT
-        // driverStart.whileHeld(new ExtendBothLifters(.8,false,driverStick)); //NOT FOR COMPETITION
-        driverBack.whileHeld(new RetractBothLifters(-1)); //NOT FOR COMPETITION
+        // TODO LEAVE OUT driverStart.whileHeld(new ExtendBothLifters(.8,false,driverStick));
+        driverBack.whileHeld(new RetractBothLifters(-1));
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed)); //Elevator manual drive
         operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kElevatorMinHeight + 3)); //This will make the lift go to the bottom + 3 pot turns
@@ -92,8 +92,8 @@ public class OI {
 
         operatorStart.whenPressed(new FrameRetraction()); //Moves everything within frame perimeter for defense
         //THESE TWO LINES ARE FOR TESTING
-        // driverA.whenPressed(new AutoSetLifterPots());
-        // driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
+        // TODO LEAVE OUT driverA.whenPressed(new AutoSetLifterPots());
+        // TODO LEAVE OUT driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
 
         driverA.whenPressed(new GetPanelAutomatedHeld()); //Gets panel
         driverA.whenReleased(new GetPanelAutomatedRelease()); //Gets panel
@@ -102,7 +102,7 @@ public class OI {
 
         driverX.whenPressed(new PlatformAuto2(driverStick)); //Runs autonomous lifting sequence
         driverStart.whenPressed(new PlatformAuto3(driverStick)); //Runs autonomous lifting sequence
-        //driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
+        // TODO LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         driverY.whenPressed(new ScoreInRocketDropper());
         driverY.whenReleased(new StopCargoMotor());
@@ -110,7 +110,7 @@ public class OI {
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
         driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE));
         driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));
-        driverDPadUp.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
+        driverDPadLeft.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
 
         operatorDPadLeft.whenPressed(new ScoreCargoShip());
         operatorDPadLeft.whenReleased(new StopCargoMotor());
@@ -126,9 +126,6 @@ public class OI {
 
         operatorLT.whenPressed(new FastShootCargo()); //Shoots cargo fast
         operatorLT.whenReleased(new StopCargoMotor());
-
-        // operatorDPadDown.whenPressed(new ShootOverPOS(operatorStick));
-        // operatorDPadDown.whenReleased(new StopCargoMotor());
     }
 
     private void initButtons(){
