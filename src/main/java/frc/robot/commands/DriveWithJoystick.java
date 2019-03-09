@@ -48,11 +48,7 @@ public class DriveWithJoystick extends Command {
         }
 
         if(stick.getRawButton(2)) {
-            turn /= 2;
-        }
-
-        if(stick.getRawButton(5)) {
-            turn /= 2;
+            turn /= 3;
         }
 
         double left = Math.max(Math.min(thrust + turn, 1), -1);
