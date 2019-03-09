@@ -93,7 +93,7 @@ public class OI {
         operatorStart.whenPressed(new FrameRetraction()); //Moves everything within frame perimeter for defense
         //THESE TWO LINES ARE FOR TESTING
         // TODO LEAVE OUT driverA.whenPressed(new AutoSetLifterPots());
-        // TODO LEAVE OUT driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
+        // driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
 
         driverA.whenPressed(new GetPanelAutomatedHeld()); //Gets panel
         driverA.whenReleased(new GetPanelAutomatedRelease()); //Gets panel
