@@ -10,6 +10,8 @@ public class Constants {
     public static final double kLineFollowStraight = 0.27;
     public static final double kLineFollowTurn = 0.5;
     public static final double kLineVoltCutoff = 1.0; //1.4
+    public static final double kNeoRampTime = 0.1;
+    public static final int kNeoAmpLimit = 35;
     
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;

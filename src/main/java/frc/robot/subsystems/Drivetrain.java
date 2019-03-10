@@ -1,11 +1,8 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,97 +14,64 @@ import frc.robot.Robot;
 // import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 public class Drivetrain extends Subsystem {
-    private TalonSRX leftLeader;
-    private TalonSRX rightLeader;
-    private VictorSPX leftFollower1;
-    private VictorSPX leftFollower2;
-    private VictorSPX rightFollower1;
-    private VictorSPX rightFollower2;
-    private AnalogInput lineSensors[];
-    private boolean lineFound = false;
-    // private ADXRS450_Gyro gyro;
-    // private boolean gyroDisabled = false;
+    private CANSparkMax leftLeader;
+    private CANSparkMax rightLeader;
+    private CANSparkMax[] leftFollowers;
+    private CANSparkMax[] rightFollowers;
+    private boolean lineFound;
+    
 
-    private BaseMotorController[] leftDrive;
-    private BaseMotorController[] rightDrive;
+    private AnalogInput lineSensors[];
+
 
     private double speedMultiplier;
 
     private StopDrive defaultCommand;
 
     public Drivetrain() {
-        leftLeader = new TalonSRX(RobotMap.kLeftTalon);
-        rightLeader = new TalonSRX(RobotMap.kRightTalon);
-        leftFollower1 = new VictorSPX(RobotMap.kLeftVictors[0]);
-        leftFollower2 = new VictorSPX(RobotMap.kLeftVictors[1]);
-        rightFollower1 = new VictorSPX(RobotMap.kRightVictors[0]);
-        rightFollower2 = new VictorSPX(RobotMap.kRightVictors[1]);
+        leftLeader = new CANSparkMax(RobotMap.kLeftLeader, MotorType.kBrushless);
+        leftLeader.setOpenLoopRampRate(Constants.kNeoRampTime);
+        rightLeader = new CANSparkMax(RobotMap.kRightLeader, MotorType.kBrushless);
+        rightLeader.setInverted(true);
+        rightLeader.setOpenLoopRampRate(Constants.kNeoRampTime);
 
-        leftDrive = new BaseMotorController[]{leftLeader, leftFollower1, leftFollower2};
-        rightDrive = new BaseMotorController[]{rightLeader, rightFollower1, rightFollower2};
+        leftFollowers = new CANSparkMax[RobotMap.kLeftFollowers.length];
+        for(int i = 0; i < leftFollowers.length; ++i) {
+            leftFollowers[i] = new CANSparkMax(RobotMap.kLeftFollowers[i], MotorType.kBrushless);
+            leftFollowers[i].setIdleMode(IdleMode.kCoast);
+            leftFollowers[i].setOpenLoopRampRate(Constants.kNeoRampTime);
+            leftFollowers[i].follow(leftLeader);
+        }
+
+        rightFollowers = new CANSparkMax[RobotMap.kRightFollowers.length];
+        for(int i = 0; i < rightFollowers.length; ++i) {
+            rightFollowers[i] = new CANSparkMax(RobotMap.kRightFollowers[i], MotorType.kBrushless);
+            rightFollowers[i].setInverted(true);
+            rightFollowers[i].setIdleMode(IdleMode.kCoast);
+            rightFollowers[i].setOpenLoopRampRate(Constants.kNeoRampTime);
+            rightFollowers[i].follow(rightLeader);
+        }
 
         lineSensors = new AnalogInput[4];
         for(int i = 0; i < 4; ++i) {
             lineSensors[i] = new AnalogInput(RobotMap.kLineSensors[i]);
         }
 
-        for(int i = 0; i < rightDrive.length; ++i) {
-            rightDrive[i].setInverted(true);
-        }
-
-        leftLeader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-        rightLeader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-
-        leftFollower1.follow(leftLeader);
-        leftFollower2.follow(leftLeader);
-        rightFollower1.follow(rightLeader);
-        rightFollower2.follow(rightLeader);
-        // try {
-		// 	gyro = new ADXRS450_Gyro();// SPI.Port.kOnboardCS1
-		// 	gyro.calibrate(); // takes 5 seconds
-		// 	gyro.reset();
-		// 	System.out.println("Gyro is working! :'('");
-		// } catch (NullPointerException e) {
-		// 	gyroDisabled = true;
-		// 	System.out.println("Gyro is unplugged, Disabling Gyro");
-		// }
         setDriveSpeed(false);
         setBrakeMode(true);
         setMotors(0, 0);
 
-        leftLeader.configPeakCurrentLimit(36);
-        leftLeader.configPeakCurrentDuration(1);
-        leftLeader.configContinuousCurrentLimit(35);
-        leftLeader.enableCurrentLimit(true);
-
-        rightLeader.configPeakCurrentLimit(36);
-        rightLeader.configPeakCurrentDuration(1);
-        rightLeader.configContinuousCurrentLimit(35);
-        rightLeader.enableCurrentLimit(true);
+        setLimit();
+        lineFound = false;
     }
 
-    public void setLimit() {
-        leftLeader.configPeakCurrentLimit(36);
-        leftLeader.configPeakCurrentDuration(1);
-        leftLeader.configContinuousCurrentLimit(35);
-        leftLeader.enableCurrentLimit(true);
-
-        rightLeader.configPeakCurrentLimit(36);
-        rightLeader.configPeakCurrentDuration(1);
-        rightLeader.configContinuousCurrentLimit(35);
-        rightLeader.enableCurrentLimit(true);
-    }
-
-    public void disableLimit() {
-        leftLeader.enableCurrentLimit(false);
-        leftLeader.configPeakCurrentLimit(0);
-        leftLeader.configPeakCurrentDuration(0);
-        leftLeader.configContinuousCurrentLimit(0);
-
-        rightLeader.enableCurrentLimit(false);
-        rightLeader.configPeakCurrentLimit(0);
-        rightLeader.configPeakCurrentDuration(0);
-        rightLeader.configContinuousCurrentLimit(0);
+    private void setLimit() {
+        leftLeader.setSmartCurrentLimit(Constants.kNeoAmpLimit);
+        rightLeader.setSmartCurrentLimit(Constants.kNeoAmpLimit);
+        for(int i = 0; i < leftFollowers.length; ++i) {
+            leftFollowers[i].setSmartCurrentLimit(Constants.kNeoAmpLimit);
+            rightFollowers[i].setSmartCurrentLimit(Constants.kNeoAmpLimit);
+        }
     }
 
     public void initDefaultCommand() {
@@ -121,16 +85,14 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("LeftSideOutput", left);
         SmartDashboard.putNumber("RightSideOutput",right);
 
-        leftLeader.set(ControlMode.PercentOutput, left * speedMultiplier);
-        rightLeader.set(ControlMode.PercentOutput, right * speedMultiplier);
+        leftLeader.set(left * speedMultiplier);
+        rightLeader.set(right * speedMultiplier);
     }
 
     public void setBrakeMode(boolean isbrake) {
-        NeutralMode mode = isbrake ? NeutralMode.Brake : NeutralMode.Coast;
-        for(int i = 0; i < leftDrive.length; ++i) {
-            leftDrive[i].setNeutralMode(mode);
-            rightDrive[i].setNeutralMode(mode);
-        }
+        IdleMode mode = isbrake ? IdleMode.kBrake : IdleMode.kCoast;
+        leftLeader.setIdleMode(mode);
+        rightLeader.setIdleMode(mode);
     }
 
     public void setDriveSpeed(boolean isSlow) {
@@ -138,11 +100,11 @@ public class Drivetrain extends Subsystem {
     }
 
     public int getLeftEncoder() {
-        return leftLeader.getSensorCollection().getQuadraturePosition();
+        return (int)(leftLeader.getEncoder().getPosition() + 0.5); //+1/2 for rounding
     }
 
     public int getRightEncoder() {
-        return rightLeader.getSensorCollection().getQuadraturePosition();
+        return (int)(rightLeader.getEncoder().getPosition() + 0.5); //+1/2 for rounding
     }
 
     // public double getGyroAngle(){
