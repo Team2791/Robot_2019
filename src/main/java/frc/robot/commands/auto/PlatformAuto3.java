@@ -24,6 +24,7 @@ public class PlatformAuto3 extends CommandGroup {
         addSequential(new RetractBackLifter(Constants.kLifterRetractionSpeed));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
         addSequential(new DriveLifterWheelFrontIR());
+        addSequential(new DriveForwardForTime(Constants.kCreep, Constants.kInchTime));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
         addSequential(new RetractFrontLifterNoShock(Constants.kLifterRetractionSpeed,false));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
