@@ -16,19 +16,20 @@ public class PlatformAuto3 extends CommandGroup {
     public PlatformAuto3 (Joystick stick){
         this.sticky = stick;
         addSequential(new TurnOffCompressor());
-        addSequential(new AutoSetLifterPots());
-        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true,sticky,false));
-        addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
-        addSequential(new DriveLifterWheelBackIR());
-        addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
-        addSequential(new RetractBackLifter(Constants.kLifterRetractionSpeed));
-        addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
-        addSequential(new DriveLifterWheelFrontIR());
-        addSequential(new DriveForwardForTime(Constants.kCreep, Constants.kInchTime));
-        addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
-        addSequential(new RetractFrontLifterNoShock(Constants.kLifterRetractionSpeed,false));
-        addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
+        addSequential(new AutoSetLifterPots()); //Think about this for a second - how can you speed this up?
+        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true,sticky,false)); //This is about as fast as it gets
+        // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING
+        addSequential(new DriveLifterWheelBackIR()); //Think about this for a second - how can you speed this up?
+        // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING
+        addSequential(new RetractBackLifter(Constants.kLifterRetractionSpeed)); //Literally as fast as it possibly can get
+        // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING
+        addSequential(new DriveLifterWheelFrontIR()); //Think about this for a second - how can you speed this up?
+        // addSequential(new DriveForwardForTime(Constants.kCreep, Constants.kInchTime)); //Add this back in if the bolts become an issue
+        // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING
+        addSequential(new RetractFrontLifterNoShock(Constants.kLifterRetractionSpeed,false)); //Think about this for a second - how can you speed this up?
+        // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING
         addSequential(new DriveForwardForTime(Constants.kDrivetrainLifterCrawlSpeedEndOfSequence,Constants.kDrivetrainLifterEndOfSequenceTime));
     }
 }
+
 

@@ -26,8 +26,8 @@ public class Constants {
     public static final int kBackPlatformCutoff = 1100;
     public static final double kLifterExtensionSpeed = .85; //Was .8
     public static final double kLifterRetractionSpeed = -1;
-    public static final double kLifterDrivePower = .4;
-    public static final double kLifterDrivePowerOverLedge = .15;
+    public static final double kLifterDrivePower = .60; //was .4;
+    public static final double kLifterDrivePowerOverLedge = .025; //was .15;
     public static final double kDrivetrainLifterCrawlSpeedFrontLifter = -0.07;
     public static final double kDrivetrainLifterCrawlSpeedEndOfSequence = -0.18;
     public static final double kDrivetrainLifterEndOfSequenceTime = 0.75;
@@ -37,7 +37,7 @@ public class Constants {
     public static final double kLifterF = 0.135;
     public static final double kLifterP = 8; //16 reduced bc doubled output
     public static final double k_IR_SENSOR_THREASHOLD = 1800;
-    public static final double kLifterFrontSlowHeight = 300;
+    public static final double kLifterFrontSlowHeight = 329; //was 300, 300 is more safe
     public static final double kLifterFrontSlowSpeed = -0.2; 
 
     //Elevator constants
@@ -48,7 +48,7 @@ public class Constants {
     public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final int kPotOffset = 23; //Comp //19.0 for practice
+    public static final int kPotOffset = 26; //was 23 //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
@@ -81,7 +81,7 @@ public class Constants {
 	public static final double kScorePanelDelayHatchRetractionAndAlignerRaise = 1.0;
 
 	//Cargo Intake Values
-	public static final double kCargoIntakeMotorSpeed = 0.75;//0.65; //0.75 //This is the intake speed for the cargo
+	public static final double kCargoIntakeMotorSpeed = 0.75; //0.75;//0.65; //0.75 //This is the intake speed for the cargo
 	public static final double kRaiseCargoArmsDelayAfterButtonPressed = 0.4; //This is the delay between when the ball presses the switch on the intake and when the intake is raised
 	public static final double kCargoIntakeMotorStallSpeed = 0.1; //was 0.15 //This is the speed at which the intake will apply a constant stall on the ball when the switch is pressed
 	public static final double kCargoSlowShootMotorSpeed = -0.25;

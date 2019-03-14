@@ -10,6 +10,10 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.Solenoid;
+
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.StopDrive;
@@ -25,7 +29,10 @@ public class Drivetrain extends Subsystem {
     private VictorSPX rightFollower2;
     private AnalogInput lineSensors[];
     private boolean lineFound = false;
-    // private ADXRS450_Gyro gyro;
+    private Solenoid leds;
+    // private DigitalOutput pin0;
+    // private PWM lineLight;
+    //private ADXRS450_Gyro gyro;
     // private boolean gyroDisabled = false;
 
     private BaseMotorController[] leftDrive;
@@ -42,6 +49,9 @@ public class Drivetrain extends Subsystem {
         leftFollower2 = new VictorSPX(RobotMap.kLeftVictors[1]);
         rightFollower1 = new VictorSPX(RobotMap.kRightVictors[0]);
         rightFollower2 = new VictorSPX(RobotMap.kRightVictors[1]);
+        // pin0 = new DigitalOutput(RobotMap.kLineFoundPin);
+        // lineLight = new PWM(RobotMap.kLineFoundPin);
+        leds = new Solenoid(RobotMap.kPCM, RobotMap.kLEDSolenoid);
 
         leftDrive = new BaseMotorController[]{leftLeader, leftFollower1, leftFollower2};
         rightDrive = new BaseMotorController[]{rightLeader, rightFollower1, rightFollower2};
@@ -185,6 +195,9 @@ public class Drivetrain extends Subsystem {
         res |= lineSensors[2].getAverageVoltage() > Constants.kLineVoltCutoff ? 4 : 0;
         res |= lineSensors[3].getAverageVoltage() > Constants.kLineVoltCutoff ? 8 : 0;
         lineFound = (res & 15) > 0;
+        // // pin0.set(true);
+        // lineLight.setRaw(255);
+        leds.set(lineFound);
         return res;
     }
 

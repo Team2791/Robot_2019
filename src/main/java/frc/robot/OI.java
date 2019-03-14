@@ -104,7 +104,7 @@ public class OI {
         driverStart.whenPressed(new PlatformAuto3(driverStick)); //Runs autonomous lifting sequence
         // TODO LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
-        driverY.whenPressed(new ScoreInRocketDropper());
+        driverY.whenPressed(new ScoreCargoShip());
         driverY.whenReleased(new StopCargoMotor());
         
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
