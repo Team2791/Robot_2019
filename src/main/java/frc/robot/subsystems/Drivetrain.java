@@ -31,6 +31,7 @@ public class Drivetrain extends Subsystem {
     public Drivetrain() {
         leftLeader = new CANSparkMax(RobotMap.kLeftLeader, MotorType.kBrushless);
         leftLeader.setOpenLoopRampRate(Constants.kNeoRampTime);
+        
         rightLeader = new CANSparkMax(RobotMap.kRightLeader, MotorType.kBrushless);
         rightLeader.setInverted(true);
         rightLeader.setOpenLoopRampRate(Constants.kNeoRampTime);
@@ -158,12 +159,10 @@ public class Drivetrain extends Subsystem {
     public void debug(){
         SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
         SmartDashboard.putNumber("Right Encoder", getLeftEncoder());
-        SmartDashboard.putNumber("Motor 0 Current", Robot.pdp.getCurrent(0));
-        SmartDashboard.putNumber("Motor 1 Current", Robot.pdp.getCurrent(1));
-        SmartDashboard.putNumber("Motor 2 Current", Robot.pdp.getCurrent(2));
-        SmartDashboard.putNumber("Motor 15 Current", Robot.pdp.getCurrent(15));
-        SmartDashboard.putNumber("Motor 14 Current", Robot.pdp.getCurrent(14));
-        SmartDashboard.putNumber("Motor 13 Current", Robot.pdp.getCurrent(13));
+        SmartDashboard.putNumber("Right Drivetrain 1", Robot.pdp.getCurrent(1));
+        SmartDashboard.putNumber("Right Drivetrain 2", Robot.pdp.getCurrent(0));
+        SmartDashboard.putNumber("Left Drivetrain 1", Robot.pdp.getCurrent(14));
+        SmartDashboard.putNumber("Left Drivetrain 2", Robot.pdp.getCurrent(15));
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
         for(int i = 0; i < 4; ++ i) {
