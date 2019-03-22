@@ -3,13 +3,13 @@ package frc.robot.commands.Lifter;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.Joystick;
+// import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ExtendBothLifters extends Command {
     private double output;
-    private boolean inFullAutoMode;
-    private Joystick sticky;
+    // private boolean inFullAutoMode;
+    // private Joystick sticky;
 
     private double lastFrontPotValue;
     private double currentFrontPotValue;
@@ -21,12 +21,12 @@ public class ExtendBothLifters extends Command {
     private Timer startupCounter = new Timer();
 
 
-    public ExtendBothLifters(double output, boolean fullAutoMode, Joystick stick, boolean useLevel2) {
+    public ExtendBothLifters(double output, boolean useLevel2) {
         super("ExtendBothLifters");
         requires(Robot.lifters);
         this.output = output;
-        this.sticky = stick;
-        this.inFullAutoMode = fullAutoMode;
+        // this.sticky = stick;
+        // this.inFullAutoMode = fullAutoMode;
         this.level2 = useLevel2;
     }
 

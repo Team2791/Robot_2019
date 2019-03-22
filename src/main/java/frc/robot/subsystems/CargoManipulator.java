@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.CargoManipulator.StallIntakeCargoMotors;
-import frc.robot.commands.CargoManipulator.StopCargoMotor;
+// import frc.robot.commands.CargoManipulator.StopCargoMotor;
 
 public class CargoManipulator extends Subsystem {
     private Solenoid raiserSolenoid;

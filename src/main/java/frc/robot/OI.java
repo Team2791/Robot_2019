@@ -27,12 +27,12 @@ import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
 // import frc.robot.commands.auto.StopTotal;
-import frc.robot.commands.Lifter.ExtendBothLifters;
+// import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
 // import frc.robot.commands.CargoManipulator.ScoreInRocketCalculated;
-import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
-import frc.robot.commands.auto.AutoSetLifterPots;
+// import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
+// import frc.robot.commands.auto.AutoSetLifterPots;
 import frc.robot.commands.auto.PlatformAuto2;
                     //               _____
                     //              |     |
@@ -66,11 +66,11 @@ public class OI {
     private Button driverStart, driverBack;
     private Button operatorStart;
     private Button driverA, driverB, driverY;
-    private Button driverDPadDown, driverDPadRight, driverDPadUp, driverDPadLeft;
+    private Button driverDPadDown, driverDPadRight, driverDPadLeft;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
     private Button driverX;
-    private Button driverRS, driverLS;
+    // private Button driverRS, driverLS;
     private Button driverRX;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed, operatorDPadDown, operatorDPadLeft;
     private Button operatorA, operatorB, operatorX, operatorY;
@@ -81,7 +81,7 @@ public class OI {
         initUsed();
 
         driveButton.whileHeld(new DriveWithJoystick(driverStick, 0.1)); //this should be the default command of the DT
-        // TODO LEAVE OUT driverStart.whileHeld(new ExtendBothLifters(.8,false,driverStick));
+        //LEAVE OUT driverStart.whileHeld(new ExtendBothLifters(.8,false,driverStick));
         driverBack.whileHeld(new RetractBothLifters(-1));
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed)); //Elevator manual drive
@@ -92,17 +92,17 @@ public class OI {
 
         operatorStart.whenPressed(new FrameRetraction()); //Moves everything within frame perimeter for defense
         //THESE TWO LINES ARE FOR TESTING
-        // TODO LEAVE OUT driverA.whenPressed(new AutoSetLifterPots());
-        // driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
+        //LEAVE OUT driverA.whenPressed(new AutoSetLifterPots());
+        //driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
 
         driverA.whenPressed(new GetPanelAutomatedHeld()); //Gets panel
         driverA.whenReleased(new GetPanelAutomatedRelease()); //Gets panel
         driverB.whenPressed(new ScorePanelAutomatedHeld()); //Scores panel
         driverB.whenReleased(new ScorePanelAutomatedRelease()); //Scores panel
 
-        driverX.whenPressed(new PlatformAuto2(driverStick)); //Runs autonomous lifting sequence
-        driverStart.whenPressed(new PlatformAuto3(driverStick)); //Runs autonomous lifting sequence
-        // TODO LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
+        driverX.whenPressed(new PlatformAuto2()); //Runs autonomous lifting sequence
+        driverStart.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
+        //LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         driverY.whenPressed(new ScoreCargoShip());
         driverY.whenReleased(new StopCargoMotor());
@@ -139,12 +139,12 @@ public class OI {
             driverStart = new JoystickButton(driverStick, 8);
             driverRB = new JoystickButton(driverStick, 6);
             driverLB = new JoystickButton(driverStick, 5);
-            driverLS = new JoystickButton(driverStick,9);
-            driverRS = new JoystickButton(driverStick,10);
+            // driverLS = new JoystickButton(driverStick,9);
+            // driverRS = new JoystickButton(driverStick,10);
             driverRX = new AnalogButton(driverStick, 4);
             driverDPadDown = new DPadButton(driverStick, DPadButton.kDPadDown);
             driverDPadRight = new DPadButton(driverStick, DPadButton.kDPadRight);
-            driverDPadUp = new DPadButton(driverStick, DPadButton.kDPadUp);
+            // driverDPadUp = new DPadButton(driverStick, DPadButton.kDPadUp);
             driverDPadLeft = new DPadButton(driverStick, DPadButton.kDPadLeft);
             driveButton = new MultiButton(new Button[] {
                 new AnalogButton(driverStick, 3, 2, 0, 0.2),

@@ -7,17 +7,16 @@ import frc.robot.commands.Lifter.DriveLifterWheelFrontIR;
 import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBackLifter;
 import frc.robot.commands.Lifter.RetractFrontLifterNoShock;
-import frc.robot.commands.DoNothing;
 import frc.robot.commands.auto.DriveForwardForTime;
-import edu.wpi.first.wpilibj.Joystick;
+// import edu.wpi.first.wpilibj.Joystick;
 
 public class PlatformAuto3 extends CommandGroup {
-    public Joystick sticky;
-    public PlatformAuto3 (Joystick stick){
-        this.sticky = stick;
+    // public Joystick sticky;
+    public PlatformAuto3 (){
+        // this.sticky = stick;
         addSequential(new TurnOffCompressor());
         addSequential(new AutoSetLifterPots()); //Think about this for a second - how can you speed this up?
-        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true,sticky,false)); //This is about as fast as it gets
+        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,false)); //This is about as fast as it gets
         // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING
         addSequential(new DriveLifterWheelBackIR()); //Think about this for a second - how can you speed this up?
         // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING

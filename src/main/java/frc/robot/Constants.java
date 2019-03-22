@@ -10,15 +10,17 @@ public class Constants {
     public static final double kLineFollowStraight = 0.27;
     public static final double kLineFollowTurn = 0.5;
     public static final double kLineVoltCutoff = 1.0; //1.4
-    public static final double kInchTime = 0.1;
+    public static final double kNeoRampTime = 0.1;
+    public static final int kNeoAmpLimit = 35;
+    
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;
     public static final int kLiftersLevel2PotValue = 120;
     public static final double kLifterFrontSlowHeightLevel2 = 90;
     public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
     public static final double kLifterCurrentKiller = 100; //If motor crosses 60 amps after current spike
-    public static final double kLifterBackPotTopTravel = 800; //TODO TUNE ME ASAP
-    public static final double kLifterFrontPotTopTravel = 800; //TODO TUNE ME ASAP
+    public static final double kLifterBackPotTopTravel = 800;
+    public static final double kLifterFrontPotTopTravel = 800;
     public static final int kFrontLifterPotMin = 40;
     public static final int kBackLifterPotMin = 50;
     public static final int kLifetPotRange = 354;
