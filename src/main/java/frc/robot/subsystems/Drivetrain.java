@@ -63,6 +63,7 @@ public class Drivetrain extends Subsystem {
         }
 
         lineSensors = new AnalogInput[4];
+        leds = new Solenoid(RobotMap.kPCM, RobotMap.kLEDSolenoid);
         for(int i = 0; i < 4; ++i) {
             lineSensors[i] = new AnalogInput(RobotMap.kLineSensors[i]);
         }

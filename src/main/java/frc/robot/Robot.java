@@ -81,7 +81,8 @@ public class Robot extends TimedRobot {
         
         oi = new OI();
         driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
-        driver_cam.setResolution(160, 120); // low res = fast response
+        driver_cam.setResolution(160, 120); // low res = fast response 160 x 120
+//        driver_cam.setFPS(60);
 
         // autoCommand = new AutoSetLifterPots();
     }
