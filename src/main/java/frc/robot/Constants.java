@@ -12,7 +12,11 @@ public class Constants {
     public static final double kLineVoltCutoff = 1.0; //1.4
     public static final double kNeoRampTime = 0.05; //0.1;
     public static final int kNeoAmpLimit = 48;
-    
+    public static final double kInchTime = 0.1;
+    public static final double kCamTurn = 0.5;
+    public static final double kCamStraight = 0.27;
+    public static final double kCamOffset = 0;
+
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;
     public static final int kLiftersLevel2PotValue = 120;
