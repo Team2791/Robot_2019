@@ -42,10 +42,10 @@ public class Elevator extends Subsystem {
             Enable the current limit such that when it exceeds 45A for 40 msec, limit the current draw to 30A
         */
         //NOTE COMMENTING THIS OUT WILL NOT DISABLE IT, YOU NEED TO SET THE NEXT 3 VALUES TO 0 and the last to false
-        driveTalon.configContinuousCurrentLimit(30);
-        driveTalon.configPeakCurrentLimit(45);
-        driveTalon.configPeakCurrentDuration(10);
-        driveTalon.enableCurrentLimit(true);
+        driveTalon.configContinuousCurrentLimit(0); //30
+        driveTalon.configPeakCurrentLimit(0); //45
+        driveTalon.configPeakCurrentDuration(0); //10
+        driveTalon.enableCurrentLimit(false);
 
         driveTalon.overrideLimitSwitchesEnable(false);
 
