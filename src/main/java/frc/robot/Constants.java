@@ -40,7 +40,7 @@ public class Constants {
     public static final double kLifterAutoTimerDelay = 0;
     public static final double kFullDangerCurrent = 134;
     public static final int kDangerTimeout = 100;
-    public static final double kLifterF = 0.135;
+    public static final double kLifterF = 0.05;
     public static final double kLifterP = 8; //16 reduced bc doubled output
     public static final double k_IR_SENSOR_THREASHOLD = 1800;
     public static final double kLifterFrontSlowHeight = 329; //was 300, 300 is more safe

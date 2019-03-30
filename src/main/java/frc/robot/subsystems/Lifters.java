@@ -18,6 +18,7 @@ public class Lifters extends Subsystem {
     private TalonSRX frontLifter;
     private TalonSRX backLifter;
     private VictorSPX lifterDrive;
+    private VictorSPX backHelper;
     private IrSensor frontIR;
     private IrSensor backIR;
     private int frontPotZero;// = 191;
@@ -31,6 +32,7 @@ public class Lifters extends Subsystem {
         frontLifter = new TalonSRX(RobotMap.kFrontLiftTalon);
         backLifter = new TalonSRX(RobotMap.kBackLiftTalon);
         lifterDrive = new VictorSPX(RobotMap.kRollerVictor);
+        backHelper = new VictorSPX(RobotMap.kLifterHelperVictor);
         frontLifter.setNeutralMode(NeutralMode.Brake);
         backLifter.setNeutralMode(NeutralMode.Brake);
         lifterDrive.setNeutralMode(NeutralMode.Brake);
@@ -39,6 +41,7 @@ public class Lifters extends Subsystem {
 
         backLifter.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         backLifter.setSensorPhase(false);
+        backHelper.follow(backLifter);
 
         frontIR = new IrSensor(RobotMap.kFrontIrReadout);
         backIR = new IrSensor(RobotMap.kBackIrReadout);

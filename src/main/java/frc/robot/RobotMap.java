@@ -32,6 +32,7 @@ public class RobotMap {
     public static final int kFrontLiftTalon = 23;
     public static final int kBackLiftTalon = 22;
     public static final int kRollerVictor = 34;
+    public static final int kLifterHelperVictor = 36;
     public static final int kFrontIrReadout = 1;
     public static final int kBackIrReadout = 0;
 
