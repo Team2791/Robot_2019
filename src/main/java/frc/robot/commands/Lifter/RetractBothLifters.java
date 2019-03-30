@@ -12,10 +12,12 @@ public class RetractBothLifters extends Command {
     }
 
     public void execute() {
+        Robot.lifters.stopBackFollow();
         Robot.lifters.ExtendBoth(output);
     }
 
     public void end() {
+        Robot.lifters.startBackFollow();
         Robot.lifters.extendFront(0);
         Robot.lifters.extendBack(0);
     }

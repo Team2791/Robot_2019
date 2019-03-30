@@ -10,8 +10,9 @@ public class Constants {
     public static final double kLineFollowStraight = 0.27;
     public static final double kLineFollowTurn = 0.5;
     public static final double kLineVoltCutoff = 1.0; //1.4
-    public static final double kNeoRampTime = 0.05; //0.1;
-    public static final int kNeoAmpLimit = 48;
+    public static final double kNeoRampTime = 0.05;
+    public static final int kNeoAmpLimit = 40; //Do not go higher than 40.  The robot will wheelie
+    public static final int kNeoAmpLimitTurn = 48; //This is going to be used later
     public static final double kInchTime = 0.1;
     public static final double kCamTurn = 0.5;
     public static final double kCamStraight = 0.27;
@@ -40,8 +41,8 @@ public class Constants {
     public static final double kLifterAutoTimerDelay = 0;
     public static final double kFullDangerCurrent = 134;
     public static final int kDangerTimeout = 100;
-    public static final double kLifterF = 0.05;
-    public static final double kLifterP = 8; //16 reduced bc doubled output
+    public static final double kLifterF = -0.04;
+    public static final double kLifterP = 4; //16 reduced bc doubled output
     public static final double k_IR_SENSOR_THREASHOLD = 1800;
     public static final double kLifterFrontSlowHeight = 329; //was 300, 300 is more safe
     public static final double kLifterFrontSlowSpeed = -0.2; 

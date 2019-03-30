@@ -35,6 +35,7 @@ public class Lifters extends Subsystem {
         backHelper = new VictorSPX(RobotMap.kLifterHelperVictor);
         frontLifter.setNeutralMode(NeutralMode.Brake);
         backLifter.setNeutralMode(NeutralMode.Brake);
+        backHelper.setNeutralMode(NeutralMode.Coast);
         lifterDrive.setNeutralMode(NeutralMode.Brake);
         frontLifter.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         frontLifter.setSensorPhase(false);
@@ -161,7 +162,13 @@ public class Lifters extends Subsystem {
         }
     }
 
+    public void stopBackFollow() {
+        backHelper.set(ControlMode.PercentOutput, 0);
+    }
 
+    public void startBackFollow() {
+        backHelper.follow(backLifter);
+    }
 
     public void zeroPots()
     {

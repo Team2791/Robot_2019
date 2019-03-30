@@ -33,6 +33,7 @@ public class ExtendBothLifters extends Command {
     public void initialize(){
         lastBackPotValue = Robot.lifters.getBackLifterHeight();
         lastFrontPotValue = Robot.lifters.getFrontLifterHeight();
+        Robot.lifters.startBackFollow();
         startupCounter.reset();
         startupCounter.start();
     }

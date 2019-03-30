@@ -22,6 +22,11 @@ public class Drivetrain extends Subsystem {
     private CANSparkMax rightLeader;
     private CANSparkMax[] leftFollowers;
     private CANSparkMax[] rightFollowers;
+    private int pCurrent;
+    private boolean isReversing = false;
+    private int pLeftEnc;
+    private int pRightEnc;
+    private int vel;
     
 
     private AnalogInput lineSensors[];
@@ -72,11 +77,17 @@ public class Drivetrain extends Subsystem {
         setBrakeMode(true);
         setMotors(0, 0);
 
-        setLimit(Constants.kNeoAmpLimit);
+        setCurrentLimit(Constants.kNeoAmpLimit);
         lineFound = false;
     }
 
     public void setLimit(int limit) {
+        if(pCurrent != limit) {
+            setLimit(limit);
+        }
+    }
+
+    private void setCurrentLimit(int limit) {
         leftLeader.setSmartCurrentLimit(limit);
         rightLeader.setSmartCurrentLimit(limit);
         for(int i = 0; i < leftFollowers.length; ++i) {
@@ -93,6 +104,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public void setMotors(double left, double right) {
+
         SmartDashboard.putNumber("LeftSideOutput", left);
         SmartDashboard.putNumber("RightSideOutput",right);
 
@@ -116,6 +128,27 @@ public class Drivetrain extends Subsystem {
 
     public int getRightEncoder() {
         return (int)(rightLeader.getEncoder().getPosition() + 0.5); //+1/2 for rounding
+    }
+
+    public void update() {
+        int leftEnc = getLeftEncoder();
+        int rightEnc = getRightEncoder();
+
+        int lVel = leftEnc - pLeftEnc;
+        int rVel = rightEnc - pRightEnc;
+
+        pLeftEnc = leftEnc;
+        pRightEnc = rightEnc;
+        vel = rVel + lVel / 2;
+        if(lVel >= 0 || rVel >= 0) {
+            isReversing = false;
+        } else {
+            isReversing = true;
+        }
+    }
+
+    public boolean getIsReversing() {
+        return isReversing;
     }
 
     // public double getGyroAngle(){
@@ -176,6 +209,7 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Right Drivetrain 2", Robot.pdp.getCurrent(0));
         SmartDashboard.putNumber("Left Drivetrain 1", Robot.pdp.getCurrent(14));
         SmartDashboard.putNumber("Left Drivetrain 2", Robot.pdp.getCurrent(15));
+        SmartDashboard.putNumber("velocity", vel);
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
         for(int i = 0; i < 4; ++ i) {
