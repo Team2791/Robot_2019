@@ -21,10 +21,10 @@ public class FollowLimelight extends Command {
 
     public void execute() {
 
-        
+
         double thrust = 0.5;
 
-        
+
         thrust *= kMoveSpeed;
         if(Math.abs(thrust) < 0.1) {
             thrust = 0;
@@ -44,7 +44,7 @@ public class FollowLimelight extends Command {
         double right = Math.max(Math.min(thrust + turn, 1), -1);
         System.out.println("right: "+right);
         Robot.drivetrain.setMotors(left, right);
-        
+
         myLimelight.debug();
     }
 

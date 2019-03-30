@@ -72,16 +72,16 @@ public class Drivetrain extends Subsystem {
         setBrakeMode(true);
         setMotors(0, 0);
 
-        setLimit();
+        setLimit(Constants.kNeoAmpLimit);
         lineFound = false;
     }
 
-    private void setLimit() {
-        leftLeader.setSmartCurrentLimit(Constants.kNeoAmpLimit);
-        rightLeader.setSmartCurrentLimit(Constants.kNeoAmpLimit);
+    public void setLimit(int limit) {
+        leftLeader.setSmartCurrentLimit(limit);
+        rightLeader.setSmartCurrentLimit(limit);
         for(int i = 0; i < leftFollowers.length; ++i) {
-            leftFollowers[i].setSmartCurrentLimit(Constants.kNeoAmpLimit);
-            rightFollowers[i].setSmartCurrentLimit(Constants.kNeoAmpLimit);
+            leftFollowers[i].setSmartCurrentLimit(limit);
+            rightFollowers[i].setSmartCurrentLimit(limit);
         }
     }
 
