@@ -27,7 +27,8 @@ public class Drivetrain extends Subsystem {
     private int pLeftEnc;
     private int pRightEnc;
     private int vel;
-    
+    private int pVel;
+    private int motorCounter;    
 
     private AnalogInput lineSensors[];
     private boolean lineFound = false;
@@ -79,6 +80,7 @@ public class Drivetrain extends Subsystem {
 
         setCurrentLimit(Constants.kNeoAmpLimit);
         lineFound = false;
+        motorCounter = -1;
     }
 
     public void setLimit(int limit) {
@@ -107,6 +109,14 @@ public class Drivetrain extends Subsystem {
 
         SmartDashboard.putNumber("LeftSideOutput", left);
         SmartDashboard.putNumber("RightSideOutput",right);
+
+        if(isReversing && (left + right) / 2 > 0) {
+            for(int i = 0; i < rightFollowers.length; ++i) {
+                leftFollowers[i].set(0);
+                rightFollowers[i].set(0);
+            }
+            motorCounter = Constants.kMotorReenableDelay;
+        }
 
         leftLeader.set(left * speedMultiplier);
         rightLeader.set(right * speedMultiplier);
@@ -139,16 +149,32 @@ public class Drivetrain extends Subsystem {
 
         pLeftEnc = leftEnc;
         pRightEnc = rightEnc;
+        pVel = vel;
         vel = rVel + lVel / 2;
         if(lVel >= 0 || rVel >= 0) {
             isReversing = false;
         } else {
             isReversing = true;
         }
+        
+        if(motorCounter > 0) {
+            --motorCounter;
+        } else if(motorCounter == 0) {
+            --motorCounter;
+            for(int i = 0; i < rightFollowers.length; ++i) {
+                rightFollowers[i].follow(rightLeader);
+                leftFollowers[i].follow(leftLeader);
+            }
+        }
     }
 
     public boolean getIsReversing() {
         return isReversing;
+    }
+
+    //In Encoder pulses per second
+    public double getVelocity() {
+        return (vel + pVel) * 25.0;
     }
 
     // public double getGyroAngle(){

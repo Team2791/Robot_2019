@@ -11,12 +11,12 @@ public class Constants {
     public static final double kLineFollowTurn = 0.5;
     public static final double kLineVoltCutoff = 1.0; //1.4
     public static final double kNeoRampTime = 0.05;
-    public static final int kNeoAmpLimit = 40; //Do not go higher than 40.  The robot will wheelie
-    public static final int kNeoAmpLimitTurn = 48; //This is going to be used later
+    public static final int kNeoAmpLimit = 48; //use 40 to prevent wheelies
     public static final double kInchTime = 0.1;
     public static final double kCamTurn = 0.5;
     public static final double kCamStraight = 0.27;
     public static final double kCamOffset = 0;
+    public static final int kMotorReenableDelay = 13; //13 iterations ~= 1/8 of a second
 
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;
