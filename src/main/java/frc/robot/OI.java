@@ -108,7 +108,7 @@ public class OI {
         driverY.whenReleased(new StopCargoMotor());
         
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
-        driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE));
+        driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE+10.0)); //About 2 inches is added here, so that the center of the panel is not lined up with the bolt heads
         driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));
         driverDPadLeft.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
 
