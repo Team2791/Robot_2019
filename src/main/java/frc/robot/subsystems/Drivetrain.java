@@ -26,9 +26,8 @@ public class Drivetrain extends Subsystem {
     private boolean isReversing = false;
     private int pLeftEnc;
     private int pRightEnc;
-    private int vel;
-    private int pVel;
-    private int motorCounter;    
+    private int[] velocities;
+    private int frameCounter;    
 
     private AnalogInput lineSensors[];
     private boolean lineFound = false;
@@ -80,7 +79,9 @@ public class Drivetrain extends Subsystem {
 
         setCurrentLimit(Constants.kNeoAmpLimit);
         lineFound = false;
-        motorCounter = -1;
+
+        velocities = new int[] {0, 0, 0, 0, 0};
+        frameCounter = 0;
     }
 
     public void setLimit(int limit) {
@@ -98,6 +99,16 @@ public class Drivetrain extends Subsystem {
         }
     }
 
+    private void setRamp(double rampRate)
+    {
+        leftLeader.setOpenLoopRampRate(rampRate);
+        rightLeader.setOpenLoopRampRate(rampRate);
+        for(int i = 0; i < leftFollowers.length; ++i) {
+            leftFollowers[i].setOpenLoopRampRate(rampRate);
+            rightFollowers[i].setOpenLoopRampRate(rampRate);
+        }
+    }
+
     public void initDefaultCommand() {
         if(defaultCommand == null) {
             defaultCommand = new StopDrive();
@@ -108,18 +119,15 @@ public class Drivetrain extends Subsystem {
     public void setMotors(double left, double right) {
 
         SmartDashboard.putNumber("LeftSideOutput", left);
-        SmartDashboard.putNumber("RightSideOutput",right);
+        SmartDashboard.putNumber("RightSideOutput", right);
 
         if(isReversing && (left + right) / 2 > 0) {
-            for(int i = 0; i < rightFollowers.length; ++i) {
-                leftFollowers[i].set(0);
-                rightFollowers[i].set(0);
-            }
-            motorCounter = Constants.kMotorReenableDelay;
+            leftLeader.set(Math.min(0, left));
+            rightLeader.set(Math.min(0, right));
+        } else {
+            leftLeader.set(left * speedMultiplier);
+            rightLeader.set(right * speedMultiplier);
         }
-
-        leftLeader.set(left * speedMultiplier);
-        rightLeader.set(right * speedMultiplier);
     }
 
     public void setBrakeMode(boolean isbrake) {
@@ -149,23 +157,13 @@ public class Drivetrain extends Subsystem {
 
         pLeftEnc = leftEnc;
         pRightEnc = rightEnc;
-        pVel = vel;
-        vel = rVel + lVel / 2;
-        if(lVel >= 0 || rVel >= 0) {
+        setVelocity((int)((lVel + rVel) / 2.0 + 0.5));
+        if(getVelocity() >= 0) {
             isReversing = false;
         } else {
             isReversing = true;
         }
-        
-        if(motorCounter > 0) {
-            --motorCounter;
-        } else if(motorCounter == 0) {
-            --motorCounter;
-            for(int i = 0; i < rightFollowers.length; ++i) {
-                rightFollowers[i].follow(rightLeader);
-                leftFollowers[i].follow(leftLeader);
-            }
-        }
+        ++frameCounter;
     }
 
     public boolean getIsReversing() {
@@ -174,7 +172,17 @@ public class Drivetrain extends Subsystem {
 
     //In Encoder pulses per second
     public double getVelocity() {
-        return (vel + pVel) * 25.0;
+        int max = 0;
+        for(int i = 0; i < 5; ++i) {
+            if(Math.abs(velocities[i]) > Math.abs(max)){
+                max = velocities[i];
+            }
+        }
+        return max;
+    }
+
+    private void setVelocity(int velocity) {
+        velocities[frameCounter % 5] = velocity;
     }
 
     // public double getGyroAngle(){
@@ -235,7 +243,7 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Right Drivetrain 2", Robot.pdp.getCurrent(0));
         SmartDashboard.putNumber("Left Drivetrain 1", Robot.pdp.getCurrent(14));
         SmartDashboard.putNumber("Left Drivetrain 2", Robot.pdp.getCurrent(15));
-        SmartDashboard.putNumber("velocity", vel);
+        SmartDashboard.putNumber("Measured Velocity", getVelocity());
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
         for(int i = 0; i < 4; ++ i) {

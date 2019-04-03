@@ -91,12 +91,12 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         drivetrain.update();
         //EACH debug only runs once per 10 loops
-        loopCounter += 1;
-        if(loopCounter % 10 == 0) { lifters.debug(); }
-        if(loopCounter % 10 == 1) { elevator.debug(); }
-        if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
-        if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
-        if(loopCounter % 10 == 4) { drivetrain.debug(); }
+        // loopCounter += 1;
+        // if(loopCounter % 10 == 0) { lifters.debug(); }
+        // if(loopCounter % 10 == 1) { elevator.debug(); }
+        // if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
+        // if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
+        drivetrain.debug();
     }
 
     @Override
