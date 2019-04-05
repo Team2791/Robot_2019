@@ -12,6 +12,7 @@ public class RetractBackLifter extends Command {
     }
 
     public void execute() {
+        Robot.lifters.stopBackFollow();
         Robot.lifters.extendBack(output);
     }
 

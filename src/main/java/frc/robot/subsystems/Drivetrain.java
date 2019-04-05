@@ -22,7 +22,12 @@ public class Drivetrain extends Subsystem {
     private CANSparkMax rightLeader;
     private CANSparkMax[] leftFollowers;
     private CANSparkMax[] rightFollowers;
-    
+    private int pCurrent;
+    private boolean isReversing = false;
+    private int pLeftEnc;
+    private int pRightEnc;
+    private int[] velocities;
+    private int frameCounter;    
 
     private AnalogInput lineSensors[];
     private boolean lineFound = false;
@@ -72,16 +77,35 @@ public class Drivetrain extends Subsystem {
         setBrakeMode(true);
         setMotors(0, 0);
 
-        setLimit();
+        setCurrentLimit(Constants.kNeoAmpLimit);
         lineFound = false;
+
+        velocities = new int[] {0, 0, 0, 0, 0};
+        frameCounter = 0;
     }
 
-    private void setLimit() {
-        leftLeader.setSmartCurrentLimit(Constants.kNeoAmpLimit);
-        rightLeader.setSmartCurrentLimit(Constants.kNeoAmpLimit);
+    public void setLimit(int limit) {
+        if(pCurrent != limit) {
+            setLimit(limit);
+        }
+    }
+
+    private void setCurrentLimit(int limit) {
+        leftLeader.setSmartCurrentLimit(limit);
+        rightLeader.setSmartCurrentLimit(limit);
         for(int i = 0; i < leftFollowers.length; ++i) {
-            leftFollowers[i].setSmartCurrentLimit(Constants.kNeoAmpLimit);
-            rightFollowers[i].setSmartCurrentLimit(Constants.kNeoAmpLimit);
+            leftFollowers[i].setSmartCurrentLimit(limit);
+            rightFollowers[i].setSmartCurrentLimit(limit);
+        }
+    }
+
+    private void setRamp(double rampRate)
+    {
+        leftLeader.setOpenLoopRampRate(rampRate);
+        rightLeader.setOpenLoopRampRate(rampRate);
+        for(int i = 0; i < leftFollowers.length; ++i) {
+            leftFollowers[i].setOpenLoopRampRate(rampRate);
+            rightFollowers[i].setOpenLoopRampRate(rampRate);
         }
     }
 
@@ -93,11 +117,17 @@ public class Drivetrain extends Subsystem {
     }
 
     public void setMotors(double left, double right) {
-        SmartDashboard.putNumber("LeftSideOutput", left);
-        SmartDashboard.putNumber("RightSideOutput",right);
 
-        leftLeader.set(left * speedMultiplier);
-        rightLeader.set(right * speedMultiplier);
+        SmartDashboard.putNumber("LeftSideOutput", left);
+        SmartDashboard.putNumber("RightSideOutput", right);
+
+        if(isReversing && (left + right) / 2 > 0) {
+            leftLeader.set(Math.min(0, left));
+            rightLeader.set(Math.min(0, right));
+        } else {
+            leftLeader.set(left * speedMultiplier);
+            rightLeader.set(right * speedMultiplier);
+        }
     }
 
     public void setBrakeMode(boolean isbrake) {
@@ -116,6 +146,43 @@ public class Drivetrain extends Subsystem {
 
     public int getRightEncoder() {
         return (int)(rightLeader.getEncoder().getPosition() + 0.5); //+1/2 for rounding
+    }
+
+    public void update() {
+        int leftEnc = getLeftEncoder();
+        int rightEnc = getRightEncoder();
+
+        int lVel = leftEnc - pLeftEnc;
+        int rVel = rightEnc - pRightEnc;
+
+        pLeftEnc = leftEnc;
+        pRightEnc = rightEnc;
+        setVelocity((int)((lVel + rVel) / 2.0 + 0.5));
+        if(getVelocity() >= 0) {
+            isReversing = false;
+        } else {
+            isReversing = true;
+        }
+        ++frameCounter;
+    }
+
+    public boolean getIsReversing() {
+        return isReversing;
+    }
+
+    //In Encoder pulses per second
+    public double getVelocity() {
+        int max = 0;
+        for(int i = 0; i < 5; ++i) {
+            if(Math.abs(velocities[i]) > Math.abs(max)){
+                max = velocities[i];
+            }
+        }
+        return max;
+    }
+
+    private void setVelocity(int velocity) {
+        velocities[frameCounter % 5] = velocity;
     }
 
     // public double getGyroAngle(){
@@ -176,6 +243,7 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Right Drivetrain 2", Robot.pdp.getCurrent(0));
         SmartDashboard.putNumber("Left Drivetrain 1", Robot.pdp.getCurrent(14));
         SmartDashboard.putNumber("Left Drivetrain 2", Robot.pdp.getCurrent(15));
+        SmartDashboard.putNumber("Measured Velocity", getVelocity());
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
         for(int i = 0; i < 4; ++ i) {

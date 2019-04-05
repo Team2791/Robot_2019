@@ -4,14 +4,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import frc.robot.commands.*;
+import frc.robot.commands.auto.FollowLimelight;
+import frc.robot.commands.auto.SetLimit;
 import frc.robot.controller.AnalogButton;
 import frc.robot.controller.DPadButton;
 import frc.robot.controller.MultiButton;
 
-import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.FollowLineAndSetLift;
-import frc.robot.commands.FrameRetraction;
-import frc.robot.commands.PreciseTurnJoystick;
 import frc.robot.commands.Elevator.MagicMotionHatchBall;
 import frc.robot.commands.Elevator.RunLiftWithJoystick;
 import frc.robot.commands.HatchManipulator.GetPanelAutomatedHeld;
@@ -90,7 +89,7 @@ public class OI {
         operatorX.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_TWO, Constants.kELEVATOR_BALL_TWO)); //Sets elevator to panel height 2 / ball height 2
         operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE)); //Sets elevator to panel height 2 / ball height 2
 
-        operatorStart.whenPressed(new FrameRetraction()); //Moves everything within frame perimeter for defense
+        operatorStart.whenPressed(new SetLimit(15));
         //THESE TWO LINES ARE FOR TESTING
         //LEAVE OUT driverA.whenPressed(new AutoSetLifterPots());
         //driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
@@ -108,7 +107,7 @@ public class OI {
         driverY.whenReleased(new StopCargoMotor());
         
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
-        driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE+10.0)); //About 2 inches is added here, so that the center of the panel is not lined up with the bolt heads
+        driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE+10.0));
         driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));
         driverDPadLeft.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
 

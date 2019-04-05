@@ -51,6 +51,14 @@ public class DriveWithJoystick extends Command {
             turn /= 3;
         }
 
+        // This causes the robot to crash.  It is the ideal solution to wheelies.
+        // if(Math.abs(turn) > 0.05) {
+        //     Robot.drivetrain.setLimit(Constants.kNeoAmpLimitTurn);
+        // }
+        // else {
+        //     Robot.drivetrain.setLimit(Constants.kNeoAmpLimit);
+        // }
+
         double left = Math.max(Math.min(thrust + turn, 1), -1);
         double right = Math.max(Math.min(thrust - turn, 1), -1);
         
