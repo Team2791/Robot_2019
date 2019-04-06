@@ -26,7 +26,8 @@ public class Drivetrain extends Subsystem {
     private boolean isReversing = false;
     private int pLeftEnc;
     private int pRightEnc;
-    private int[] velocities;
+    private int[] leftVelocities;
+    private int[] rightVelocities;
     private int frameCounter;    
 
     private AnalogInput lineSensors[];
@@ -80,7 +81,8 @@ public class Drivetrain extends Subsystem {
         setCurrentLimit(Constants.kNeoAmpLimit);
         lineFound = false;
 
-        velocities = new int[] {0, 0, 0, 0, 0};
+        leftVelocities = new int[] {0, 0, 0, 0, 0};
+        rightVelocities = new int[] {0, 0, 0, 0, 0};
         frameCounter = 0;
     }
 
@@ -99,15 +101,15 @@ public class Drivetrain extends Subsystem {
         }
     }
 
-    private void setRamp(double rampRate)
-    {
-        leftLeader.setOpenLoopRampRate(rampRate);
-        rightLeader.setOpenLoopRampRate(rampRate);
-        for(int i = 0; i < leftFollowers.length; ++i) {
-            leftFollowers[i].setOpenLoopRampRate(rampRate);
-            rightFollowers[i].setOpenLoopRampRate(rampRate);
-        }
-    }
+    // private void setRamp(double rampRate)
+    // {
+    //     leftLeader.setOpenLoopRampRate(rampRate);
+    //     rightLeader.setOpenLoopRampRate(rampRate);
+    //     for(int i = 0; i < leftFollowers.length; ++i) {
+    //         leftFollowers[i].setOpenLoopRampRate(rampRate);
+    //         rightFollowers[i].setOpenLoopRampRate(rampRate);
+    //     }
+    // }
 
     public void initDefaultCommand() {
         if(defaultCommand == null) {
@@ -117,13 +119,12 @@ public class Drivetrain extends Subsystem {
     }
 
     public void setMotors(double left, double right) {
-
         SmartDashboard.putNumber("LeftSideOutput", left);
         SmartDashboard.putNumber("RightSideOutput", right);
 
-        if(isReversing && (left + right) / 2 > 0) {
-            leftLeader.set(Math.min(0, left));
-            rightLeader.set(Math.min(0, right));
+        if(getLeftVelocity() < 0 && getRightVelocity() < 0 && (left + right) / 2 > 0) {
+            leftLeader.set(Math.min(0, left * speedMultiplier));
+            rightLeader.set(Math.min(0, right * speedMultiplier));
         } else {
             leftLeader.set(left * speedMultiplier);
             rightLeader.set(right * speedMultiplier);
@@ -157,7 +158,7 @@ public class Drivetrain extends Subsystem {
 
         pLeftEnc = leftEnc;
         pRightEnc = rightEnc;
-        setVelocity((int)((lVel + rVel) / 2.0 + 0.5));
+        setVelocity(lVel, rVel);
         if(getVelocity() >= 0) {
             isReversing = false;
         } else {
@@ -172,17 +173,32 @@ public class Drivetrain extends Subsystem {
 
     //In Encoder pulses per second
     public double getVelocity() {
+        return getLeftVelocity() + getRightVelocity() / 2;
+    }
+    
+    private double getLeftVelocity() {
         int max = 0;
         for(int i = 0; i < 5; ++i) {
-            if(Math.abs(velocities[i]) > Math.abs(max)){
-                max = velocities[i];
+            if(Math.abs(leftVelocities[i]) > Math.abs(max)){
+                max = leftVelocities[i];
             }
         }
         return max;
     }
 
-    private void setVelocity(int velocity) {
-        velocities[frameCounter % 5] = velocity;
+    private double getRightVelocity() {
+        int max = 0;
+        for(int i = 0; i < 5; ++i) {
+            if(Math.abs(rightVelocities[i]) > Math.abs(max)){
+                max = rightVelocities[i];
+            }
+        }
+        return max;
+    }
+
+    private void setVelocity(int left, int right) {
+        leftVelocities[frameCounter % 5] = left;
+        rightVelocities[frameCounter % 5] = right;
     }
 
     // public double getGyroAngle(){
