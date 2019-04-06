@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.util.LedMode;
+import frc.robot.util.Limelight;
 
 public class LimelightFollow extends Command {
     public LimelightFollow() {
@@ -12,6 +14,9 @@ public class LimelightFollow extends Command {
         requires(Robot.drivetrain);
     }
 
+    public void initialize() {
+        Robot.limelight.setLed(LedMode.On);
+    }
     public void execute() {
         double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
         //tv is 0 if no targets are found, 1 if there are targets
@@ -36,6 +41,7 @@ public class LimelightFollow extends Command {
 
     public void end() {
         Robot.drivetrain.setMotors(0, 0);
+        Robot.limelight.setLed(LedMode.Off);
     }
 
     public boolean isFinished() {
