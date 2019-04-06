@@ -13,17 +13,19 @@ public class LimelightFollow extends Command {
 
     public void execute() {
         double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+        //tv is 0 if no targets are found, 1 if there are targets
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        //tx returns a value between -27 (center of target is left of frame) and 27 (center of target is right of frame)
         
         double turn = Constants.kCamTurn;
         double thrust = Constants.kCamStraight;
         
         if(tv < 1) {
-            Robot.drivetrain.setMotors(thrust, thrust);
+            Robot.drivetrain.setMotors(thrust, thrust); //if I dont see a target, drive forward
             return;
         }
 
-        turn *= tx - Constants.kCamOffset;
+        turn *= (tx/27); //sets "turn" = to kCamTurn * the percentage of how off the target is
 
         double left = Math.max(Math.min(thrust + turn, 1), -1);
         double right = Math.max(Math.min(thrust - turn, 1), -1);

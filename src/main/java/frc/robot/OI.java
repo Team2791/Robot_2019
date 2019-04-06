@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import frc.robot.commands.*;
-import frc.robot.commands.auto.FollowLimelight;
 import frc.robot.commands.auto.SetLimit;
 import frc.robot.controller.AnalogButton;
 import frc.robot.controller.DPadButton;
@@ -89,17 +88,20 @@ public class OI {
         operatorX.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_TWO, Constants.kELEVATOR_BALL_TWO)); //Sets elevator to panel height 2 / ball height 2
         operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE)); //Sets elevator to panel height 2 / ball height 2
 
-        operatorStart.whenPressed(new SetLimit(15));
         //THESE TWO LINES ARE FOR TESTING
         //LEAVE OUT driverA.whenPressed(new AutoSetLifterPots());
-        //driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
+        //LEAVE OUT driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
 
         driverA.whenPressed(new GetPanelAutomatedHeld()); //Gets panel
         driverA.whenReleased(new GetPanelAutomatedRelease()); //Gets panel
         driverB.whenPressed(new ScorePanelAutomatedHeld()); //Scores panel
         driverB.whenReleased(new ScorePanelAutomatedRelease()); //Scores panel
 
-        driverX.whenPressed(new PlatformAuto2()); //Runs autonomous lifting sequence
+        // driverX.whenPressed(new PlatformAuto2()); //Runs autonomous lifting sequence
+
+        //FOR TESTING ONLY
+        driverX.whenPressed(new LimelightFollow());
+
         driverStart.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
         //LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 

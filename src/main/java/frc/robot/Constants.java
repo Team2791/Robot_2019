@@ -15,7 +15,7 @@ public class Constants {
     public static final double kInchTime = 0.1;
     public static final double kCamTurn = 0.5;
     public static final double kCamStraight = 0.27;
-    public static final double kCamOffset = 0;
+    // public static final double kCamOffset = 0;
 
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;
