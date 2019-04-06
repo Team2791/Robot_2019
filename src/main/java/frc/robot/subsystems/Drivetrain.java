@@ -122,9 +122,9 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("LeftSideOutput", left);
         SmartDashboard.putNumber("RightSideOutput", right);
 
-        if(getLeftVelocity() < 0 && getRightVelocity() < 0 && (left + right) / 2 > 0) {
-            leftLeader.set(Math.min(0, left * speedMultiplier));
-            rightLeader.set(Math.min(0, right * speedMultiplier));
+        if(getLeftVelocity() < 0 && getRightVelocity() < 0 && (left + right) / 2 > 0) { //TODO change the first 0 and second 0 to some type of threshold value
+            leftLeader.set(Math.max(0, left * speedMultiplier));
+            rightLeader.set(Math.max(0, right * speedMultiplier));
         } else {
             leftLeader.set(left * speedMultiplier);
             rightLeader.set(right * speedMultiplier);
