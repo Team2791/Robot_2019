@@ -4,6 +4,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
+
 //import frc.robot.util.Limelight.CameraMode;
 
 public class Limelight {
@@ -138,6 +140,12 @@ public class Limelight {
         SmartDashboard.putString("Limelight Vertical sidelength", Double.toString(getLengthVert()));
         SmartDashboard.putString("Limelight Pipeline Index", Double.toString(getIndexPipe()));
         SmartDashboard.putString("Limelight Distance", Double.toString(getDistance()));
+        if(targetValid() && Robot.drivetrain.isLineFound() == false){
+            Robot.drivetrain.setGreenLED(true);
+        }
+        else{
+            Robot.drivetrain.setGreenLED(false);
+        }
 
     }
 }
