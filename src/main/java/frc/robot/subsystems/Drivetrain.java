@@ -96,10 +96,14 @@ public class Drivetrain extends Subsystem {
 
     private void setCurrentLimit(int limit) {
         leftLeader.setSmartCurrentLimit(limit);
+        leftLeader.setSecondaryCurrentLimit(120, 0);
         rightLeader.setSmartCurrentLimit(limit);
+        rightLeader.setSecondaryCurrentLimit(120, 0);
         for(int i = 0; i < leftFollowers.length; ++i) {
             leftFollowers[i].setSmartCurrentLimit(limit);
+            leftFollowers[i].setSecondaryCurrentLimit(120, 0);
             rightFollowers[i].setSmartCurrentLimit(limit);
+            rightFollowers[i].setSecondaryCurrentLimit(120, 0);
         }
     }
 
@@ -125,8 +129,11 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("RightSideOutput", right);
 
         if(getLeftVelocity() < 0 && getRightVelocity() < 0 && (left + right) / 2 > 0) { //TODO change the first 0 and second 0 to some type of threshold value
-            leftLeader.set(Math.max(0, left * speedMultiplier));
-            rightLeader.set(Math.max(0, right * speedMultiplier));
+            // leftLeader.set(Math.max(0, left * speedMultiplier));
+            // rightLeader.set(Math.max(0, right * speedMultiplier));
+            leftLeader.set(0);
+            rightLeader.set(0);
+            System.out.println("Wheelie prevention");
         } else {
             leftLeader.set(left * speedMultiplier);
             rightLeader.set(right * speedMultiplier);
@@ -180,6 +187,7 @@ public class Drivetrain extends Subsystem {
     
     private double getLeftVelocity() {
         int max = 0;
+        if(leftVelocities == null) return 0;
         for(int i = 0; i < 5; ++i) {
             if(Math.abs(leftVelocities[i]) > Math.abs(max)){
                 max = leftVelocities[i];
@@ -190,6 +198,7 @@ public class Drivetrain extends Subsystem {
 
     private double getRightVelocity() {
         int max = 0;
+        if(rightVelocities == null) return 0;
         for(int i = 0; i < 5; ++i) {
             if(Math.abs(rightVelocities[i]) > Math.abs(max)){
                 max = rightVelocities[i];
@@ -243,7 +252,7 @@ public class Drivetrain extends Subsystem {
         res |= lineSensors[2].getAverageVoltage() > Constants.kLineVoltCutoff ? 4 : 0;
         res |= lineSensors[3].getAverageVoltage() > Constants.kLineVoltCutoff ? 8 : 0;
         lineFound = (res & 15) > 0;
-        setBlueLED(true);
+        setBlueLED(lineFound);
         return res;
     }
     public void setGreenLED(boolean state){

@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
         if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
         if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
         drivetrain.debug();
-        limelight.debug();
+        //limelight.debug();
     }
 
     @Override
