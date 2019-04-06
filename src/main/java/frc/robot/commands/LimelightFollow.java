@@ -4,6 +4,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.Drivetrain;
 
 public class LimelightFollow extends Command {
     public LimelightFollow() {
@@ -22,9 +23,10 @@ public class LimelightFollow extends Command {
         
         if(tv < 1) {
             Robot.drivetrain.setMotors(thrust, thrust); //if I dont see a target, drive forward
+            Robot.drivetrain.setGreenLED(false);
             return;
         }
-
+        Robot.drivetrain.setGreenLED(true);
         turn *= (tx/27); //sets "turn" = to kCamTurn * the percentage of how off the target is
 
         double left = Math.max(Math.min(thrust + turn, 1), -1);

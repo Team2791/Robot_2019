@@ -32,7 +32,8 @@ public class Drivetrain extends Subsystem {
 
     private AnalogInput lineSensors[];
     private boolean lineFound = false;
-    private Solenoid leds;
+    private Solenoid blueLED;
+    private Solenoid greenLED;
     // private DigitalOutput pin0;
     // private PWM lineLight;
     //private ADXRS450_Gyro gyro;
@@ -69,7 +70,8 @@ public class Drivetrain extends Subsystem {
         }
 
         lineSensors = new AnalogInput[4];
-        leds = new Solenoid(RobotMap.kPCM, RobotMap.kLEDSolenoid);
+        blueLED = new Solenoid(RobotMap.kPCM, RobotMap.kLEDBlueSolenoid);
+        greenLED = new Solenoid(RobotMap.kPCM, RobotMap.kLEDGreenSolenoid);
         for(int i = 0; i < 4; ++i) {
             lineSensors[i] = new AnalogInput(RobotMap.kLineSensors[i]);
         }
@@ -241,12 +243,15 @@ public class Drivetrain extends Subsystem {
         res |= lineSensors[2].getAverageVoltage() > Constants.kLineVoltCutoff ? 4 : 0;
         res |= lineSensors[3].getAverageVoltage() > Constants.kLineVoltCutoff ? 8 : 0;
         lineFound = (res & 15) > 0;
-        // // pin0.set(true);
-        // lineLight.setRaw(255);
-        leds.set(lineFound);
+        setBlueLED(true);
         return res;
     }
-
+    public void setGreenLED(boolean state){
+        greenLED.set(state);
+    }
+    public void setBlueLED(boolean state){
+        blueLED.set(state);
+    }
     public double getLineSensor(int index)
     {
         return lineSensors[index].getAverageVoltage();

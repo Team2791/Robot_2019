@@ -26,7 +26,9 @@ public class RobotMap {
     public static final int[] kRightFollowers = {31};
 //    public static final int[] kLineSensors = {7, 6, 5, 4};
     public static final int[] kLineSensors = {4,5,6,7};
-    public static final int kLEDSolenoid = 7;
+    public static final int kLEDBlueSolenoid = 7;
+    public static final int kLEDGreenSolenoid = 6;
+
 
     //Lifters
     public static final int kFrontLiftTalon = 23;
