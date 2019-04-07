@@ -133,7 +133,6 @@ public class Drivetrain extends Subsystem {
             // rightLeader.set(Math.max(0, right * speedMultiplier));
             leftLeader.set(0);
             rightLeader.set(0);
-            System.out.println("Wheelie prevention");
         } else {
             leftLeader.set(left * speedMultiplier);
             rightLeader.set(right * speedMultiplier);
