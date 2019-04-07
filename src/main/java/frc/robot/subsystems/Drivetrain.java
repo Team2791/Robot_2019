@@ -255,6 +255,9 @@ public class Drivetrain extends Subsystem {
         setBlueLED(lineFound);
         return res;
     }
+    public boolean isLineFound(){
+        return lineFound;
+    }
     public void setGreenLED(boolean state){
         greenLED.set(state);
     }

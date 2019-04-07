@@ -28,10 +28,10 @@ public class LimelightFollow extends Command {
         
         if(tv < 1) {
             Robot.drivetrain.setMotors(thrust, thrust); //if I dont see a target, drive forward
-            Robot.drivetrain.setGreenLED(false);
+            // Robot.drivetrain.setGreenLED(false);
             return;
         }
-        Robot.drivetrain.setGreenLED(true);
+        // Robot.drivetrain.setGreenLED(true);
         turn *= (tx/27); //sets "turn" = to kCamTurn * the percentage of how off the target is
 
         double left = Math.max(Math.min(thrust + turn, 1), -1);
@@ -41,7 +41,7 @@ public class LimelightFollow extends Command {
 
     public void end() {
         Robot.drivetrain.setMotors(0, 0);
-        Robot.limelight.setLed(LedMode.Off);
+        // Robot.limelight.setLed(LedMode.Off);
     }
 
     public boolean isFinished() {

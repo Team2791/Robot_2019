@@ -13,7 +13,7 @@ public class Constants {
     public static final double kNeoRampTime = 0.05;
     public static final int kNeoAmpLimit = 48;
     public static final double kInchTime = 0.1;
-    public static final double kCamTurn = 0.35;
+    public static final double kCamTurn = 0.5;
     public static final double kCamStraight = 0.27;
     // public static final double kCamOffset = 0;
 

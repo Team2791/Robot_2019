@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
         compressor.start();
         hatchManipulator = new HatchManipulator();
         cargoManipulator = new CargoManipulator();
+        limelight = new Limelight();
         
         oi = new OI();
         // driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
@@ -97,7 +98,7 @@ public class Robot extends TimedRobot {
         if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
         if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
         drivetrain.debug();
-        //limelight.debug();
+        limelight.debug();
     }
 
     @Override

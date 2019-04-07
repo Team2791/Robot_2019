@@ -28,6 +28,7 @@ import frc.robot.commands.auto.PlatformAuto3;
 // import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
+import frc.robot.commands.auto.LimeLightLineFollow;
 // import frc.robot.commands.CargoManipulator.ScoreInRocketCalculated;
 // import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
 // import frc.robot.commands.auto.AutoSetLifterPots;
@@ -100,7 +101,7 @@ public class OI {
         // driverX.whenPressed(new PlatformAuto2()); //Runs autonomous lifting sequence
 
         //FOR TESTING ONLY
-        driverX.whenPressed(new LimelightFollow());
+        driverX.whileHeld(new LimeLightLineFollow());
 
         driverStart.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
         //LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
