@@ -45,6 +45,7 @@ public class LimelightFollow extends Command {
     }
 
     public boolean isFinished() {
-        return Robot.drivetrain.getLineSensors() > 0;
+        return Robot.drivetrain.getLineSensors() > 0; //owo
+        
     }
 }

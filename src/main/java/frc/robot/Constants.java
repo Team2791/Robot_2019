@@ -6,9 +6,9 @@ public final class Constants {
     public static final double kFastDrive = 1.0;
     public static final double kSlowDrive = 0.5;
     public static final double kCreep = 0.2;
-    public static final double kSlowish = 1.0; //Testing should be 0.5
-    public static final double kLineFollowStraight = 0.27;
-    public static final double kLineFollowTurn = 0.5;
+    public static final double kSlowish = 0.5; //Testing should be 0.5
+    public static final double kLineFollowStraight = 0.19; //0.27;
+    public static final double kLineFollowTurn = 0.2; //0.5;
     public static final double kLineVoltCutoff = 1.0; //1.4
     public static final double kNeoRampTime = 0.05;
     public static final int kNeoAmpLimit = 48;
@@ -54,7 +54,7 @@ public final class Constants {
     public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final int kPotOffset = 57; //was 23 //Comp //19.0 for practice
+    public static final int kPotOffset = 27; //was 23 //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 

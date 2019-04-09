@@ -101,7 +101,7 @@ public class OI {
         // driverX.whenPressed(new PlatformAuto2()); //Runs autonomous lifting sequence
 
         //FOR TESTING ONLY
-        driverX.whileHeld(new LimeLightLineFollow());
+        driverX.whileHeld(new PlatformAuto2());
 
         driverStart.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
         //LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
@@ -110,9 +110,15 @@ public class OI {
         driverY.whenReleased(new StopCargoMotor());
         
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
-        driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE+10.0));
-        driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));
-        driverDPadLeft.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
+
+        
+        driverDPadDown.whileHeld(new LimeLightLineFollow());
+        driverDPadRight.whileHeld(new LimeLightLineFollow());
+        driverDPadLeft.whileHeld(new LimeLightLineFollow());
+
+        // driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE+10.0));
+        // driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));
+        // driverDPadLeft.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
 
         operatorDPadLeft.whenPressed(new ScoreCargoShip());
         operatorDPadLeft.whenReleased(new StopCargoMotor());

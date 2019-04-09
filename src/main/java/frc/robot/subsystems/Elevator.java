@@ -70,6 +70,7 @@ public class Elevator extends Subsystem {
     }
 
     public double getSensorPosition() {
+        // return 75;
         return driveTalon.getSelectedSensorPosition(0);
     }
 
@@ -117,6 +118,7 @@ public class Elevator extends Subsystem {
         SmartDashboard.putBoolean("Elevator - Top Limit Switch value", atTop());
         SmartDashboard.putBoolean("Elevator - Bottom Limit Switch value", atBottom());
         SmartDashboard.putNumber("Elevator - Height", getElevatorHeight());
+        System.out.println(getElevatorHeight());
         SmartDashboard.putNumber("Elevator - Velocity", getVelocity());
         SmartDashboard.putBoolean("Elevator - Close to top", closeToTop());
         SmartDashboard.putBoolean("Elevator - Close to bottom", closeToBottom());
