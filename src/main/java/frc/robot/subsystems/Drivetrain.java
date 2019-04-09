@@ -86,6 +86,7 @@ public class Drivetrain extends Subsystem {
         leftVelocities = new int[] {0, 0, 0, 0, 0};
         rightVelocities = new int[] {0, 0, 0, 0, 0};
         frameCounter = 0;
+        initGyro();
     }
 
     public void setLimit(int limit) {
@@ -266,7 +267,7 @@ public class Drivetrain extends Subsystem {
 
     	// ************** Gyro and Encoder Helper Methods **************//
 
-	@Deprecated
+	// @Deprecated
 	// public double getAngleEncoder() {
 		// return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
 	// }
@@ -278,7 +279,7 @@ public class Drivetrain extends Subsystem {
 		return 0.0;
 	}
 
-	@Deprecated
+	// @Deprecated
 	// public double getEncoderAngleRate() {
 		// return (360 / 7.9) * (getLeftVelocity() - getRightVelocity()) / 2.0;
 	// }
@@ -347,8 +348,8 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Measured Velocity", getVelocity());
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
-        SmartDashboard.putNumber("DT - Gyro angle", gyro.getAngle());
-		SmartDashboard.putNumber("DT - Gyro rate", gyro.getRate());
+        SmartDashboard.putNumber("DT - Gyro angle", getGyroAngle());
+		SmartDashboard.putNumber("DT - Gyro rate", getGyroRate());
         for(int i = 0; i < 4; ++ i) {
             SmartDashboard.putNumber("Line Voltage" + i, getLineSensor(i));
         }

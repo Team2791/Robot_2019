@@ -36,14 +36,14 @@ public class TestPath extends CommandGroup {
         if(isRight){
             //Normally you should put the right side path here
             //ADD A NUMBER TO MAKE A TIME OUT
-			addSequential(new RunPath(ShakerPaths.FROM_CENTER.STATION_TO_CENTER_ROCKET, 0.75));
-			addSequential(new RunPath(ShakerPaths.FROM_CENTER.CENTER_ROCKET_FINISH,0.75));
+			addSequential(new RunPath(ShakerPaths.FROM_CENTER.STATION_TO_CENTER_ROCKET, -0.5, RunPath.Direction.BACKWARDS));
+			addSequential(new RunPath(ShakerPaths.FROM_CENTER.CENTER_ROCKET_FINISH, -0.5,RunPath.Direction.BACKWARDS));
 
         }
         else{
             //Normally you should put the left side path here
-            addSequential(new RunPath(ShakerPaths.FROM_CENTER.STATION_TO_CENTER_ROCKET, 0.75));
-			addSequential(new RunPath(ShakerPaths.FROM_CENTER.CENTER_ROCKET_FINISH,0.75));
+            addSequential(new RunPath(ShakerPaths.FROM_CENTER.STATION_TO_CENTER_ROCKET, 0.5,RunPath.Direction.BACKWARDS));
+			addSequential(new RunPath(ShakerPaths.FROM_CENTER.CENTER_ROCKET_FINISH, 0.5,RunPath.Direction.BACKWARDS));
         }
 	}
 }
