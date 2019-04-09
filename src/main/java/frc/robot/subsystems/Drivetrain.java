@@ -149,39 +149,56 @@ public class Drivetrain extends Subsystem {
         //TODO NOW THIS IS WHERE IT GETS FUNKY
 		return rightLeader.getEncoder().getPosition() * ((0.5 * Math.PI)*.12);
     }
-    // public double getGyroAngle(){
-    //     if(!gyroDisabled)
-    //         return gyro.getAngle();
-    //     System.err.println("Gyro is Disabled, Angle is Incorrect");
-    //     return 0.0;
-    // }
-    // public double getGyroRate() {
-    //     if (!gyroDisabled)
-    //         return gyro.getRate();
-    //     System.err.println("Gyro is Disabled, Rate is Incorrect");
-    //     return 0.0;
-    // }
-    // public double getGyroAngleInRadians() {
-    //     return getGyroAngle() * (Math.PI/180);
-    // }
-    // public void resetGyro() {
-    //     if(!gyroDisabled) {
-    //         gyro.reset();
-    //     } else { 
-    //         System.err.println("Gyro is Disabled, Unable to Reset");
-    //     }
-    // }
-    // public boolean getGyroDisabled() {
-    //     return gyroDisabled;
-    // } 
-    // public void calibrateGyro() {
-    //     if (!gyroDisabled) {
-    //         System.out.println("Gyro calibrating");
-    //         gyro.calibrate();
-    //         System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
-    //     }
-    // }
 
+    	// ************** Gyro and Encoder Helper Methods **************//
+
+	@Deprecated
+	// public double getAngleEncoder() {
+		// return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
+	// }
+
+	public double getGyroAngle() {
+		if (!gyroDisabled)
+			return gyro.getAngle();
+		System.err.println("Gyro is Disabled, Angle is Incorrect");
+		return 0.0;
+	}
+
+	@Deprecated
+	// public double getEncoderAngleRate() {
+		// return (360 / 7.9) * (getLeftVelocity() - getRightVelocity()) / 2.0;
+	// }
+
+	public double getGyroRate() {
+		if (!gyroDisabled)
+			return gyro.getRate();
+		System.err.println("Gyro is Disabled, Rate is Incorrect");
+		return 0.0;
+	}
+
+	public double getGyroAngleInRadians() {
+		return getGyroAngle() * (Math.PI / 180);
+    }
+    public void resetGyro() {
+		if (!gyroDisabled) {
+			gyro.reset();
+		} else {
+			System.err.println("Gyro is Disabled, Unable to Reset");
+		}
+	}
+
+	public boolean getGyroDisabled() {
+		return gyroDisabled;
+	}
+
+	public void calibrateGyro() {
+		if (!gyroDisabled) {
+			System.out.println("Gyro calibrating");
+			gyro.calibrate();
+			System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
+		}
+    }
+    
     public int getLineSensors() {
         int res = 0;
         res |= lineSensors[0].getAverageVoltage() > Constants.kLineVoltCutoff ? 1 : 0;

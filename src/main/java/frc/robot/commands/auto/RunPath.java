@@ -108,11 +108,12 @@ public class RunPath extends Command {
     	double driveSpeed = speed.apply(amountOfPathDriven);
 
     	if(Math.abs(getDistance()) > 3) {
-    		Robot.drivetrain.setLeftRightMotorOutputs(
-        			(driveSpeed+((error)/(arcDivisor/Math.abs(driveSpeed)))),
-        			(driveSpeed-(((error)/(arcDivisor/Math.abs(driveSpeed))))));
+            Robot.drivetrain.setMotors(
+                (driveSpeed+((error)/(arcDivisor/Math.abs(driveSpeed)))),
+                (driveSpeed-(((error)/(arcDivisor/Math.abs(driveSpeed))))));
+
     	} else {
-    		Robot.drivetrain.setLeftRightMotorOutputs(driveSpeed, driveSpeed);
+    		Robot.drivetrain.setMotors(driveSpeed, driveSpeed);
     	}
     }
 

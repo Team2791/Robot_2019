@@ -12,6 +12,8 @@ public class Constants {
     public static final double kLineVoltCutoff = 1.0; //1.4
     public static final double kNeoRampTime = 0.05; //0.1;
     public static final int kNeoAmpLimit = 48;
+    public static final double WHEEL_DIAMETER_IN_IN = 6.0 * 0.95833333; //because of carpet + real size wheels are actually 0.95833333 * 6'' //TODO FROM 2018??
+    public static double driveEncoderTicks = 256 * 2; // not sure why we're doing this ?? //TODO 2018???
     
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;
