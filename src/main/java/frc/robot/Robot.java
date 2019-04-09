@@ -78,23 +78,27 @@ public class Robot extends TimedRobot {
         compressor.start();
         hatchManipulator = new HatchManipulator();
         cargoManipulator = new CargoManipulator();
+        limelight = new Limelight();
         
         oi = new OI();
-        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
-        driver_cam.setResolution(160, 120); // low res = fast response
+        // driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
+        // driver_cam.setResolution(160, 120); // low res = fast response 160 x 120
+//        driver_cam.setFPS(60);
 
         // autoCommand = new AutoSetLifterPots();
     }
     
     @Override
     public void robotPeriodic() {
+        drivetrain.update();
         //EACH debug only runs once per 10 loops
-        loopCounter += 1;
+        // loopCounter += 1;
         if(loopCounter % 10 == 0) { lifters.debug(); }
         if(loopCounter % 10 == 1) { elevator.debug(); }
         if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
         if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
-        if(loopCounter % 10 == 4) { drivetrain.debug(); }
+        drivetrain.debug();
+        limelight.debug();
     }
 
     @Override
@@ -121,6 +125,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        compressor.start();
         // autoCommand.cancel();
     }
 

@@ -2,13 +2,13 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
 public class AutoSetLifterPots extends Command {
     public AutoSetLifterPots() {
         super("AutoSetLifterPots");
         requires(Robot.lifters);
     }
-
+    public void initialize(){
+    }
     public void execute() {
         
         if(Robot.lifters.isBackRetracted()) {

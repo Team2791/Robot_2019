@@ -1,15 +1,16 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.DigitalOutput;
+// import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.Solenoid;
+
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.StopDrive;
@@ -17,98 +18,104 @@ import frc.robot.Robot;
 // import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 public class Drivetrain extends Subsystem {
-    private TalonSRX leftLeader;
-    private TalonSRX rightLeader;
-    private VictorSPX leftFollower1;
-    private VictorSPX leftFollower2;
-    private VictorSPX rightFollower1;
-    private VictorSPX rightFollower2;
+    private CANSparkMax leftLeader;
+    private CANSparkMax rightLeader;
+    private CANSparkMax[] leftFollowers;
+    private CANSparkMax[] rightFollowers;
+    private int pCurrent;
+    private boolean isReversing = false;
+    private int pLeftEnc;
+    private int pRightEnc;
+    private int[] leftVelocities;
+    private int[] rightVelocities;
+    private int frameCounter;    
+
     private AnalogInput lineSensors[];
     private boolean lineFound = false;
-    // private ADXRS450_Gyro gyro;
+    private Solenoid blueLED;
+    private Solenoid greenLED;
+    // private DigitalOutput pin0;
+    // private PWM lineLight;
+    //private ADXRS450_Gyro gyro;
     // private boolean gyroDisabled = false;
 
-    private BaseMotorController[] leftDrive;
-    private BaseMotorController[] rightDrive;
 
     private double speedMultiplier;
 
     private StopDrive defaultCommand;
 
     public Drivetrain() {
-        leftLeader = new TalonSRX(RobotMap.kLeftTalon);
-        rightLeader = new TalonSRX(RobotMap.kRightTalon);
-        leftFollower1 = new VictorSPX(RobotMap.kLeftVictors[0]);
-        leftFollower2 = new VictorSPX(RobotMap.kLeftVictors[1]);
-        rightFollower1 = new VictorSPX(RobotMap.kRightVictors[0]);
-        rightFollower2 = new VictorSPX(RobotMap.kRightVictors[1]);
+        leftLeader = new CANSparkMax(RobotMap.kLeftLeader, MotorType.kBrushless);
+        leftLeader.setOpenLoopRampRate(Constants.kNeoRampTime);
+        
+        rightLeader = new CANSparkMax(RobotMap.kRightLeader, MotorType.kBrushless);
+        rightLeader.setInverted(true);
+        rightLeader.setOpenLoopRampRate(Constants.kNeoRampTime);
 
-        leftDrive = new BaseMotorController[]{leftLeader, leftFollower1, leftFollower2};
-        rightDrive = new BaseMotorController[]{rightLeader, rightFollower1, rightFollower2};
+        leftFollowers = new CANSparkMax[RobotMap.kLeftFollowers.length];
+        for(int i = 0; i < leftFollowers.length; ++i) {
+            leftFollowers[i] = new CANSparkMax(RobotMap.kLeftFollowers[i], MotorType.kBrushless);
+            leftFollowers[i].setIdleMode(IdleMode.kCoast);
+            leftFollowers[i].setOpenLoopRampRate(Constants.kNeoRampTime);
+            leftFollowers[i].follow(leftLeader);
+        }
+
+        rightFollowers = new CANSparkMax[RobotMap.kRightFollowers.length];
+        for(int i = 0; i < rightFollowers.length; ++i) {
+            rightFollowers[i] = new CANSparkMax(RobotMap.kRightFollowers[i], MotorType.kBrushless);
+            rightFollowers[i].setInverted(true);
+            rightFollowers[i].setIdleMode(IdleMode.kCoast);
+            rightFollowers[i].setOpenLoopRampRate(Constants.kNeoRampTime);
+            rightFollowers[i].follow(rightLeader);
+        }
 
         lineSensors = new AnalogInput[4];
+        blueLED = new Solenoid(RobotMap.kPCM, RobotMap.kLEDBlueSolenoid);
+        greenLED = new Solenoid(RobotMap.kPCM, RobotMap.kLEDGreenSolenoid);
         for(int i = 0; i < 4; ++i) {
             lineSensors[i] = new AnalogInput(RobotMap.kLineSensors[i]);
         }
 
-        for(int i = 0; i < rightDrive.length; ++i) {
-            rightDrive[i].setInverted(true);
-        }
-
-        leftLeader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-        rightLeader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-
-        leftFollower1.follow(leftLeader);
-        leftFollower2.follow(leftLeader);
-        rightFollower1.follow(rightLeader);
-        rightFollower2.follow(rightLeader);
-        // try {
-		// 	gyro = new ADXRS450_Gyro();// SPI.Port.kOnboardCS1
-		// 	gyro.calibrate(); // takes 5 seconds
-		// 	gyro.reset();
-		// 	System.out.println("Gyro is working! :'('");
-		// } catch (NullPointerException e) {
-		// 	gyroDisabled = true;
-		// 	System.out.println("Gyro is unplugged, Disabling Gyro");
-		// }
         setDriveSpeed(false);
         setBrakeMode(true);
         setMotors(0, 0);
 
-        leftLeader.configPeakCurrentLimit(36);
-        leftLeader.configPeakCurrentDuration(1);
-        leftLeader.configContinuousCurrentLimit(35);
-        leftLeader.enableCurrentLimit(true);
+        setCurrentLimit(Constants.kNeoAmpLimit);
+        lineFound = false;
 
-        rightLeader.configPeakCurrentLimit(36);
-        rightLeader.configPeakCurrentDuration(1);
-        rightLeader.configContinuousCurrentLimit(35);
-        rightLeader.enableCurrentLimit(true);
+        leftVelocities = new int[] {0, 0, 0, 0, 0};
+        rightVelocities = new int[] {0, 0, 0, 0, 0};
+        frameCounter = 0;
     }
 
-    public void setLimit() {
-        leftLeader.configPeakCurrentLimit(36);
-        leftLeader.configPeakCurrentDuration(1);
-        leftLeader.configContinuousCurrentLimit(35);
-        leftLeader.enableCurrentLimit(true);
-
-        rightLeader.configPeakCurrentLimit(36);
-        rightLeader.configPeakCurrentDuration(1);
-        rightLeader.configContinuousCurrentLimit(35);
-        rightLeader.enableCurrentLimit(true);
+    public void setLimit(int limit) {
+        if(pCurrent != limit) {
+            setLimit(limit);
+        }
     }
 
-    public void disableLimit() {
-        leftLeader.enableCurrentLimit(false);
-        leftLeader.configPeakCurrentLimit(0);
-        leftLeader.configPeakCurrentDuration(0);
-        leftLeader.configContinuousCurrentLimit(0);
-
-        rightLeader.enableCurrentLimit(false);
-        rightLeader.configPeakCurrentLimit(0);
-        rightLeader.configPeakCurrentDuration(0);
-        rightLeader.configContinuousCurrentLimit(0);
+    private void setCurrentLimit(int limit) {
+        leftLeader.setSmartCurrentLimit(limit);
+        leftLeader.setSecondaryCurrentLimit(120, 0);
+        rightLeader.setSmartCurrentLimit(limit);
+        rightLeader.setSecondaryCurrentLimit(120, 0);
+        for(int i = 0; i < leftFollowers.length; ++i) {
+            leftFollowers[i].setSmartCurrentLimit(limit);
+            leftFollowers[i].setSecondaryCurrentLimit(120, 0);
+            rightFollowers[i].setSmartCurrentLimit(limit);
+            rightFollowers[i].setSecondaryCurrentLimit(120, 0);
+        }
     }
+
+    // private void setRamp(double rampRate)
+    // {
+    //     leftLeader.setOpenLoopRampRate(rampRate);
+    //     rightLeader.setOpenLoopRampRate(rampRate);
+    //     for(int i = 0; i < leftFollowers.length; ++i) {
+    //         leftFollowers[i].setOpenLoopRampRate(rampRate);
+    //         rightFollowers[i].setOpenLoopRampRate(rampRate);
+    //     }
+    // }
 
     public void initDefaultCommand() {
         if(defaultCommand == null) {
@@ -119,18 +126,23 @@ public class Drivetrain extends Subsystem {
 
     public void setMotors(double left, double right) {
         SmartDashboard.putNumber("LeftSideOutput", left);
-        SmartDashboard.putNumber("RightSideOutput",right);
+        SmartDashboard.putNumber("RightSideOutput", right);
 
-        leftLeader.set(ControlMode.PercentOutput, left * speedMultiplier);
-        rightLeader.set(ControlMode.PercentOutput, right * speedMultiplier);
+        if(Math.abs(left - right) <= 0.2 && getLeftVelocity() < -1 && getRightVelocity() < -1 && (left + right) / 2 > 0) { //TODO change the first 0 and second 0 to some type of threshold value
+            // leftLeader.set(Math.max(0, left * speedMultiplier));
+            // rightLeader.set(Math.max(0, right * speedMultiplier));
+            leftLeader.set(0);
+            rightLeader.set(0);
+        } else {
+            leftLeader.set(left * speedMultiplier);
+            rightLeader.set(right * speedMultiplier);
+        }
     }
 
     public void setBrakeMode(boolean isbrake) {
-        NeutralMode mode = isbrake ? NeutralMode.Brake : NeutralMode.Coast;
-        for(int i = 0; i < leftDrive.length; ++i) {
-            leftDrive[i].setNeutralMode(mode);
-            rightDrive[i].setNeutralMode(mode);
-        }
+        IdleMode mode = isbrake ? IdleMode.kBrake : IdleMode.kCoast;
+        leftLeader.setIdleMode(mode);
+        rightLeader.setIdleMode(mode);
     }
 
     public void setDriveSpeed(boolean isSlow) {
@@ -138,11 +150,65 @@ public class Drivetrain extends Subsystem {
     }
 
     public int getLeftEncoder() {
-        return leftLeader.getSensorCollection().getQuadraturePosition();
+        return (int)(leftLeader.getEncoder().getPosition() + 0.5); //+1/2 for rounding
     }
 
     public int getRightEncoder() {
-        return rightLeader.getSensorCollection().getQuadraturePosition();
+        return (int)(rightLeader.getEncoder().getPosition() + 0.5); //+1/2 for rounding
+    }
+
+    public void update() {
+        int leftEnc = getLeftEncoder();
+        int rightEnc = getRightEncoder();
+
+        int lVel = leftEnc - pLeftEnc;
+        int rVel = rightEnc - pRightEnc;
+
+        pLeftEnc = leftEnc;
+        pRightEnc = rightEnc;
+        setVelocity(lVel, rVel);
+        if(getVelocity() >= 0) {
+            isReversing = false;
+        } else {
+            isReversing = true;
+        }
+        ++frameCounter;
+    }
+
+    public boolean getIsReversing() {
+        return isReversing;
+    }
+
+    //In Encoder pulses per second
+    public double getVelocity() {
+        return getLeftVelocity() + getRightVelocity() / 2;
+    }
+    
+    private double getLeftVelocity() {
+        int max = 0;
+        if(leftVelocities == null) return 0;
+        for(int i = 0; i < 5; ++i) {
+            if(Math.abs(leftVelocities[i]) > Math.abs(max)){
+                max = leftVelocities[i];
+            }
+        }
+        return max;
+    }
+
+    private double getRightVelocity() {
+        int max = 0;
+        if(rightVelocities == null) return 0;
+        for(int i = 0; i < 5; ++i) {
+            if(Math.abs(rightVelocities[i]) > Math.abs(max)){
+                max = rightVelocities[i];
+            }
+        }
+        return max;
+    }
+
+    private void setVelocity(int left, int right) {
+        leftVelocities[frameCounter % 5] = left;
+        rightVelocities[frameCounter % 5] = right;
     }
 
     // public double getGyroAngle(){
@@ -185,9 +251,18 @@ public class Drivetrain extends Subsystem {
         res |= lineSensors[2].getAverageVoltage() > Constants.kLineVoltCutoff ? 4 : 0;
         res |= lineSensors[3].getAverageVoltage() > Constants.kLineVoltCutoff ? 8 : 0;
         lineFound = (res & 15) > 0;
+        setBlueLED(lineFound);
         return res;
     }
-
+    public boolean isLineFound(){
+        return lineFound;
+    }
+    public void setGreenLED(boolean state){
+        greenLED.set(state);
+    }
+    public void setBlueLED(boolean state){
+        blueLED.set(state);
+    }
     public double getLineSensor(int index)
     {
         return lineSensors[index].getAverageVoltage();
@@ -196,12 +271,11 @@ public class Drivetrain extends Subsystem {
     public void debug(){
         SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
         SmartDashboard.putNumber("Right Encoder", getLeftEncoder());
-        SmartDashboard.putNumber("Motor 0 Current", Robot.pdp.getCurrent(0));
-        SmartDashboard.putNumber("Motor 1 Current", Robot.pdp.getCurrent(1));
-        SmartDashboard.putNumber("Motor 2 Current", Robot.pdp.getCurrent(2));
-        SmartDashboard.putNumber("Motor 15 Current", Robot.pdp.getCurrent(15));
-        SmartDashboard.putNumber("Motor 14 Current", Robot.pdp.getCurrent(14));
-        SmartDashboard.putNumber("Motor 13 Current", Robot.pdp.getCurrent(13));
+        SmartDashboard.putNumber("Right Drivetrain 1", Robot.pdp.getCurrent(1));
+        SmartDashboard.putNumber("Right Drivetrain 2", Robot.pdp.getCurrent(0));
+        SmartDashboard.putNumber("Left Drivetrain 1", Robot.pdp.getCurrent(14));
+        SmartDashboard.putNumber("Left Drivetrain 2", Robot.pdp.getCurrent(15));
+        SmartDashboard.putNumber("Measured Velocity", getVelocity());
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
         for(int i = 0; i < 4; ++ i) {
