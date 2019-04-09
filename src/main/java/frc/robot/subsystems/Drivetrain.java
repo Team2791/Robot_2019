@@ -15,7 +15,8 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.StopDrive;
 import frc.robot.Robot;
-// import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import frc.robot.util.Util;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 public class Drivetrain extends Subsystem {
     private CANSparkMax leftLeader;
@@ -29,15 +30,14 @@ public class Drivetrain extends Subsystem {
     private int[] leftVelocities;
     private int[] rightVelocities;
     private int frameCounter;    
-
     private AnalogInput lineSensors[];
     private boolean lineFound = false;
     private Solenoid blueLED;
     private Solenoid greenLED;
     // private DigitalOutput pin0;
     // private PWM lineLight;
-    //private ADXRS450_Gyro gyro;
-    // private boolean gyroDisabled = false;
+    private ADXRS450_Gyro gyro;
+    private boolean gyroDisabled = false;
 
 
     private double speedMultiplier;
@@ -92,6 +92,7 @@ public class Drivetrain extends Subsystem {
         if(pCurrent != limit) {
             setLimit(limit);
         }
+        initGyro();
     }
 
     private void setCurrentLimit(int limit) {
@@ -106,17 +107,17 @@ public class Drivetrain extends Subsystem {
             rightFollowers[i].setSecondaryCurrentLimit(120, 0);
         }
     }
-
-    // private void setRamp(double rampRate)
-    // {
-    //     leftLeader.setOpenLoopRampRate(rampRate);
-    //     rightLeader.setOpenLoopRampRate(rampRate);
-    //     for(int i = 0; i < leftFollowers.length; ++i) {
-    //         leftFollowers[i].setOpenLoopRampRate(rampRate);
-    //         rightFollowers[i].setOpenLoopRampRate(rampRate);
-    //     }
-    // }
-
+    public void initGyro(){
+        try {
+			gyro = new ADXRS450_Gyro();// SPI.Port.kOnboardCS1
+			gyro.calibrate(); // takes 5 seconds
+			gyro.reset();
+			System.out.println("Gyro is working! :-)");
+		} catch (NullPointerException e) {
+			gyroDisabled = true;
+			System.out.println("Gyro is unplugged, Disabling Gyro");
+		}
+    }
     public void initDefaultCommand() {
         if(defaultCommand == null) {
             defaultCommand = new StopDrive();
@@ -243,7 +244,75 @@ public class Drivetrain extends Subsystem {
     //         System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
     //     }
     // }
+    public double getAverageDist() {
+		return Util.average(getLeftDistance(), getRightDistance());
+		// right side commented out due to potential wiring issues
+		// return getLeftDistance();
+    }
+    public double getLeftDistance() {
+        //TODO NOW THIS IS WHERE IT GETS FUNKY
+        //TODO IF THIS BREAKS READ THIS FUNCTION
+        //Multiply the # of ticks by distance per tick in feet, dont change distance per pulse
+        //Note that leftLeader.getEncoder().getPosition()
+        //YOU NEED TO FIX THIS FUNCTION TO RETURN THE DISTANCE TRAVELED IN FEET
+        //Left side is returning value between 0 and 1 for how complete the rotation is
+		return leftLeader.getEncoder().getPosition() * ((0.5 * Math.PI)*.12);
+    }
+    
+    public double getRightDistance() {
+        //TODO NOW THIS IS WHERE IT GETS FUNKY
+		return rightLeader.getEncoder().getPosition() * ((0.5 * Math.PI)*.12);
+    }
 
+    	// ************** Gyro and Encoder Helper Methods **************//
+
+	@Deprecated
+	// public double getAngleEncoder() {
+		// return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
+	// }
+
+	public double getGyroAngle() {
+		if (!gyroDisabled)
+			return gyro.getAngle();
+		System.err.println("Gyro is Disabled, Angle is Incorrect");
+		return 0.0;
+	}
+
+	@Deprecated
+	// public double getEncoderAngleRate() {
+		// return (360 / 7.9) * (getLeftVelocity() - getRightVelocity()) / 2.0;
+	// }
+
+	public double getGyroRate() {
+		if (!gyroDisabled)
+			return gyro.getRate();
+		System.err.println("Gyro is Disabled, Rate is Incorrect");
+		return 0.0;
+	}
+
+	public double getGyroAngleInRadians() {
+		return getGyroAngle() * (Math.PI / 180);
+    }
+    public void resetGyro() {
+		if (!gyroDisabled) {
+			gyro.reset();
+		} else {
+			System.err.println("Gyro is Disabled, Unable to Reset");
+		}
+	}
+
+	public boolean getGyroDisabled() {
+		return gyroDisabled;
+	}
+
+	public void calibrateGyro() {
+		if (!gyroDisabled) {
+			System.out.println("Gyro calibrating");
+			gyro.calibrate();
+			System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
+		}
+    }
+    
     public int getLineSensors() {
         int res = 0;
         res |= lineSensors[0].getAverageVoltage() > Constants.kLineVoltCutoff ? 1 : 0;
@@ -278,6 +347,8 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Measured Velocity", getVelocity());
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
+        SmartDashboard.putNumber("DT - Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("DT - Gyro rate", gyro.getRate());
         for(int i = 0; i < 4; ++ i) {
             SmartDashboard.putNumber("Line Voltage" + i, getLineSensor(i));
         }
