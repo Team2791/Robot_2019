@@ -15,22 +15,23 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.StopDrive;
 import frc.robot.Robot;
-// import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import frc.robot.util.Util;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 public class Drivetrain extends Subsystem {
     private CANSparkMax leftLeader;
     private CANSparkMax rightLeader;
     private CANSparkMax[] leftFollowers;
     private CANSparkMax[] rightFollowers;
-    
+    private double distancePerPulse = distancePerPulse = Util.tickToFeet(Constants.driveEncoderTicks, Constants.WHEEL_DIAMETER_IN_IN);
 
     private AnalogInput lineSensors[];
     private boolean lineFound = false;
     private Solenoid leds;
     // private DigitalOutput pin0;
     // private PWM lineLight;
-    //private ADXRS450_Gyro gyro;
-    // private boolean gyroDisabled = false;
+    private ADXRS450_Gyro gyro;
+    private boolean gyroDisabled = false;
 
 
     private double speedMultiplier;
@@ -74,6 +75,7 @@ public class Drivetrain extends Subsystem {
 
         setLimit();
         lineFound = false;
+        initGyro();
     }
 
     private void setLimit() {
@@ -84,7 +86,17 @@ public class Drivetrain extends Subsystem {
             rightFollowers[i].setSmartCurrentLimit(Constants.kNeoAmpLimit);
         }
     }
-
+    public void initGyro(){
+        try {
+			gyro = new ADXRS450_Gyro();// SPI.Port.kOnboardCS1
+			gyro.calibrate(); // takes 5 seconds
+			gyro.reset();
+			System.out.println("Gyro is working! :-)");
+		} catch (NullPointerException e) {
+			gyroDisabled = true;
+			System.out.println("Gyro is unplugged, Disabling Gyro");
+		}
+    }
     public void initDefaultCommand() {
         if(defaultCommand == null) {
             defaultCommand = new StopDrive();
@@ -118,6 +130,25 @@ public class Drivetrain extends Subsystem {
         return (int)(rightLeader.getEncoder().getPosition() + 0.5); //+1/2 for rounding
     }
 
+    public double getAverageDist() {
+		return Util.average(getLeftDistance(), getRightDistance());
+		// right side commented out due to potential wiring issues
+		// return getLeftDistance();
+    }
+    public double getLeftDistance() {
+        //TODO NOW THIS IS WHERE IT GETS FUNKY
+        //TODO IF THIS BREAKS READ THIS FUNCTION
+        //Multiply the # of ticks by distance per tick in feet, dont change distance per pulse
+        //Note that leftLeader.getEncoder().getPosition()
+        //YOU NEED TO FIX THIS FUNCTION TO RETURN THE DISTANCE TRAVELED IN FEET
+        //Left side is returning value between 0 and 1 for how complete the rotation is
+		return leftLeader.getEncoder().getPosition() * ((0.5 * Math.PI)*.12);
+    }
+    
+    public double getRightDistance() {
+        //TODO NOW THIS IS WHERE IT GETS FUNKY
+		return rightLeader.getEncoder().getPosition() * ((0.5 * Math.PI)*.12);
+    }
     // public double getGyroAngle(){
     //     if(!gyroDisabled)
     //         return gyro.getAngle();
@@ -178,6 +209,8 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Left Drivetrain 2", Robot.pdp.getCurrent(15));
         SmartDashboard.putNumber("Line Active", getLineSensors());
         SmartDashboard.putBoolean("Line Found", lineFound);
+        SmartDashboard.putNumber("DT - Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("DT - Gyro rate", gyro.getRate());
         for(int i = 0; i < 4; ++ i) {
             SmartDashboard.putNumber("Line Voltage" + i, getLineSensor(i));
         }
