@@ -95,4 +95,7 @@ public final class Constants {
     public static final double kCargoIntakeHumanSpeed = 0.65;
     public static final double kCargoIntakeCurrentThreshold = 14; //This seems to work pretty well lol
     public static final double kCargoCurrentSpikeDelay = 0.6; //This seems to work pretty well lol
-}
+
+    //Pathing
+    public static final double kFarRocketPathDelay = 1.0; //just to test individual path
+    public static final double kCargoshipBay1Delay = 1.0; //just to test individual path
