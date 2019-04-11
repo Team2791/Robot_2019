@@ -107,6 +107,7 @@ public class OI {
         driverStart.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
         //LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
+        //true does right hp far rocket path, false does right hp bay 1 ship path
         driverY.whileHeld(new TestPath(true));
         // driverY.whenReleased(new StopCargoMotor());
         
