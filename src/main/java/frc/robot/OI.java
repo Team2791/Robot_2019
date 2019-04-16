@@ -114,9 +114,9 @@ public class OI {
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
 
         
-        driverDPadDown.whileHeld(new LimeLightLineFollow());
-        driverDPadRight.whileHeld(new LimeLightLineFollow());
-        driverDPadLeft.whileHeld(new LimeLightLineFollow());
+        driverDPadDown.whileHeld(new LimeLightLineFollow(Constants.kCamStraightSlow));
+        driverDPadRight.whileHeld(new LimeLightLineFollow(Constants.kCamStraightMedium));
+        driverDPadLeft.whileHeld(new LimeLightLineFollow(Constants.kCamStraightFast));
 
         // driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE+10.0));
         // driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));

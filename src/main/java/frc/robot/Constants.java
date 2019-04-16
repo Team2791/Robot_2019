@@ -14,7 +14,9 @@ public final class Constants {
     public static final int kNeoAmpLimit = 48;
     public static final double kInchTime = 0.1;
     public static final double kCamTurn = 0.5;
-    public static final double kCamStraight = 0.27;
+    public static final double kCamStraightFast = 0.6;
+    public static final double kCamStraightMedium = 0.45;
+    public static final double kCamStraightSlow = 0.25;
     // public static final double kCamOffset = 0;
 
     // Lifters constants
@@ -99,3 +101,4 @@ public final class Constants {
     //Pathing
     public static final double kFarRocketPathDelay = 1.0; //just to test individual path
     public static final double kCargoshipBay1Delay = 1.0; //just to test individual path
+}

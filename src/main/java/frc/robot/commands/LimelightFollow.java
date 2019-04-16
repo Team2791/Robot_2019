@@ -9,8 +9,10 @@ import frc.robot.util.LedMode;
 import frc.robot.util.Limelight;
 
 public class LimelightFollow extends Command {
-    public LimelightFollow() {
+    private double thrustBase;
+    public LimelightFollow(double thrustLevel) {
         super("LimelightFollow");
+        thrustBase = thrustLevel;
         requires(Robot.drivetrain);
     }
 
@@ -24,7 +26,7 @@ public class LimelightFollow extends Command {
         //tx returns a value between -27 (center of target is left of frame) and 27 (center of target is right of frame)
         
         double turn = Constants.kCamTurn;
-        double thrust = Constants.kCamStraight;
+        double thrust = thrustBase;
         
         if(tv < 1) {
             Robot.drivetrain.setMotors(thrust, thrust); //if I dont see a target, drive forward

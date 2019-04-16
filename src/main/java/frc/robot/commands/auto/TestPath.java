@@ -44,7 +44,7 @@ public class TestPath extends CommandGroup {
 			//Goes from right HP to Far Side Rocket, than turns and goes in to score direction. Driver still scores
 			addSequential(new RunPath(ShakerPaths.FROM_RIGHT_HP.HP_TO_FAR_SIDE_ROCKET,-0.5,RunPath.Direction.FORWARDS));
 			addSequential(new DoNothing(),Constants.kFarRocketPathDelay);
-			addSequential(new RunPath(ShakerPaths.FROM_RIGHT_HP.FAR_SIDE_ROCKET_TO_SCORE,0.5,RunPath.Direction.FORWARDS));
+			addSequential(new RunPath(ShakerPaths.FROM_RIGHT_HP.FAR_SIDE_ROCKET_TO_SCORE,-0.5,RunPath.Direction.FORWARDS));
 			
 
         }
@@ -56,7 +56,7 @@ public class TestPath extends CommandGroup {
 			//Goes from right HP to near Cargoship Bay 1, than turns and drives into Bay 1
 			addSequential(new RunPath(ShakerPaths.FROM_RIGHT_HP.HP_TO_NEAR_CARGSHIP_BAY1,-0.5,RunPath.Direction.FORWARDS));
 			addSequential(new DoNothing(),Constants.kCargoshipBay1Delay);
-			addSequential(new RunPath(ShakerPaths.FROM_RIGHT_HP.NEAR_CARGOSHIP_BAY1_TO_SCORE,0.5,RunPath.Direction.FORWARDS));
+			addSequential(new RunPath(ShakerPaths.FROM_RIGHT_HP.NEAR_CARGOSHIP_BAY1_TO_SCORE,-0.5,RunPath.Direction.FORWARDS));
 		}
 	}
 }
