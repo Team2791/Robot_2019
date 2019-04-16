@@ -24,11 +24,12 @@ public class LimelightFollow extends Command {
         //tv is 0 if no targets are found, 1 if there are targets
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         //tx returns a value between -27 (center of target is left of frame) and 27 (center of target is right of frame)
-        
+        double lengthHori = NetworkTableInstance.getDefault().getTable("limelight").getEntry("thor").getDouble(0); //Horizontal sidelength of the rough bounding box (0 - 320 pixels)
+        double lengthVert = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tvert").getDouble(0); //Vertical sidelength of the rough bounding box (0 - 320 pixels)
         double turn = Constants.kCamTurn;
         double thrust = thrustBase;
         
-        if(tv < 1) {
+        if(tv < 1 || (lengthHori / lengthVert) > 3.1 || (lengthHori / lengthVert) < 1.0) {
             Robot.drivetrain.setMotors(thrust, thrust); //if I dont see a target, drive forward
             // Robot.drivetrain.setGreenLED(false);
             return;
@@ -39,6 +40,7 @@ public class LimelightFollow extends Command {
         double left = Math.max(Math.min(thrust + turn, 1), -1);
         double right = Math.max(Math.min(thrust - turn, 1), -1);
         Robot.drivetrain.setMotors(left, right);
+        System.out.print("Ratio = " + lengthHori / lengthVert);
     }
 
     public void end() {
@@ -48,6 +50,6 @@ public class LimelightFollow extends Command {
 
     public boolean isFinished() {
         return Robot.drivetrain.getLineSensors() > 0; //owo
-        
+        // return false;
     }
 }

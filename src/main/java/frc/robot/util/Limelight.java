@@ -140,11 +140,13 @@ public class Limelight {
         SmartDashboard.putString("Limelight Vertical sidelength", Double.toString(getLengthVert()));
         SmartDashboard.putString("Limelight Pipeline Index", Double.toString(getIndexPipe()));
         SmartDashboard.putString("Limelight Distance", Double.toString(getDistance()));
-        if(targetValid() && Robot.drivetrain.isLineFound() == false){
+        if(targetValid() && Robot.drivetrain.isLineFound() == false && (getLengthHori() / getLengthVert() > 1.0) && (getLengthHori() / getLengthVert() < 3.3)){
             Robot.drivetrain.setGreenLED(true);
+            SmartDashboard.putBoolean("Limelight Target Found", true);
         }
         else{
             Robot.drivetrain.setGreenLED(false);
+            SmartDashboard.putBoolean("Limelight Target Found", false);
         }
 
     }
