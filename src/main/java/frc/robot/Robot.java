@@ -11,8 +11,8 @@ import frc.robot.subsystems.Lifters;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.subsystems.CargoManipulator;
 import frc.robot.util.Limelight;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+// import edu.wpi.cscore.UsbCamera;
+// import edu.wpi.first.wpilibj.CameraServer;
 
                                                                                                    
 //                                                      . ...                                         
@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
     public static Compressor compressor;
     // private Command autoCommand;
 
-    public static UsbCamera driver_cam;
+    // public static UsbCamera driver_cam;
 
 
     @Override
@@ -81,24 +81,19 @@ public class Robot extends TimedRobot {
         limelight = new Limelight();
         
         oi = new OI();
-        // driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
-        // driver_cam.setResolution(160, 120); // low res = fast response 160 x 120
-//        driver_cam.setFPS(60);
-
-        // autoCommand = new AutoSetLifterPots();
     }
     
     @Override
     public void robotPeriodic() {
-        drivetrain.update();
-        //EACH debug only runs once per 10 loops
+        // drivetrain.update();
+        // //EACH debug only runs once per 10 loops
         // loopCounter += 1;
-        if(loopCounter % 10 == 0) { lifters.debug(); }
-        if(loopCounter % 10 == 1) { elevator.debug(); }
-        if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
-        if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
-        drivetrain.debug();
-        limelight.debug();
+        // if(loopCounter % 10 == 0) { lifters.debug(); }
+        // if(loopCounter % 10 == 1) { elevator.debug(); }
+        // if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
+        // if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
+        // drivetrain.debug(); //TODO PUT THIS F***ER BACK IN 
+        // limelight.debug(); //TODO PUT THIS F***ER BACK IN 
     }
 
     @Override
@@ -109,7 +104,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        // Scheduler.getInstance().run(); //TODO IF STUFF BREAK ITS THIS LINE
         drivetrain.setMotors(0, 0);
     }
 

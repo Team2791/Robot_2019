@@ -4,6 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 //import frc.robot.util.Limelight.CameraMode;
@@ -127,19 +128,21 @@ public class Limelight {
     }
 
     public void debug() {
-        SmartDashboard.putString("Limelight Horizontal", Double.toString(getHorizontalOffset()));
-        SmartDashboard.putString("Limelight Vertical", Double.toString(getVerticalOffset()));
-        SmartDashboard.putString("Limelight Area", Double.toString(getTargetArea()));
-        SmartDashboard.putString("Limelight Skew", Double.toString(getTargetSkew()));
-       // SmartDashboard.putString("Limelight Latency", Double.toString(getLatency()));
-        SmartDashboard.putString("Limelight Valid", Boolean.toString(targetValid()));
+        if(Constants.debugMode==true){
+        SmartDashboard.putString("Limelight Pipeline Index", Double.toString(getIndexPipe()));
+        SmartDashboard.putString("Limelight Distance", Double.toString(getDistance()));
         SmartDashboard.putString("Limelight Distance from Object", Double.toString(getDistance()));
         SmartDashboard.putString("Limelight Sidelength of shortest side", Double.toString(getLengthShort()));
         SmartDashboard.putString("Limelight Sidelength of longest side", Double.toString(getLengthLong()));
+        SmartDashboard.putString("Limelight Area", Double.toString(getTargetArea()));
+        SmartDashboard.putString("Limelight Skew", Double.toString(getTargetSkew()));
+        }
+        SmartDashboard.putString("Limelight Horizontal", Double.toString(getHorizontalOffset()));
+        SmartDashboard.putString("Limelight Vertical", Double.toString(getVerticalOffset()));
+        SmartDashboard.putString("Limelight Valid", Boolean.toString(targetValid()));
         SmartDashboard.putString("Limelight Horizontal sidelength", Double.toString(getLengthHori()));
         SmartDashboard.putString("Limelight Vertical sidelength", Double.toString(getLengthVert()));
-        SmartDashboard.putString("Limelight Pipeline Index", Double.toString(getIndexPipe()));
-        SmartDashboard.putString("Limelight Distance", Double.toString(getDistance()));
+
         if(targetValid() && Robot.drivetrain.isLineFound() == false && (getLengthHori() / getLengthVert() > 1.0) && (getLengthHori() / getLengthVert() < 3.3)){
             Robot.drivetrain.setGreenLED(true);
             SmartDashboard.putBoolean("Limelight Target Found", true);

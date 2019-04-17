@@ -254,6 +254,12 @@ public class Lifters extends Subsystem {
     }
 
     public void debug() {
+        if(Constants.debugMode == true){
+        SmartDashboard.putNumber("LFT - Adjusted Pot Diff", getFrontLifterHeight() - getBackLifterHeight());
+        SmartDashboard.putNumber("LFT - PID Output", pid);
+        SmartDashboard.putNumber("LFT - Front Lift Current", getFrontCurrent());
+        SmartDashboard.putNumber("LFT - Back Lift Current", getBackCurrent());
+        }
         SmartDashboard.putBoolean("LFT - Front Lifter Retracted", isFrontRetracted());
         SmartDashboard.putBoolean("LFT - Front Lifter Extended", isFrontExtended());
         SmartDashboard.putBoolean("LFT - Back Lifter Retracted", isBackRetracted());
@@ -264,12 +270,5 @@ public class Lifters extends Subsystem {
         SmartDashboard.putNumber("LFT - Back IR raw", backIR.getValue());
         SmartDashboard.putNumber("LFT - Adjusted Front Pot", getFrontLifterHeight());
         SmartDashboard.putNumber("LFT - Adjusted Back Pot", getBackLifterHeight());
-        SmartDashboard.putNumber("LFT - Adjusted Pot Diff", getFrontLifterHeight() - getBackLifterHeight());
-        SmartDashboard.putNumber("LFT - PID Output", pid);
-        SmartDashboard.putNumber("LFT - Front Lift Current", getFrontCurrent());
-        SmartDashboard.putNumber("LFT - Back Lift Current", getBackCurrent());
-
-        //proportional = SmartDashboard.getNumber("LifterKP", Constants.kLifterP);
-        //feedForward = SmartDashboard.getNumber("LifterKF", Constants.kLifterF);
     }
 }

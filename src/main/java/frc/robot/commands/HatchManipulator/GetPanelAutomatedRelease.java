@@ -13,6 +13,6 @@ public class GetPanelAutomatedRelease extends CommandGroup {
         addSequential(new DoNothing(), Constants.kGetPanelAutomatedReleaseRetractionDelay);
         addSequential(new RetractHatch());
         addSequential(new DoNothing(), Constants.kGetPanelAutomatedReleaseAlignerRetractionDelay);
-        addSequential(new RaiseAligner());
+        // addSequential(new RaiseAligner());
     }
 }

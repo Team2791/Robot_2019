@@ -7,8 +7,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj.DigitalOutput;
-// import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.Solenoid;
 
 import frc.robot.Constants;
@@ -34,8 +32,6 @@ public class Drivetrain extends Subsystem {
     private boolean lineFound = false;
     private Solenoid blueLED;
     private Solenoid greenLED;
-    // private DigitalOutput pin0;
-    // private PWM lineLight;
     private ADXRS450_Gyro gyro;
     private boolean gyroDisabled = false;
 
@@ -213,38 +209,6 @@ public class Drivetrain extends Subsystem {
         rightVelocities[frameCounter % 5] = right;
     }
 
-    // public double getGyroAngle(){
-    //     if(!gyroDisabled)
-    //         return gyro.getAngle();
-    //     System.err.println("Gyro is Disabled, Angle is Incorrect");
-    //     return 0.0;
-    // }
-    // public double getGyroRate() {
-    //     if (!gyroDisabled)
-    //         return gyro.getRate();
-    //     System.err.println("Gyro is Disabled, Rate is Incorrect");
-    //     return 0.0;
-    // }
-    // public double getGyroAngleInRadians() {
-    //     return getGyroAngle() * (Math.PI/180);
-    // }
-    // public void resetGyro() {
-    //     if(!gyroDisabled) {
-    //         gyro.reset();
-    //     } else { 
-    //         System.err.println("Gyro is Disabled, Unable to Reset");
-    //     }
-    // }
-    // public boolean getGyroDisabled() {
-    //     return gyroDisabled;
-    // } 
-    // public void calibrateGyro() {
-    //     if (!gyroDisabled) {
-    //         System.out.println("Gyro calibrating");
-    //         gyro.calibrate();
-    //         System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
-    //     }
-    // }
     public double getAverageDist() {
 		return Util.average(getLeftDistance(), getRightDistance());
 		// right side commented out due to potential wiring issues
@@ -265,24 +229,12 @@ public class Drivetrain extends Subsystem {
 		return rightLeader.getEncoder().getPosition() * ((0.5 * Math.PI)*.12);
     }
 
-    	// ************** Gyro and Encoder Helper Methods **************//
-
-	// @Deprecated
-	// public double getAngleEncoder() {
-		// return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
-	// }
-
 	public double getGyroAngle() {
 		if (!gyroDisabled)
 			return gyro.getAngle();
 		System.err.println("Gyro is Disabled, Angle is Incorrect");
 		return 0.0;
 	}
-
-	// @Deprecated
-	// public double getEncoderAngleRate() {
-		// return (360 / 7.9) * (getLeftVelocity() - getRightVelocity()) / 2.0;
-	// }
 
 	public double getGyroRate() {
 		if (!gyroDisabled)
@@ -294,6 +246,7 @@ public class Drivetrain extends Subsystem {
 	public double getGyroAngleInRadians() {
 		return getGyroAngle() * (Math.PI / 180);
     }
+
     public void resetGyro() {
 		if (!gyroDisabled) {
 			gyro.reset();
@@ -324,21 +277,27 @@ public class Drivetrain extends Subsystem {
         setBlueLED(lineFound);
         return res;
     }
+
     public boolean isLineFound(){
         return lineFound;
     }
+
     public void setGreenLED(boolean state){
         greenLED.set(state);
     }
+
     public void setBlueLED(boolean state){
         blueLED.set(state);
     }
+    
     public double getLineSensor(int index)
     {
         return lineSensors[index].getAverageVoltage();
     }
 
     public void debug(){
+        //This should be "dead code" under normal circumstances
+        if(Constants.debugMode==true){
         SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
         SmartDashboard.putNumber("Right Encoder", getLeftEncoder());
         SmartDashboard.putNumber("Right Drivetrain 1", Robot.pdp.getCurrent(1));
@@ -347,11 +306,14 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Left Drivetrain 2", Robot.pdp.getCurrent(15));
         SmartDashboard.putNumber("Measured Velocity", getVelocity());
         SmartDashboard.putNumber("Line Active", getLineSensors());
+        SmartDashboard.putNumber("DT - Gyro rate", getGyroRate());
+        }
+        
         SmartDashboard.putBoolean("Line Found", lineFound);
         SmartDashboard.putNumber("DT - Gyro angle", getGyroAngle());
-		SmartDashboard.putNumber("DT - Gyro rate", getGyroRate());
-        for(int i = 0; i < 4; ++ i) {
-            SmartDashboard.putNumber("Line Voltage" + i, getLineSensor(i));
-        }
+        SmartDashboard.putNumber("Line Voltage" + 0, getLineSensor(0));
+        SmartDashboard.putNumber("Line Voltage" + 1, getLineSensor(1));
+        SmartDashboard.putNumber("Line Voltage" + 2, getLineSensor(2));
+        SmartDashboard.putNumber("Line Voltage" + 3, getLineSensor(3));
     }
 }  

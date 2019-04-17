@@ -2,6 +2,9 @@ package frc.robot;
 
 
 public final class Constants {
+    public static final boolean debugMode = false;
+
+
     // Drivetrain constants
     public static final double kFastDrive = 1.0;
     public static final double kSlowDrive = 0.5;

@@ -14,7 +14,7 @@ public class PauseLift extends Command {
     }
 
     protected void execute() {
-        Robot.elevator.command = "PauseLift";
+        // Robot.elevator.command = "PauseLift";
     	Robot.elevator.setPowerUnsafe(0);
     }
 

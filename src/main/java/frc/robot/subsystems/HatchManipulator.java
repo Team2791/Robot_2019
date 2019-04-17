@@ -6,12 +6,13 @@ import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.RobotMap;
 
 public class HatchManipulator extends Subsystem {
-    private Solenoid extender, grabber, aligner;
+    private Solenoid extender, grabber;
+    // private Solenoid aligner;
 
     public HatchManipulator() {
         extender = new Solenoid(RobotMap.kPCM, RobotMap.kExtenderHatchSolenoid);
         grabber = new Solenoid(RobotMap.kPCM, RobotMap.kGrabberHatchSolenoid);
-        aligner = new Solenoid(RobotMap.kPCM, RobotMap.kAlignerHatchSolenoid);
+        // aligner = new Solenoid(RobotMap.kPCM, RobotMap.kAlignerHatchSolenoid);
     
     }
 
@@ -34,16 +35,16 @@ public class HatchManipulator extends Subsystem {
         return !grabber.get();
     }
 
-    public void setAligner(boolean extended) {
-         aligner.set(extended);
-    }
-    public boolean getAligner() {
-        return aligner.get();
-    }
+    // public void setAligner(boolean extended) {
+    //      aligner.set(extended);
+    // }
+    // public boolean getAligner() {
+        // return aligner.get();
+    // }
 
     public void debug() {
         SmartDashboard.putBoolean("HatchManipulator Extender Solenoid", getExtender());
         SmartDashboard.putBoolean("HatchManipulator Grabber Solenoid", getGrabber());
-        SmartDashboard.putBoolean("HatchManipulator Aligner Solenoid", getAligner());
+        // SmartDashboard.putBoolean("HatchManipulator Aligner Solenoid", getAligner());
     }
 }

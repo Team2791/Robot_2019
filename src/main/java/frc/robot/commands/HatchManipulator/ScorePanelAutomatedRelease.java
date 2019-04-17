@@ -14,6 +14,6 @@ public class ScorePanelAutomatedRelease extends CommandGroup {
         addSequential(new DoNothing(), Constants.kScorePanelDelayGrabberCloseAndHatchRetraction);
         addSequential(new RetractHatch());
         addSequential(new DoNothing(), Constants.kScorePanelDelayHatchRetractionAndAlignerRaise);
-        addSequential(new RaiseAligner());
+        // addSequential(new RaiseAligner());
     }
 }

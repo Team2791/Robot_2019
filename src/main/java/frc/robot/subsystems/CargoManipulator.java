@@ -6,15 +6,14 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.CargoManipulator.StallIntakeCargoMotors;
-// import frc.robot.commands.CargoManipulator.StopCargoMotor;
 
 public class CargoManipulator extends Subsystem {
     private Solenoid raiserSolenoid;
     private VictorSPX intakeVictor;
-    // private DigitalInput cargoSwitch;
     public boolean CargoControls = false;
 
     public CargoManipulator() {
@@ -54,8 +53,10 @@ public class CargoManipulator extends Subsystem {
         return Robot.pdp.getCurrent(RobotMap.kCargoIntakeVictorPDP);
     }
     public void debug() {
-        SmartDashboard.putBoolean("CargoManipulator Raiser", getRaiser());
+        if(Constants.debugMode==true){
         SmartDashboard.putNumber("CargoManipulator Current Draw", getCargoCurrent());
+        }
+        SmartDashboard.putBoolean("CargoManipulator Raiser", getRaiser());
         // SmartDashboard.putBoolean("Cargo Limit Switch State", getCargoSwitchState());
     }
 }
