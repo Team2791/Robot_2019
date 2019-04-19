@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import frc.robot.commands.*;
-import frc.robot.commands.auto.SetLimit;
+// import frc.robot.commands.auto.SetLimit;
 import frc.robot.controller.AnalogButton;
 import frc.robot.controller.DPadButton;
 import frc.robot.controller.MultiButton;

@@ -126,7 +126,7 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("LeftSideOutput", left);
         SmartDashboard.putNumber("RightSideOutput", right);
 
-        if(Math.abs(left - right) <= 0.2 && getLeftVelocity() < -1 && getRightVelocity() < -1 && (left + right) / 2 > 0) { //TODO change the first 0 and second 0 to some type of threshold value
+        if(Math.abs(left - right) <= 0.2 && getLeftVelocity() < -1 && getRightVelocity() < -1 && (left + right) / 2 > 0) {
             // leftLeader.set(Math.max(0, left * speedMultiplier));
             // rightLeader.set(Math.max(0, right * speedMultiplier));
             leftLeader.set(0);
@@ -215,8 +215,6 @@ public class Drivetrain extends Subsystem {
 		// return getLeftDistance();
     }
     public double getLeftDistance() {
-        //TODO NOW THIS IS WHERE IT GETS FUNKY
-        //TODO IF THIS BREAKS READ THIS FUNCTION
         //Multiply the # of ticks by distance per tick in feet, dont change distance per pulse
         //Note that leftLeader.getEncoder().getPosition()
         //YOU NEED TO FIX THIS FUNCTION TO RETURN THE DISTANCE TRAVELED IN FEET
@@ -225,7 +223,6 @@ public class Drivetrain extends Subsystem {
     }
     
     public double getRightDistance() {
-        //TODO NOW THIS IS WHERE IT GETS FUNKY
 		return rightLeader.getEncoder().getPosition() * ((0.5 * Math.PI)*.12);
     }
 

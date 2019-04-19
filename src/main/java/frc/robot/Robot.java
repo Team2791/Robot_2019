@@ -104,7 +104,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        // Scheduler.getInstance().run(); //TODO IF STUFF BREAK ITS THIS LINE
         drivetrain.setMotors(0, 0);
     }
 
