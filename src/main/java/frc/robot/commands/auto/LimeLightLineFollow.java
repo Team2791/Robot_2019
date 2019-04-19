@@ -8,7 +8,7 @@ public class LimeLightLineFollow extends CommandGroup {
     private double travelSpeed;
     public LimeLightLineFollow (double speed){
         travelSpeed = speed;
-        addSequential(new LimelightFollow(travelSpeed));
+        addSequential(new LimelightFollow(travelSpeed,true));
         addSequential(new FollowLine());
 
     }

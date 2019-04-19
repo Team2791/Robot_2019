@@ -14,7 +14,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.StopDrive;
 import frc.robot.Robot;
 import frc.robot.util.Util;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+// import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 public class Drivetrain extends Subsystem {
     private CANSparkMax leftLeader;
@@ -32,8 +32,8 @@ public class Drivetrain extends Subsystem {
     private boolean lineFound = false;
     private Solenoid blueLED;
     private Solenoid greenLED;
-    private ADXRS450_Gyro gyro;
-    private boolean gyroDisabled = false;
+    // private ADXRS450_Gyro gyro;
+    // private boolean gyroDisabled = false;
 
 
     private double speedMultiplier;
@@ -82,14 +82,14 @@ public class Drivetrain extends Subsystem {
         leftVelocities = new int[] {0, 0, 0, 0, 0};
         rightVelocities = new int[] {0, 0, 0, 0, 0};
         frameCounter = 0;
-        initGyro();
+        // initGyro();
     }
 
     public void setLimit(int limit) {
         if(pCurrent != limit) {
             setLimit(limit);
         }
-        initGyro();
+        // initGyro();
     }
 
     private void setCurrentLimit(int limit) {
@@ -104,17 +104,17 @@ public class Drivetrain extends Subsystem {
             rightFollowers[i].setSecondaryCurrentLimit(120, 0);
         }
     }
-    public void initGyro(){
-        try {
-			gyro = new ADXRS450_Gyro();// SPI.Port.kOnboardCS1
-			gyro.calibrate(); // takes 5 seconds
-			gyro.reset();
-			System.out.println("Gyro is working! :-)");
-		} catch (NullPointerException e) {
-			gyroDisabled = true;
-			System.out.println("Gyro is unplugged, Disabling Gyro");
-		}
-    }
+    // public void initGyro(){
+    //     try {
+	// 		gyro = new ADXRS450_Gyro();// SPI.Port.kOnboardCS1
+	// 		gyro.calibrate(); // takes 5 seconds
+	// 		gyro.reset();
+	// 		System.out.println("Gyro is working! :-)");
+	// 	} catch (NullPointerException e) {
+	// 		gyroDisabled = true;
+	// 		System.out.println("Gyro is unplugged, Disabling Gyro");
+	// 	}
+    // }
     public void initDefaultCommand() {
         if(defaultCommand == null) {
             defaultCommand = new StopDrive();
@@ -161,7 +161,7 @@ public class Drivetrain extends Subsystem {
 
         int lVel = leftEnc - pLeftEnc;
         int rVel = rightEnc - pRightEnc;
-
+        getLineSensors();
         pLeftEnc = leftEnc;
         pRightEnc = rightEnc;
         setVelocity(lVel, rVel);
@@ -229,43 +229,43 @@ public class Drivetrain extends Subsystem {
 		return rightLeader.getEncoder().getPosition() * ((0.5 * Math.PI)*.12);
     }
 
-	public double getGyroAngle() {
-		if (!gyroDisabled)
-			return gyro.getAngle();
-		System.err.println("Gyro is Disabled, Angle is Incorrect");
-		return 0.0;
-	}
+	// public double getGyroAngle() {
+	// 	if (!gyroDisabled)
+	// 		return gyro.getAngle();
+	// 	System.err.println("Gyro is Disabled, Angle is Incorrect");
+	// 	return 0.0;
+	// }
 
-	public double getGyroRate() {
-		if (!gyroDisabled)
-			return gyro.getRate();
-		System.err.println("Gyro is Disabled, Rate is Incorrect");
-		return 0.0;
-	}
+	// public double getGyroRate() {
+	// 	if (!gyroDisabled)
+	// 		return gyro.getRate();
+	// 	System.err.println("Gyro is Disabled, Rate is Incorrect");
+	// 	return 0.0;
+	// }
 
-	public double getGyroAngleInRadians() {
-		return getGyroAngle() * (Math.PI / 180);
-    }
+	// public double getGyroAngleInRadians() {
+	// 	return getGyroAngle() * (Math.PI / 180);
+    // }
 
-    public void resetGyro() {
-		if (!gyroDisabled) {
-			gyro.reset();
-		} else {
-			System.err.println("Gyro is Disabled, Unable to Reset");
-		}
-	}
+    // public void resetGyro() {
+	// 	if (!gyroDisabled) {
+	// 		gyro.reset();
+	// 	} else {
+	// 		System.err.println("Gyro is Disabled, Unable to Reset");
+	// 	}
+	// }
 
-	public boolean getGyroDisabled() {
-		return gyroDisabled;
-	}
+	// public boolean getGyroDisabled() {
+	// 	return gyroDisabled;
+	// }
 
-	public void calibrateGyro() {
-		if (!gyroDisabled) {
-			System.out.println("Gyro calibrating");
-			gyro.calibrate();
-			System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
-		}
-    }
+	// public void calibrateGyro() {
+	// 	if (!gyroDisabled) {
+	// 		System.out.println("Gyro calibrating");
+	// 		gyro.calibrate();
+	// 		System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
+	// 	}
+    // }
     
     public int getLineSensors() {
         int res = 0;
@@ -274,7 +274,7 @@ public class Drivetrain extends Subsystem {
         res |= lineSensors[2].getAverageVoltage() > Constants.kLineVoltCutoff ? 4 : 0;
         res |= lineSensors[3].getAverageVoltage() > Constants.kLineVoltCutoff ? 8 : 0;
         lineFound = (res & 15) > 0;
-        setBlueLED(lineFound);
+        // setBlueLED(lineFound);
         return res;
     }
 
@@ -306,11 +306,11 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("Left Drivetrain 2", Robot.pdp.getCurrent(15));
         SmartDashboard.putNumber("Measured Velocity", getVelocity());
         SmartDashboard.putNumber("Line Active", getLineSensors());
-        SmartDashboard.putNumber("DT - Gyro rate", getGyroRate());
+        // SmartDashboard.putNumber("DT - Gyro rate", getGyroRate());
         }
         
         SmartDashboard.putBoolean("Line Found", lineFound);
-        SmartDashboard.putNumber("DT - Gyro angle", getGyroAngle());
+        // SmartDashboard.putNumber("DT - Gyro angle", getGyroAngle());
         SmartDashboard.putNumber("Line Voltage" + 0, getLineSensor(0));
         SmartDashboard.putNumber("Line Voltage" + 1, getLineSensor(1));
         SmartDashboard.putNumber("Line Voltage" + 2, getLineSensor(2));

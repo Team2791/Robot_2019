@@ -85,15 +85,15 @@ public class Robot extends TimedRobot {
     
     @Override
     public void robotPeriodic() {
-        // drivetrain.update();
+        drivetrain.update(); //TODO PUT THIS BACK IN
         // //EACH debug only runs once per 10 loops
-        // loopCounter += 1;
-        // if(loopCounter % 10 == 0) { lifters.debug(); }
-        // if(loopCounter % 10 == 1) { elevator.debug(); }
-        // if(loopCounter % 10 == 2) { cargoManipulator.debug(); }
-        // if(loopCounter % 10 == 3) { hatchManipulator.debug(); }
-        // drivetrain.debug(); //TODO PUT THIS F***ER BACK IN 
-        // limelight.debug(); //TODO PUT THIS F***ER BACK IN 
+        loopCounter += 1; //TODO PUT THIS BACK IN
+        if(loopCounter % 10 == 0) { lifters.debug(); } //TODO PUT THIS BACK IN
+        if(loopCounter % 10 == 1) { elevator.debug(); } //TODO PUT THIS BACK IN
+        if(loopCounter % 10 == 2) { cargoManipulator.debug(); } //TODO PUT THIS BACK IN
+        if(loopCounter % 10 == 3) { hatchManipulator.debug(); } //TODO PUT THIS BACK IN 
+        drivetrain.debug(); //TODO PUT THIS BACK IN 
+        limelight.debug(); //TODO PUT THIS BACK IN 
     }
 
     @Override
@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        Robot.drivetrain.resetGyro();
+        // Robot.drivetrain.resetGyro();
         // autoCommand.start();
     }
 

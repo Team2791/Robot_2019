@@ -10,9 +10,11 @@ import frc.robot.util.Limelight;
 
 public class LimelightFollow extends Command {
     private double thrustBase;
-    public LimelightFollow(double thrustLevel) {
+    private boolean lineFollow;
+    public LimelightFollow(double thrustLevel, boolean followedByLineFollowing) {
         super("LimelightFollow");
         thrustBase = thrustLevel;
+        lineFollow = followedByLineFollowing;
         requires(Robot.drivetrain);
     }
 
@@ -49,7 +51,10 @@ public class LimelightFollow extends Command {
     }
 
     public boolean isFinished() {
-        return Robot.drivetrain.getLineSensors() > 0; //owo
-        // return false;
+        if(lineFollow){
+            return Robot.drivetrain.getLineSensors() > 0; //owo
+
+        }
+        return false;
     }
 }

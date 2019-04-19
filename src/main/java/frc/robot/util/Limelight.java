@@ -147,7 +147,12 @@ public class Limelight {
             Robot.drivetrain.setGreenLED(true);
             SmartDashboard.putBoolean("Limelight Target Found", true);
         }
+        else if(Robot.drivetrain.isLineFound()){
+            Robot.drivetrain.setGreenLED(false);
+            Robot.drivetrain.setBlueLED(true);
+        }
         else{
+            Robot.drivetrain.setBlueLED(false);
             Robot.drivetrain.setGreenLED(false);
             SmartDashboard.putBoolean("Limelight Target Found", false);
         }

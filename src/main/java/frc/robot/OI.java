@@ -113,8 +113,12 @@ public class OI {
         
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
 
+        //TODO THE ELEVATOR NEEDS A TIMEOUT VERY VERY VERY BADLY
+        //TODO DID YOU READ THAT LINE ABOVE?
+        //TODO PLEASE ADD AN ELEVATOR TIME OUT
         
         driverDPadDown.whileHeld(new LimeLightLineFollow(Constants.kCamStraightSlow));
+        // driverDPadRight.whileHeld(new LimelightFollow(Constants.kCamStraightMedium,false));
         driverDPadRight.whileHeld(new LimeLightLineFollow(Constants.kCamStraightMedium));
         driverDPadLeft.whileHeld(new LimeLightLineFollow(Constants.kCamStraightFast));
 
