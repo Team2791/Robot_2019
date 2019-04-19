@@ -117,10 +117,10 @@ public class OI {
         //TODO DID YOU READ THAT LINE ABOVE?
         //TODO PLEASE ADD AN ELEVATOR TIME OUT
         
-        driverDPadDown.whileHeld(new LimeLightLineFollow(Constants.kCamStraightSlow));
-        // driverDPadRight.whileHeld(new LimelightFollow(Constants.kCamStraightMedium,false));
-        driverDPadRight.whileHeld(new LimeLightLineFollow(Constants.kCamStraightMedium));
-        driverDPadLeft.whileHeld(new LimeLightLineFollow(Constants.kCamStraightFast));
+        driverDPadDown.whileHeld(new LimeLightLineFollow(Constants.kCamStraightSlow,false));
+        // FOR TESTING ONLY driverDPadRight.whileHeld(new LimelightFollow(Constants.kCamStraightMedium,false));
+        driverDPadRight.whileHeld(new LimeLightLineFollow(Constants.kCamStraightMedium,true));
+        driverDPadLeft.whileHeld(new LimeLightLineFollow(Constants.kCamStraightFast,false));
 
         // driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE+10.0));
         // driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));

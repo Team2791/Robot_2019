@@ -6,9 +6,11 @@ import frc.robot.commands.LimelightFollow;
 
 public class LimeLightLineFollow extends CommandGroup {
     private double travelSpeed;
-    public LimeLightLineFollow (double speed){
+    private boolean useScaled;
+    public LimeLightLineFollow (double speed, boolean scaled){
         travelSpeed = speed;
-        addSequential(new LimelightFollow(travelSpeed,true));
+        useScaled = scaled;
+        addSequential(new LimelightFollow(travelSpeed,true,useScaled));
         addSequential(new FollowLine());
 
     }
