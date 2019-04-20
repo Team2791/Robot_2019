@@ -10,7 +10,7 @@ public class DriveLifterWheelFrontIR extends Command {
 
     public DriveLifterWheelFrontIR() {
         requires(Robot.drivetrain);
-        frontOverLedge = new DelayedBoolean(0.5);
+        frontOverLedge = new DelayedBoolean(Constants.kLifterDriveForwardDelay);
     }
     protected void initialize(){
         frontOverLedge.update(false);

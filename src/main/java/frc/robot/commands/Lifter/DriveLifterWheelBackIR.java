@@ -8,7 +8,7 @@ import frc.robot.util.DelayedBoolean;
 public class DriveLifterWheelBackIR extends Command {
     DelayedBoolean backOverLedge;
     public DriveLifterWheelBackIR() {
-        backOverLedge = new DelayedBoolean(1);
+        backOverLedge = new DelayedBoolean(Constants.kLifterDriveBackDelay);
     }
 
     @Override

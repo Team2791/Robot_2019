@@ -10,11 +10,13 @@ import frc.robot.util.LedMode;
 
 public class LimelightFollow extends Command {
     private double thrustBase;
+    private double thrustPeak;
     private boolean lineFollow;
     private boolean scaledFollow;
-    public LimelightFollow(double thrustLevel, boolean followedByLineFollowing, boolean scaled) {
+    public LimelightFollow(double thrustLevelLOW, double thrustLevelHIGH, boolean followedByLineFollowing, boolean scaled) {
         super("LimelightFollow");
-        thrustBase = thrustLevel;
+        thrustBase = thrustLevelLOW;
+        thrustPeak = thrustLevelHIGH;
         lineFollow = followedByLineFollowing;
         scaledFollow = scaled;
         requires(Robot.drivetrain);
@@ -25,7 +27,7 @@ public class LimelightFollow extends Command {
     }
     public void execute() {
         if(scaledFollow = false){
-            double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+        double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
         //tv is 0 if no targets are found, 1 if there are targets
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         //tx returns a value between -27 (center of target is left of frame) and 27 (center of target is right of frame)
@@ -57,7 +59,7 @@ public class LimelightFollow extends Command {
         double lengthHori = NetworkTableInstance.getDefault().getTable("limelight").getEntry("thor").getDouble(0); //Horizontal sidelength of the rough bounding box (0 - 320 pixels)
         double lengthVert = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tvert").getDouble(0); //Vertical sidelength of the rough bounding box (0 - 320 pixels)
         double turn = Constants.kCamTurn;
-        double thrust = Constants.kCamStraightSlow;
+        double thrust = thrustBase;
         
         if(tv < 1 || (lengthHori / lengthVert) > 3.1 || (lengthHori / lengthVert) < 1.0) {
             Robot.drivetrain.setMotors(thrust, thrust); //if I dont see a target, drive forward
@@ -65,15 +67,17 @@ public class LimelightFollow extends Command {
             return;
         }
         // Robot.drivetrain.setGreenLED(true);
-        thrust = Constants.kCamStraightSuperFast;
+        thrust = thrustPeak;
         ty = ty + 20.5;
         ty = 41 - ty;
         thrust = thrust * (ty/41);
 
-        if(thrust < Constants.kCamStraightSlow){
-            thrust = Constants.kCamStraightSlow;
+        if(thrust < thrustBase){
+            thrust = thrustBase;
         }
-        
+        if(thrust > 1.0){
+            thrust = 1.0;
+        }
         turn *= (tx/27); //sets "turn" = to kCamTurn * the percentage of how off the target is
 
         double left = Math.max(Math.min(thrust + turn, 1), -1);

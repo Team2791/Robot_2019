@@ -23,34 +23,38 @@ public final class Constants {
     public static final double kCamStraightSlow = 0.25;
     // public static final double kCamOffset = 0;
 
+    //TODO Basically left dpad has a different funciton after we climb, if you hold left dpad after climb then it lifts us even higher
+
     // Lifters constants
     public static final int kLifterPotTicksInOneLoopForShutdown = 50;
     public static final int kLiftersLevel2PotValue = 120;
     public static final double kLifterFrontSlowHeightLevel2 = 90;
-    public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
-    public static final double kLifterCurrentKiller = 100; //If motor crosses 60 amps after current spike
+    // public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
+    // public static final double kLifterCurrentKiller = 100; //If motor crosses 60 amps after current spike
     public static final double kLifterBackPotTopTravel = 800;
     public static final double kLifterFrontPotTopTravel = 800;
     public static final int kFrontLifterPotMin = 40;
     public static final int kBackLifterPotMin = 50;
     public static final int kLifetPotRange = 354;
-    public static final int kFrontPlatformCutoff = 1100;
-    public static final int kBackPlatformCutoff = 1100;
+    // public static final int kFrontPlatformCutoff = 1100;
+    // public static final int kBackPlatformCutoff = 1100;
     public static final double kLifterExtensionSpeed = .85; //Was .8
     public static final double kLifterRetractionSpeed = -1;
     public static final double kLifterDrivePower = .60; //was .4;
-    public static final double kLifterDrivePowerOverLedge = .025; //was .15;
+    public static final double kLifterDrivePowerOverLedge = .07; //was .15;
     public static final double kDrivetrainLifterCrawlSpeedFrontLifter = -0.07;
     public static final double kDrivetrainLifterCrawlSpeedEndOfSequence = -0.18;
     public static final double kDrivetrainLifterEndOfSequenceTime = 0.75;
     public static final double kLifterAutoTimerDelay = 0;
-    public static final double kFullDangerCurrent = 134;
-    public static final int kDangerTimeout = 100;
+    // public static final double kFullDangerCurrent = 134;
+    // public static final int kDangerTimeout = 100;
+    public static final double kLifterDriveBackDelay = 0.1;
+    public static final double kLifterDriveForwardDelay = 0.1;
     public static final double kLifterF = -0.04;
     public static final double kLifterP = 4; //16 reduced bc doubled output
     public static final double k_IR_SENSOR_THREASHOLD = 1800;
     public static final double kLifterFrontSlowHeight = 329; //was 300, 300 is more safe
-    public static final double kLifterFrontSlowSpeed = -0.2; 
+    public static final double kLifterFrontSlowSpeed = -0.3; 
 
     //Elevator constants
     public static double kLIFT_HOLD_VOLTAGE = 0.25;
@@ -60,7 +64,7 @@ public final class Constants {
     public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final int kPotOffset = 27; //was 23 //Comp //19.0 for practice
+    public static final int kPotOffset = 131; //was 23 //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 

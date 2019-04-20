@@ -5,8 +5,8 @@ import frc.robot.commands.FollowLine;
 import frc.robot.commands.Elevator.SetLiftHeightMagicMotion;
 
 public class FollowLineAndSetLift extends CommandGroup {
-    public FollowLineAndSetLift(double height) {
+    public FollowLineAndSetLift(double height, double speedLOW, double speedHIGH, boolean lineFollow, boolean scaled) {
         addParallel(new SetLiftHeightMagicMotion(height));
-        addParallel(new FollowLine());
+        addSequential(new LimelightFollow(speedLOW, speedHIGH, lineFollow, scaled));
     }
 }
