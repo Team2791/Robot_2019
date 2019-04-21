@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,6 +19,7 @@ public class Elevator extends Subsystem {
 
     private Solenoid breakSolenoid;
     private TalonSRX driveTalon;
+    private VictorSPX driveHelper; //TODO TAKE ME OUT
     public boolean magic = false;
     // public String command = "";
 
@@ -38,6 +41,10 @@ public class Elevator extends Subsystem {
         driveTalon.setInverted(true); //This should be true, as green lights (Positive direction) = lift going UP
         driveTalon.setNeutralMode(NeutralMode.Brake);
 
+        driveHelper = new VictorSPX(RobotMap.kLifterHelperVictor); //TODO TAKE ME OUT
+        driveHelper.setNeutralMode(NeutralMode.Brake); //TODO TAKE ME OUT
+        driveHelper.follow(driveTalon); //TODO TAKE ME OUT
+
         /*
             Enable the current limit such that when it exceeds 45A for 40 msec, limit the current draw to 30A
         */
@@ -46,6 +53,8 @@ public class Elevator extends Subsystem {
         driveTalon.configPeakCurrentLimit(45); //45
         driveTalon.configPeakCurrentDuration(10); //10
         driveTalon.enableCurrentLimit(true); //true
+
+
 
         driveTalon.overrideLimitSwitchesEnable(false);
 
@@ -124,6 +133,7 @@ public class Elevator extends Subsystem {
         SmartDashboard.putBoolean("Elevator - Close to top", closeToTop());
         SmartDashboard.putBoolean("Elevator - Close to bottom", closeToBottom());
         SmartDashboard.putNumber("Elevator - RAW HEIGHT", getSensorPosition());
+
     }
 
 }

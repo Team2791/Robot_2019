@@ -59,12 +59,12 @@ public final class Constants {
     //Elevator constants
     public static double kLIFT_HOLD_VOLTAGE = 0.25;
     public static double kELEVATOR_F_VALUE = 0;
-    public static double kELEVATOR_P_VALUE = 15; //The P value of the lift's PID loop
+    public static double kELEVATOR_P_VALUE = 7; //15 //The P value of the lift's PID loop
     public static double kELEVATOR_I_VALUE = 0.01; //The I value of the lift's PID loop
-    public static double kELEVATOR_D_VALUE = 500.0; //The D value of the lift's PID loop
+    public static double kELEVATOR_D_VALUE = 5000; //500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final int kPotOffset = 131; //was 23 //Comp //19.0 for practice
+    public static final int kPotOffset = 37; //was 23 //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
