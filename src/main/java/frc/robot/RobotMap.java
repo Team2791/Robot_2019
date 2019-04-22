@@ -40,6 +40,7 @@ public class RobotMap {
 
     //Elevator
     public static final int kElevatorTalon = 24;
+    public static final int kElevatorVictor = 33;
     public static final int kElevatorLimitTop = 0;
     public static final int kElevatorLimitBottom = 0;
 

@@ -2,6 +2,7 @@ package frc.robot.commands.HatchManipulator;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.commands.DoNothing;
 import frc.robot.commands.CargoManipulator.RaiseCargo;
 
@@ -13,7 +14,6 @@ public class ScorePanelAutomatedRelease extends CommandGroup {
         addSequential(new CloseGrabber());
         addSequential(new DoNothing(), Constants.kScorePanelDelayGrabberCloseAndHatchRetraction);
         addSequential(new RetractHatch());
-        addSequential(new DoNothing(), Constants.kScorePanelDelayHatchRetractionAndAlignerRaise);
         // addSequential(new RaiseAligner());
     }
 }

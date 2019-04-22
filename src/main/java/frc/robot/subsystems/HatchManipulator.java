@@ -20,6 +20,7 @@ public class HatchManipulator extends Subsystem {
         
     }
 
+
     public void setExtender(boolean extended) {
         extender.set(extended);
     }

@@ -19,7 +19,7 @@ public class Elevator extends Subsystem {
 
     private Solenoid breakSolenoid;
     private TalonSRX driveTalon;
-    private VictorSPX driveHelper; //TODO TAKE ME OUT
+    private VictorSPX driveHelper;
     public boolean magic = false;
     // public String command = "";
 
@@ -41,9 +41,9 @@ public class Elevator extends Subsystem {
         driveTalon.setInverted(true); //This should be true, as green lights (Positive direction) = lift going UP
         driveTalon.setNeutralMode(NeutralMode.Brake);
 
-        driveHelper = new VictorSPX(RobotMap.kLifterHelperVictor); //TODO TAKE ME OUT
-        driveHelper.setNeutralMode(NeutralMode.Brake); //TODO TAKE ME OUT
-        driveHelper.follow(driveTalon); //TODO TAKE ME OUT
+        driveHelper = new VictorSPX(RobotMap.kElevatorVictor);
+        driveHelper.setNeutralMode(NeutralMode.Brake);
+        driveHelper.follow(driveTalon);
 
         /*
             Enable the current limit such that when it exceeds 45A for 40 msec, limit the current draw to 30A

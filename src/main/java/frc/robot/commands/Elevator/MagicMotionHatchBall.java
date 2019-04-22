@@ -1,6 +1,7 @@
 package frc.robot.commands.Elevator;
 import edu.wpi.first.wpilibj.Joystick;
 
+
 public class MagicMotionHatchBall extends SetLiftHeightMagicMotion {
 private Joystick stick;
 private double hatchHeight;
@@ -13,7 +14,9 @@ private double ballHeight;
         super(hatchHeight); // this doesn't really matter since we're going to reset this in the init
         this.stick = stick;
         this.hatchHeight = hatchHeight;
-        this.ballHeight = ballHeight;        
+        this.ballHeight = ballHeight;
+        
+        
         }
 
         @Override

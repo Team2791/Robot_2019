@@ -85,7 +85,7 @@ public class OI {
         driverBack.whileHeld(new RetractBothLifters(-1));
 
         operatorLeftJoystickUsed.whenPressed(new RunLiftWithJoystick(operatorLeftJoystickUsed)); //Elevator manual drive
-        operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kELEVATOR_PANEL_ONE + 12)); //This will make the lift go to the bottom + 3 pot turns
+        operatorA.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kElevatorMinHeight + 3, Constants.kELEVATOR_PANEL_ONE + 15)); //This will make the lift go to the bottom + 3 pot turns
         operatorB.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_ONE, Constants.kELEVATOR_BALL_SLAM_SHIP)); //Sets elevator to panel height 1 / ball height 1
         operatorX.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_TWO, Constants.kELEVATOR_BALL_TWO)); //Sets elevator to panel height 2 / ball height 2
         operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE)); //Sets elevator to panel height 2 / ball height 2
@@ -106,22 +106,12 @@ public class OI {
         //LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         //true does right hp far rocket path, false does right hp bay 1 ship path
-        // driverY.whileHeld(new TestPath(true));
         // driverY.whenReleased(new StopCargoMotor());
         
         driverRX.whileHeld(new PreciseTurnJoystick(driverStick, 0.1));
 
-        //TODO THE ELEVATOR NEEDS A TIMEOUT VERY VERY VERY BADLY
-        //TODO DID YOU READ THAT LINE ABOVE?
-        //TODO PLEASE ADD AN ELEVATOR TIME OUT
-        
-        // driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE + 10, Constants.kCamStraightSlow, Constants.kCamStraightSuperFast, true, true)); //Line follow with true, but add elevator move panel low + 10
-        driverDPadDown.whileHeld(new LimeLightLineFollow(Constants.kCamStraightSlow, Constants.kCamStraightSuperFast, true, true));
+        driverDPadLeft.whileHeld(new LimelightFollow(Constants.kCamStraightSlow, 1.0, false, true));
         driverDPadRight.whileHeld(new LimeLightLineFollow(Constants.kCamStraightSlow, 1.0, true, true)); //Line follow with true, but add speed
-
-        // driverDPadDown.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_ONE+10.0));
-        // driverDPadRight.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_TWO));
-        // driverDPadLeft.whileHeld(new FollowLineAndSetLift(Constants.kELEVATOR_PANEL_THREE));
 
         operatorDPadLeft.whenPressed(new ScoreCargoShip());
         operatorDPadLeft.whenReleased(new StopCargoMotor());
