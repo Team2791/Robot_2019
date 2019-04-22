@@ -24,6 +24,7 @@ import frc.robot.commands.CargoManipulator.SlowShootCargo;
 import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
+import frc.robot.commands.Lifter.EStopLifters;
 // import frc.robot.commands.auto.TestPath;
 // import frc.robot.commands.auto.StopTotal;
 // import frc.robot.commands.Lifter.ExtendBothLifters;
@@ -103,7 +104,7 @@ public class OI {
 
 
         driverStart.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
-        //LEAVE OUT driverY.whenPressed(new StopTotal()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
+        driverY.whenPressed(new EStopLifters()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         //true does right hp far rocket path, false does right hp bay 1 ship path
         // driverY.whenReleased(new StopCargoMotor());
