@@ -25,8 +25,6 @@ import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
 import frc.robot.commands.Lifter.EStopLifters;
-// import frc.robot.commands.auto.TestPath;
-// import frc.robot.commands.auto.StopTotal;
 // import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
