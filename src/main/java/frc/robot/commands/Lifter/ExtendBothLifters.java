@@ -17,17 +17,19 @@ public class ExtendBothLifters extends Command {
     private double currentBackPotValue;
     private double frontDiff;
     private double rearDiff;
-    private boolean level2;
+    private boolean stopEarly;
+    private double stopLimit;
     private Timer startupCounter = new Timer();
 
 
-    public ExtendBothLifters(double output, boolean useLevel2) {
+    public ExtendBothLifters(double output, boolean stopSooner, double stopHeight) {
         super("ExtendBothLifters");
         requires(Robot.lifters);
         this.output = output;
         // this.sticky = stick;
         // this.inFullAutoMode = fullAutoMode;
-        this.level2 = useLevel2;
+        this.stopEarly = stopSooner;
+        this.stopLimit = stopHeight;
     }
 
     public void initialize(){
@@ -86,8 +88,8 @@ public class ExtendBothLifters extends Command {
     }
 
     public boolean isFinished() {
-        if(level2 == true){
-            if(Robot.lifters.getFrontLifterHeight() > Constants.kLiftersLevel2PotValue && Robot.lifters.getBackLifterHeight() > Constants.kLiftersLevel2PotValue){
+        if(stopEarly == true){
+            if(Robot.lifters.getFrontLifterHeight() > stopLimit && Robot.lifters.getBackLifterHeight() > stopLimit){
                 return true;
             }
         }

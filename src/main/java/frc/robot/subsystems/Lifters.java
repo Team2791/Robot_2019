@@ -27,6 +27,8 @@ public class Lifters extends Subsystem {
     private double feedForward;
     private double pid;
     private double proportionalSPEEDY;
+    private boolean level2CompletionState;
+    private boolean level3CompletionState;
 
     public Lifters() {
         frontLifter = new TalonSRX(RobotMap.kFrontLiftTalon);
@@ -53,6 +55,7 @@ public class Lifters extends Subsystem {
         feedForward = Constants.kLifterF;
         SmartDashboard.putNumber("LifterKP", proportional);
         SmartDashboard.putNumber("LifterKF", feedForward);
+        level2CompletionState = false;
     }
 
     @Override
@@ -63,7 +66,18 @@ public class Lifters extends Subsystem {
         //sets Lifters to coast as a method for command
         lifterDrive.setNeutralMode(NeutralMode.Coast);
     }
-
+    public void setLevel3CompletionState(boolean state){
+        level3CompletionState = state;
+    }
+    public boolean getLevel3CompletionState(){
+        return level3CompletionState;
+    }
+    public void setLevel2CompletionState(boolean state){
+        level2CompletionState = state;
+    }
+    public boolean getLevel2CompletionState(){
+        return level2CompletionState;
+    }
     public void extendFront(double output) {
         //SmartDashboard.putNumber("LIFTER - front output", output);
         if(output < 0 && isFrontRetracted()) {

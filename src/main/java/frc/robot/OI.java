@@ -100,8 +100,8 @@ public class OI {
 
         driverX.whenPressed(new PlatformAuto2()); //Runs autonomous lifting sequence
 
-
         driverStart.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
+
         driverY.whenPressed(new EStopLifters()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
 
         //true does right hp far rocket path, false does right hp bay 1 ship path

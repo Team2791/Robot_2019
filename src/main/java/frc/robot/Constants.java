@@ -33,6 +33,7 @@ public final class Constants {
     // public static final double kLifterCurrentKiller = 100; //If motor crosses 60 amps after current spike
     public static final double kLifterBackPotTopTravel = 800;
     public static final double kLifterFrontPotTopTravel = 800;
+    public static final double kLifterExtraExtensionPotTravel = 240; //This is equal to about 12 inches, assuming that the lifters level 2 pot cut off is the correct number
     public static final int kFrontLifterPotMin = 40;
     public static final int kBackLifterPotMin = 50;
     public static final int kLifetPotRange = 354;
@@ -45,6 +46,7 @@ public final class Constants {
     public static final double kDrivetrainLifterCrawlSpeedFrontLifter = -0.07;
     public static final double kDrivetrainLifterCrawlSpeedEndOfSequence = -0.18;
     public static final double kDrivetrainLifterEndOfSequenceTime = 0.75;
+    public static final double kDrivetrainLifterEndOfSequenceTimeStagger = 0.2;
     public static final double kLifterAutoTimerDelay = 0;
     // public static final double kFullDangerCurrent = 134;
     // public static final int kDangerTimeout = 100;

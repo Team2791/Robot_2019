@@ -17,6 +17,10 @@ public class DriveWithJoystick extends Command {
         this.deadzone = deadzone;
     }
 
+    public void initialize(){
+        Robot.compressor.start();
+    }
+
     public void execute() {
         double thrust = 0;
         if(stick.getRawButton(6)) {
@@ -47,7 +51,7 @@ public class DriveWithJoystick extends Command {
             turn *= Math.abs(turn);
         }
 
-        if(stick.getRawButton(2)) {
+        if(stick.getRawButton(2) && thrust > Constants.kCreep) {
             turn /= 3;
         }
 
