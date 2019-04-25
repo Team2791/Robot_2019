@@ -20,6 +20,7 @@ public final class Constants {
     public static final double kCamStraightFast = 0.6;
     public static final double kCamStraightSuperFast = 0.75;
     public static final double kCamStraightMedium = 0.45;
+    public static final double kDrivetrainLifterEndOfSequenceTimeStagger = .2;
     public static final double kCamStraightSlow = 0.25;
     // public static final double kCamOffset = 0;
 
@@ -31,8 +32,8 @@ public final class Constants {
     public static final double kLifterFrontSlowHeightLevel2 = 90;
     // public static final double kLifterCurrentProtectionSpikeTimer = 1.0; //Might need to be higher
     // public static final double kLifterCurrentKiller = 100; //If motor crosses 60 amps after current spike
-    public static final double kLifterBackPotTopTravel = 800;
-    public static final double kLifterFrontPotTopTravel = 800;
+    public static final double kLifterBackPotTopTravel = 800; //This should be 340 ish but hey it works dont ask questions
+    public static final double kLifterFrontPotTopTravel = 800; //This should be 340 ish but hey it works dont ask questions
     public static final int kFrontLifterPotMin = 40;
     public static final int kBackLifterPotMin = 50;
     public static final int kLifetPotRange = 354;
@@ -48,6 +49,7 @@ public final class Constants {
     public static final double kLifterAutoTimerDelay = 0;
     // public static final double kFullDangerCurrent = 134;
     // public static final int kDangerTimeout = 100;
+    public static final double kLifterExtraExtensionPotTravel = 190;
     public static final double kLifterDriveBackDelay = 0.1;
     public static final double kLifterDriveForwardDelay = 0.1;
     public static final double kLifterF = -0.04;
@@ -59,12 +61,12 @@ public final class Constants {
     //Elevator constants
     public static double kLIFT_HOLD_VOLTAGE = 0.25;
     public static double kELEVATOR_F_VALUE = 0;
-    public static double kELEVATOR_P_VALUE = 5; //15 //The P value of the lift's PID loop
-    public static double kELEVATOR_I_VALUE = 0; //0.01; //The I value of the lift's PID loop
-    public static double kELEVATOR_D_VALUE = 150;//5000; //500.0; //The D value of the lift's PID loop
+    public static double kELEVATOR_P_VALUE = 15; //5 for 2 motors //15 //The P value of the lift's PID loop
+    public static double kELEVATOR_I_VALUE = 0.01; // 0 for 2 motors//0.01; //The I value of the lift's PID loop
+    public static double kELEVATOR_D_VALUE = 500; //150 for 2 motors; //500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final int kPotOffset = 39; //was 23 //Comp //19.0 for practice
+    public static final int kPotOffset = 152; //was 23 //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 

@@ -90,7 +90,7 @@ public class LimelightFollow extends Command {
 
     public void end() {
         Robot.drivetrain.setMotors(0, 0);
-        // Robot.limelight.setLed(LedMode.Off);
+        Robot.limelight.setLed(LedMode.Off); //NEW ADDITION BUDDY
     }
 
     public boolean isFinished() {

@@ -25,6 +25,7 @@ import frc.robot.commands.CargoManipulator.StopCargoMotor;
 import frc.robot.commands.CargoManipulator.CargoHumanPlayerIntake;
 import frc.robot.commands.auto.PlatformAuto3;
 import frc.robot.commands.Lifter.EStopLifters;
+import frc.robot.commands.auto.PlatformAuto2To3;
 // import frc.robot.commands.Lifter.ExtendBothLifters;
 import frc.robot.commands.Lifter.RetractBothLifters;
 import frc.robot.util.Util;
@@ -33,6 +34,7 @@ import frc.robot.commands.auto.LimeLightLineFollow;
 // import frc.robot.commands.CargoManipulator.ScoreInRocketDropper;
 // import frc.robot.commands.auto.AutoSetLifterPots;
 import frc.robot.commands.auto.PlatformAuto2;
+import frc.robot.commands.auto.PlatformAuto3Plus;
                     //               _____
                     //              |     |
                     //              | | | |
@@ -56,19 +58,22 @@ import frc.robot.commands.auto.PlatformAuto2;
                     //          ///         \\\
                     //        _///___     ___\\\_
                     //       |_______|   |_______|
+import frc.robot.commands.auto.ToggleLimeLED;
 
 public class OI {
     public static Joystick driverStick;
     public static Joystick operatorStick;
+    public static Joystick extraStick;
     private Button driveButton;
     private Button driverLB, driverRB;
     private Button driverStart, driverBack;
     private Button operatorStart;
     private Button driverA, driverB, driverY;
-    private Button driverDPadDown, driverDPadRight, driverDPadLeft;
+    private Button driverDPadDown, driverDPadRight, driverDPadLeft, operatorDPadRight;
     private Button operatorRB, operatorLT, operatorLB, operatorRT;
     public Button operatorLS, operatorBack;
     private Button driverX;
+    private Button extraA, extraB, extraX, extraY;
     // private Button driverRS, driverLS;
     private Button driverRX;
     protected Button operatorLeftJoystickUsed, operatorRightJoystickUsed, operatorDPadDown, operatorDPadLeft;
@@ -76,6 +81,7 @@ public class OI {
     public OI() {
         driverStick = new Joystick(0);
         operatorStick = new Joystick(1);
+        extraStick = new Joystick(2);
         initButtons();
         initUsed();
 
@@ -88,7 +94,6 @@ public class OI {
         operatorB.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_ONE, Constants.kELEVATOR_BALL_SLAM_SHIP)); //Sets elevator to panel height 1 / ball height 1
         operatorX.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_TWO, Constants.kELEVATOR_BALL_TWO)); //Sets elevator to panel height 2 / ball height 2
         operatorY.whenPressed(new MagicMotionHatchBall(operatorStick, Constants.kELEVATOR_PANEL_THREE, Constants.kELEVATOR_BALL_THREE)); //Sets elevator to panel height 2 / ball height 2
-
         //THESE TWO LINES ARE FOR TESTING
         //LEAVE OUT driverA.whenPressed(new AutoSetLifterPots());
         //LEAVE OUT driverB.whenPressed(new ExtendBothLifters(.8,false,driverStick,false));
@@ -98,8 +103,10 @@ public class OI {
         driverB.whenPressed(new ScorePanelAutomatedHeld()); //Scores panel
         driverB.whenReleased(new ScorePanelAutomatedRelease()); //Scores panel
 
-        driverX.whenPressed(new PlatformAuto2()); //Runs autonomous lifting sequence
+        extraX.whenPressed(new PlatformAuto2To3()); //Runs autonomous lifting sequence
+        extraY.whenPressed(new PlatformAuto3Plus()); //Runs autonomous lifting sequence
 
+        driverX.whenPressed(new PlatformAuto2()); //Runs autonomous lifting sequence
 
         driverStart.whenPressed(new PlatformAuto3()); //Runs autonomous lifting sequence
         driverY.whenPressed(new EStopLifters()); //Use this to cancel the autonomous lifting sequence if something has gone wrong
@@ -114,6 +121,9 @@ public class OI {
 
         operatorDPadLeft.whenPressed(new ScoreCargoShip());
         operatorDPadLeft.whenReleased(new StopCargoMotor());
+        
+        operatorDPadDown.whenPressed(new ToggleLimeLED(false));
+        operatorDPadRight.whenPressed(new ToggleLimeLED(true));
 
         operatorRT.whenPressed(new HoldCargoIntake()); //Intakes cargo off floor
         operatorRT.whenReleased(new ReleaseCargoIntake());
@@ -135,6 +145,10 @@ public class OI {
             driverB = new JoystickButton(driverStick, 2);
             driverX = new JoystickButton(driverStick,3);
             driverY = new JoystickButton(driverStick,4);
+            extraA = new JoystickButton(extraStick, 1);
+            extraB = new JoystickButton(extraStick, 2);
+            extraX = new JoystickButton(extraStick, 3);
+            extraY = new JoystickButton(extraStick, 4);
             driverBack = new JoystickButton(driverStick, 7);
             driverStart = new JoystickButton(driverStick, 8);
             driverRB = new JoystickButton(driverStick, 6);
@@ -166,6 +180,7 @@ public class OI {
             operatorLS = new AnalogButton(operatorStick, 1);
             operatorDPadDown = new DPadButton(operatorStick, DPadButton.kDPadDown);
             operatorDPadLeft = new DPadButton(operatorStick, DPadButton.kDPadLeft);
+            operatorDPadRight = new DPadButton(operatorStick, DPadButton.kDPadRight);
         }
 
         catch (Exception error){

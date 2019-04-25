@@ -11,6 +11,7 @@ import frc.robot.subsystems.Lifters;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.subsystems.CargoManipulator;
 import frc.robot.util.Limelight;
+import frc.robot.util.LedMode;
 // import edu.wpi.cscore.UsbCamera;
 // import edu.wpi.first.wpilibj.CameraServer;
 
@@ -100,10 +101,12 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
        drivetrain.setMotors(0, 0);
        lifters.resetSystem();
+       Robot.limelight.setLed(LedMode.Off); //NEW ADDITION BUDDY
     }
 
     @Override
     public void disabledPeriodic() {
+        Robot.limelight.setLed(LedMode.Off); //NEW ADDITION BUDDY
         drivetrain.setMotors(0, 0);
     }
 
@@ -111,6 +114,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         // Robot.drivetrain.resetGyro();
         // autoCommand.start();
+        Robot.limelight.setLed(LedMode.Off); //NEW ADDITION BUDDY
     }
 
     @Override
