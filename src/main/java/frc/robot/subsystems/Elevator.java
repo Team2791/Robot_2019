@@ -55,6 +55,7 @@ public class Elevator extends Subsystem {
         driveTalon.enableCurrentLimit(true); //true
 
 
+
         driveTalon.overrideLimitSwitchesEnable(false);
 
         driveTalon.configNominalOutputForward(Constants.kLIFT_HOLD_VOLTAGE, 0); //kLIFT_HOLD_VOLTAGE is a little bit of stall current to keep lift from falling back down before the break enables

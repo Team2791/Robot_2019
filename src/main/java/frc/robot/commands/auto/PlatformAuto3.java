@@ -16,7 +16,7 @@ public class PlatformAuto3 extends CommandGroup {
         // this.sticky = stick;
         addSequential(new TurnOffCompressor());
         addSequential(new AutoSetLifterPots()); //Think about this for a second - how can you speed this up?
-        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,false,0)); //This is about as fast as it gets
+        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,false)); //This is about as fast as it gets
         // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING
         addSequential(new DriveLifterWheelBackIR()); //Think about this for a second - how can you speed this up?
         // addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay); //FOR TESTING

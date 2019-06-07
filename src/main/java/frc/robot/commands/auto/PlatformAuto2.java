@@ -18,7 +18,7 @@ public class PlatformAuto2 extends CommandGroup {
         // this.sticky = stick;
         addSequential(new TurnOffCompressor());
         addSequential(new AutoSetLifterPots());
-        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true, Constants.kLiftersLevel2PotValue));
+        addSequential(new ExtendBothLifters(Constants.kLifterExtensionSpeed,true));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
         addSequential(new DriveLifterWheelBackIR());
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
@@ -26,6 +26,7 @@ public class PlatformAuto2 extends CommandGroup {
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
         addSequential(new DriveLifterWheelFrontIR());
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
+        // addSequential(new DriveForwardForTime(Constants.kCreep, Constants.kInchTime));
         addSequential(new RetractFrontLifterNoShock(Constants.kLifterRetractionSpeed, true));
         addSequential(new DoNothing(),Constants.kLifterAutoTimerDelay);
         addSequential(new DriveForwardForTime(Constants.kDrivetrainLifterCrawlSpeedEndOfSequence,Constants.kDrivetrainLifterEndOfSequenceTime));
