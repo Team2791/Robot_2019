@@ -14,4 +14,5 @@ This code follow the WPI command-based architecture.
 Results: 
 TVR - Winner and Excellence in Engineering Award Winner
 CNY - Winner and Industrial Design Award Winner
-Darwin - TBD
+Darwin - Semifinalists
+Battlecry - TBD
