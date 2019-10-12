@@ -8,10 +8,11 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HatchManipulator;
 import frc.robot.subsystems.Lifters;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.subsystems.CargoManipulator;
 import frc.robot.util.Limelight;
-// import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.UsbCamera;
 // import edu.wpi.first.wpilibj.CameraServer;
 
                                                                                                    
@@ -65,7 +66,7 @@ public class Robot extends TimedRobot {
     public static Compressor compressor;
     // private Command autoCommand;
 
-    // public static UsbCamera driver_cam;
+    public static UsbCamera driver_cam;
 
 
     @Override
@@ -79,8 +80,13 @@ public class Robot extends TimedRobot {
         hatchManipulator = new HatchManipulator();
         cargoManipulator = new CargoManipulator();
         limelight = new Limelight();
-        
+        //PUT ME IN TO WIN
+        // CameraServer.getInstance().startAutomaticCapture();
         oi = new OI();
+        driver_cam = CameraServer.getInstance().startAutomaticCapture("Driver Cam", 0);
+        driver_cam.setResolution(160, 120); // low res = fast response 160 x 120
+        driver_cam.setFPS(60);
+
     }
     
     @Override

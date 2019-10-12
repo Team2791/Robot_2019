@@ -12,7 +12,7 @@ public final class Constants {
     public static final double kSlowish = 0.5; //Testing should be 0.5
     public static final double kLineFollowStraight = 0.19; //0.27;
     public static final double kLineFollowTurn = 0.2; //0.5;
-    public static final double kLineVoltCutoff = 1.0; //1.4
+    public static final double kLineVoltCutoff = 1.03; //1.0 for field, 1.4 for tile
     public static final double kNeoRampTime = 0.05;
     public static final int kNeoAmpLimit = 48;
     public static final double kInchTime = 0.1;
@@ -64,7 +64,7 @@ public final class Constants {
     public static double kELEVATOR_D_VALUE = 150;//5000; //500.0; //The D value of the lift's PID loop
     public static int kELEVATOR_I_ZONE_VALUE = 50;
 
-    public static final int kPotOffset = 73; //was 23 //Comp //19.0 for practice
+    public static final int kPotOffset = 91;//was 89 //was 23 //Comp //19.0 for practice
     // this should be set so that all of the distances assume the bottom of the lift is 0
     // eg: if the robot reads 14 at the bottom this should be 14
 
@@ -72,17 +72,17 @@ public final class Constants {
     public static double kElevatorShootOverHeight = 900 + kPotOffset;
 
 
-    public static double kELEVATOR_PANEL_ONE = 67.0 + kPotOffset;
+    public static double kELEVATOR_PANEL_ONE = 89.0 + kPotOffset; //previous number added 67
     public static double kELEVATOR_PANEL_TWO = 518 + kPotOffset;
-    public static double kELEVATOR_PANEL_THREE = 919 + kPotOffset;
+    public static double kELEVATOR_PANEL_THREE = 932 + kPotOffset;// was 919
 
     public static double kELEVATOR_BALL_ONE = 160 + kPotOffset; //THIS IS THE CARGO SHIP
     public static double kELEVATOR_BALL_SLAM_SHIP = 244 + kPotOffset;
     public static double kELEVATOR_BALL_TWO = 408 + kPotOffset;
     public static double kELEVATOR_BALL_THREE = 844 + kPotOffset;
 
-    public static final int kElevatorMaxHeight = 920 + kPotOffset; //This is the maximum height of the elevator based on potentiometer values 
-    public static final int kElevatorMinHeight = 0 + kPotOffset; //This is the minimum height of the elevator based on potentiometer values 
+    public static final int kElevatorMaxHeight = 932 + kPotOffset; //This is the maximum height of the elevator based on potentiometer values // previous value was 920
+    public static final int kElevatorMinHeight = 0 + kPotOffset; //This is the minimum height of the elevator based on potentiometer values //previous value was 0.0
     public static final int kElevatorBottomSafetyDistance = 100;
     public static final int kElevatorTopSafetyDistance = 100;
     public static final double MANUAL_POWER = 0.75;

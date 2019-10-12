@@ -114,7 +114,7 @@ public class Elevator extends Subsystem {
     public void setPowerUnsafe(double power) {
 		driveTalon.set(ControlMode.PercentOutput, power);
     }
-
+//TODO: Change method because this ain't magic motion boi
     public void setTargetMagicMotion(double targetHeight) {
         driveTalon.set(ControlMode.Position, targetHeight);
     }
